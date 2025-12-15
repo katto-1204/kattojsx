@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, type ReactNode } from "react";
+import { useTheme } from "@/components/theme-provider";
 
 // Language icons
 const HTMLIcon = () => (
@@ -146,16 +147,27 @@ interface BentoItemProps {
 const BentoItem = ({ children, className = "", delay = 0 }: BentoItemProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   return (
     <motion.div
       ref={ref}
-      className={`glass rounded-2xl p-6 ${className}`}
+      className={`glass rounded-2xl p-6 group cursor-pointer ${className}`}
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay }}
+      whileHover={{
+        scale: 1.02,
+        transition: { duration: 0.3 }
+      }}
     >
-      {children}
+      {isDark && (
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-orange-500/30 via-orange-600/20 to-orange-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      )}
+      <div className="relative z-10">
+        {children}
+      </div>
     </motion.div>
   );
 };

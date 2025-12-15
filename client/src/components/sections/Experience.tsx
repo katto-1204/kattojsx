@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Briefcase } from "lucide-react";
 
 const experiences = [
@@ -31,6 +31,7 @@ const experiences = [
 
 export function Experience() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [clickedCard, setClickedCard] = useState<number | null>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -40,15 +41,59 @@ export function Experience() {
 
   return (
     <section className="py-24 relative overflow-hidden">
-      {/* Subtle animated gradient background */}
-      <motion.div
-        className="absolute inset-0 -z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
+      {/* Animated Grid Background */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-orange-950/40 dark:from-black dark:via-zinc-950 dark:to-orange-900/60" />
-      </motion.div>
+        {/* Grid Pattern */}
+        <div 
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(249, 115, 22, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(249, 115, 22, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+          }}
+        />
+        {/* Animated Grid Lines */}
+        <motion.div
+          className="absolute inset-0"
+          animate={{
+            backgroundPosition: ['0px 0px', '50px 50px'],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: 'linear',
+          }}
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(249, 115, 22, 0.2) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(249, 115, 22, 0.2) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+          }}
+        />
+        {/* Animated Grid Lines - Reverse Direction */}
+        <motion.div
+          className="absolute inset-0"
+          animate={{
+            backgroundPosition: ['50px 50px', '0px 0px'],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: 'linear',
+          }}
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(249, 115, 22, 0.15) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(249, 115, 22, 0.15) 1px, transparent 1px)
+            `,
+            backgroundSize: '75px 75px',
+          }}
+        />
+      </div>
       <div className="container mx-auto px-4" ref={containerRef}>
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
@@ -85,12 +130,25 @@ export function Experience() {
               {/* Content Card */}
               <div className={`ml-12 md:ml-0 md:w-[calc(50%-60px)] ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
                 <motion.div 
-                  className="bg-white dark:bg-zinc-900 p-10 rounded-3xl border border-border/50 shadow-lg hover:shadow-xl transition-all group"
+                  className="bg-white dark:bg-zinc-900 p-10 rounded-3xl border border-border/50 shadow-lg hover:shadow-xl transition-all group cursor-pointer"
                   whileHover={{ 
                     rotateY: 5,
                     rotateX: -2,
                     translateY: -8,
                     transition: { duration: 0.3 }
+                  }}
+                  animate={{
+                    rotateY: clickedCard === index ? 15 : 0,
+                    rotateX: clickedCard === index ? -8 : 0,
+                    scale: clickedCard === index ? 1.05 : 1,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20,
+                  }}
+                  onClick={() => {
+                    setClickedCard(clickedCard === index ? null : index);
                   }}
                 >
                   <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">

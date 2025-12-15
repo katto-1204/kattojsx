@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useLocation } from "wouter";
+import { useTheme } from "@/components/theme-provider";
 
 interface Company {
   name: string;
@@ -64,6 +65,8 @@ export function EducationalTour() {
   const [activeLocation, setActiveLocation] = useState<"cebu" | "bohol">("cebu");
   const [, setLocation] = useLocation();
   const [routeLoading, setRouteLoading] = useState<"cebu" | "bohol" | null>(null);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   const filteredCompanies = companies.filter((c) => c.location === activeLocation);
   const row1 = filteredCompanies.slice(0, 5);
@@ -152,8 +155,10 @@ export function EducationalTour() {
             onClick={() => setActiveLocation("bohol")}
             className={`px-8 py-4 rounded-full font-display font-bold text-lg transition-all border-2 ${
               activeLocation === "bohol"
-                ? "bg-white text-orange-600 border-orange-500"
-                : "bg-transparent text-white border-orange-500"
+                ? isDark 
+                  ? "bg-orange-500 text-black border-orange-500"
+                  : "bg-black text-white border-black"
+                : "bg-transparent text-orange-500 border-orange-500"
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
