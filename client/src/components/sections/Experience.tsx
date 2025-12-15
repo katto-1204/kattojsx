@@ -1,97 +1,79 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { Briefcase } from "lucide-react";
+import { motion } from "framer-motion";
+import { Briefcase, Building2, Users } from "lucide-react";
 
 const experiences = [
   {
     role: "FREELANCE DEVELOPER",
     period: "2023-2025",
     company: "Self-employed",
-    description: "Developing custom web solutions for various clients using React and Next.js."
+    icon: Briefcase,
+    color: "bg-blue-500"
   },
   {
-    role: "SOCIAL MEDIA MANAGER, GRAPHIC DESIGNER",
+    role: "SOCIAL MEDIA MANAGER",
     period: "2024",
     company: "GEE GRAPHICS",
-    description: "Managed social media presence and created visual assets for marketing campaigns."
+    icon: Users,
+    color: "bg-purple-500"
   },
   {
     role: "CREATIVES HEAD",
     period: "2023",
     company: "ITS",
-    description: "Led the creative team in designing event materials and digital content."
+    icon: Building2,
+    color: "bg-orange-500"
   },
   {
     role: "CREATIVES MANAGER",
     period: "2022",
     company: "CETSO",
-    description: "Oversaw creative direction for organizational projects and branding."
+    icon: Users,
+    color: "bg-green-500"
   }
 ];
 
 export function Experience() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
   return (
-    <section className="py-24 bg-muted/30 relative overflow-hidden">
-      <div className="container mx-auto px-4" ref={containerRef}>
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 text-center"
-        >
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">PROFESSIONAL EXPERIENCE</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            A dynamic and engaging way to showcase my professional journey.
-          </p>
-        </motion.div>
+    <section className="py-32 overflow-hidden relative">
+      {/* Gradual blur overlay on edges */}
+      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        <div className="relative max-w-3xl mx-auto">
-          {/* Vertical Line */}
-          <div className="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-0.5 bg-border -translate-x-1/2" />
+      <div className="container mx-auto px-4 mb-12">
+        <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">EXPERIENCE</h2>
+        <p className="text-muted-foreground">A decade of crafting digital experiences across industries</p>
+      </div>
+
+      <div className="flex overflow-x-auto pb-12 px-4 md:px-24 gap-8 no-scrollbar snap-x">
+        {experiences.map((exp, index) => (
           <motion.div 
-            className="absolute left-[19px] md:left-1/2 top-0 w-0.5 bg-primary -translate-x-1/2 origin-top"
-            style={{ height: lineHeight }}
-          />
+            key={index}
+            className="flex-shrink-0 w-[300px] snap-center"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: index * 0.1 }}
+          >
+            <div className="relative pt-12">
+               {/* Timeline Line */}
+               <div className="absolute top-[27px] left-0 w-full h-0.5 bg-border -z-10" />
+               
+               {/* Dot */}
+               <div className={`w-14 h-14 rounded-full border-4 border-background ${exp.color} flex items-center justify-center text-white mb-6 mx-auto relative z-10 shadow-lg`}>
+                  <exp.icon className="w-6 h-6" />
+               </div>
 
-          {experiences.map((exp, index) => (
-            <motion.div 
-              key={index}
-              className={`relative flex items-start md:items-center gap-8 mb-16 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              {/* Timeline Point */}
-              <div className="absolute left-[19px] md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-background border-4 border-primary z-10 shadow-[0_0_15px_rgba(249,115,22,0.5)]" />
-
-              {/* Content Card */}
-              <div className={`ml-12 md:ml-0 md:w-[calc(50%-40px)] ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
-                <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-border/50 shadow-sm hover:shadow-md transition-shadow group">
-                  <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold mb-3">
+               <div className="bg-card dark:bg-zinc-900 border border-border/50 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all group hover:-translate-y-1">
+                  <span className="inline-block px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs font-bold mb-3">
                     {exp.period}
                   </span>
                   <h3 className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">{exp.role}</h3>
-                  <h4 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wider">{exp.company}</h4>
-                  <p className="text-sm text-muted-foreground/80 leading-relaxed">
-                    {exp.description}
-                  </p>
-                </div>
-              </div>
-              
-              {/* Empty space for the other side */}
-              <div className="hidden md:block md:w-[calc(50%-40px)]" />
-            </motion.div>
-          ))}
-        </div>
+                  <h4 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{exp.company}</h4>
+               </div>
+            </div>
+          </motion.div>
+        ))}
+        {/* Padding for scroll */}
+        <div className="w-12 flex-shrink-0" />
       </div>
     </section>
   );

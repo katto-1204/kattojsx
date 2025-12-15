@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 import { Navbar } from "@/components/layout/Navbar";
+import { TopHeader } from "@/components/layout/TopHeader";
+import { WelcomeScreen } from "@/components/ui/WelcomeScreen";
 import { Hero } from "@/components/sections/Hero";
 import { Personal } from "@/components/sections/Personal";
 import { Experience } from "@/components/sections/Experience";
@@ -17,7 +19,6 @@ export default function Home() {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      // minimal config to avoid type errors with recent versions
     });
 
     function raf(time: number) {
@@ -34,7 +35,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/30">
+      <WelcomeScreen />
       <CustomCursor />
+      <TopHeader />
       <Navbar />
       
       <main className="flex flex-col w-full overflow-hidden">

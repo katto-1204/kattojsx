@@ -1,19 +1,18 @@
 import { TourPage } from "@/components/layout/TourPage";
-import { TourLoading } from "@/components/ui/TourLoading";
-import { useState } from "react";
+import boholBg from "@assets/generated_images/scenic_view_of_bohol_chocolate_hills.png";
 
 export default function Bohol() {
-  const [loading, setLoading] = useState(true);
-
   return (
-    <>
-      {loading && <TourLoading target="bohol" onComplete={() => setLoading(false)} />}
-      <TourPage 
-        location="BOHOL"
-        days={[4]}
-        hotels={["VISTA SUITES PANGLAO"]}
-        roommate={false}
-      />
-    </>
+    <TourPage 
+      location="BOHOL"
+      date="MAY 2025"
+      bgImage={boholBg}
+      days={[4]}
+      hotels={["VISTA SUITES PANGLAO (BOHOL)"]}
+      companies={[
+        { name: "TAGBILARAN 911", color: "#22C55E", bg: "bg-green-50 dark:bg-green-950/20" }
+      ]}
+      roommate={false}
+    />
   );
 }

@@ -1,13 +1,32 @@
 import { motion } from "framer-motion";
-import { Code, Database, Layout, Palette, Terminal, Cpu, PenTool, Figma, Video, Share2 } from "lucide-react";
+import { Cpu, PenTool } from "lucide-react";
 import portrait from "@assets/generated_images/professional_portrait_of_a_creative_female_developer.png";
+
+// Simple SVG Icons for Brands
+const Icons = {
+  HTML: (props: any) => <svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M12 2l9.6 2.6-1.5 15.6-8.1 2.2-8.1-2.2-1.5-15.6zm0 2.8l-6.8 1.9.9 10 5.9 1.6 5.9-1.6.9-10z"/></svg>,
+  CSS: (props: any) => <svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M12 2l9.6 2.6-1.5 15.6-8.1 2.2-8.1-2.2-1.5-15.6zm0 2.8l-6.8 1.9.9 10 5.9 1.6 5.9-1.6.9-10z"/></svg>,
+  JS: (props: any) => <svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M3 3h18v18H3V3zm13.6 13.4c0-.9.7-1.6 1.6-1.6s1.6.7 1.6 1.6-.7 1.6-1.6 1.6-1.6-.7-1.6-1.6zm-6.5 0c0-.9.7-1.6 1.6-1.6s1.6.7 1.6 1.6-.7 1.6-1.6 1.6-1.6-.7-1.6-1.6z"/></svg>,
+  React: (props: any) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" {...props}><circle cx="12" cy="12" r="2"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zM12 22c-5.5 0-10-4.5-10-10S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10z"/><path d="M12 6c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6z"/></svg>,
+  Python: (props: any) => <svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M12 2c2.8 0 5 2.2 5 5v2h-2V7c0-1.7-1.3-3-3-3S9 5.3 9 7v2H7V7c0-2.8 2.2-5 5-5zm0 13c-2.8 0-5 2.2-5 5v2h2v-2c0-1.7 1.3-3 3-3s3 1.3 3 3v2h2v-2c0-2.8-2.2-5-5-5z"/></svg>,
+  Generic: (props: any) => <svg viewBox="0 0 24 24" fill="currentColor" {...props}><circle cx="12" cy="12" r="10"/></svg>
+};
 
 const skills = [
   "Full Stack Developer", "Graphic Designer", "UI/UX", "Video Editing", "Social Media"
 ];
 
 const languages = [
-  "HTML", "CSS", "JS", "DJANGO", "PYTHON", "VUE", "SVELTE", "REACT", "C++", "JAVA", "C", "NEXTJS", "PHP", "MYSQL"
+  { name: "HTML", icon: Icons.HTML },
+  { name: "CSS", icon: Icons.CSS },
+  { name: "JS", icon: Icons.JS },
+  { name: "REACT", icon: Icons.React },
+  { name: "PYTHON", icon: Icons.Python },
+  { name: "VUE", icon: Icons.Generic },
+  { name: "SVELTE", icon: Icons.Generic },
+  { name: "NEXTJS", icon: Icons.Generic },
+  { name: "PHP", icon: Icons.Generic },
+  { name: "MYSQL", icon: Icons.Generic }
 ];
 
 const tools = [
@@ -68,14 +87,17 @@ export function Personal() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <h3 className="text-lg font-bold mb-6 flex items-center gap-2"><Terminal className="w-5 h-5 text-primary" /> MY LANGUAGES</h3>
-          <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
+          <h3 className="text-lg font-bold mb-6 flex items-center gap-2">MY LANGUAGES</h3>
+          <div className="grid grid-cols-4 sm:grid-cols-5 gap-6">
             {languages.map((lang, i) => (
               <div key={i} className="flex flex-col items-center gap-2 group">
-                <div className="w-10 h-10 rounded-xl bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center border border-border group-hover:border-primary/50 transition-colors">
-                  <Code className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                </div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{lang}</span>
+                <motion.div 
+                  className="w-12 h-12 flex items-center justify-center text-muted-foreground group-hover:text-primary transition-colors"
+                  whileHover={{ y: -5, rotate: 10, scale: 1.1 }}
+                >
+                  <lang.icon className="w-8 h-8" />
+                </motion.div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{lang.name}</span>
               </div>
             ))}
           </div>
@@ -91,16 +113,19 @@ export function Personal() {
           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none" />
           
           <h3 className="text-lg font-bold mb-4 flex items-center gap-2 relative z-10"><PenTool className="w-5 h-5 text-primary" /> MY TOOLS</h3>
-          <div className="flex flex-wrap gap-4 relative z-10">
+          <div className="flex flex-wrap gap-6 relative z-10">
             {tools.map((tool, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <div className="p-1.5 rounded-md bg-white/10 backdrop-blur-sm">
-                  {tool === "FIGMA" ? <Figma className="w-4 h-4" /> : 
-                   tool === "CAPCUT" ? <Video className="w-4 h-4" /> :
-                   <Layout className="w-4 h-4" />}
+              <motion.div 
+                key={i} 
+                className="flex items-center gap-2"
+                whileHover={{ scale: 1.1 }}
+              >
+                <div className="p-2 rounded-md bg-white/10 backdrop-blur-sm">
+                   {/* Simplified check for tools */}
+                   <Icons.Generic className="w-4 h-4" />
                 </div>
                 <span className="text-xs font-medium">{tool}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>
