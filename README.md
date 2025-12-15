@@ -6,39 +6,101 @@ A creative full stack developer portfolio by Catherine Arnado. Built to showcase
 
 ## How It Works
 
+```mermaid
+graph TD
+    A["User's Browser"] --> B["React Application"]
+    B --> C["Vite Dev Server / Build"]
+    B --> D["Components & Pages"]
+    D --> E["Tailwind CSS + UI Library"]
+    E --> F["Renders to DOM"]
+    
+    F --> G["User Interactions"]
+    G --> H{API Call Needed?}
+    H -->|Yes| I["Express Server"]
+    H -->|No| F
+    
+    I --> J["Route Handler"]
+    J --> K{Query DB?}
+    K -->|Yes| L["PostgreSQL + Drizzle"]
+    K -->|No| M["Send Response"]
+    L --> M
+    M --> N["JSON Response to Client"]
+    N --> B
+    B --> F
+    
+    style A fill:#e1f5ff
+    style B fill:#f3e5f5
+    style I fill:#e8f5e9
+    style L fill:#fff3e0
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         User's Browser                              │
-│                                                                     │
-│  ┌──────────────────────────────────────────────────────────────┐  │
-│  │              React Application (Client)                      │  │
-│  │                                                              │  │
-│  │  ┌──────────┐  ┌────────────┐  ┌──────────┐  ┌───────────┐ │  │
-│  │  │   Hero   │  │ Portfolio  │  │   Tour   │  │ Journal   │ │  │
-│  │  │ Section  │  │  Gallery   │  │  Pages   │  │  & Blog   │ │  │
-│  │  └──────────┘  └────────────┘  └──────────┘  └───────────┘ │  │
-│  │                                                              │  │
-│  │  React Components + Tailwind CSS + Radix UI + 3D Effects    │  │
-│  └──────────────────────────────────────────────────────────────┘  │
-│                          ↓ (HTTP/JSON)                             │
-└─────────────────────────────────────────────────────────────────────┘
-                              ↓
-                    ┌─────────────────────┐
-                    │   Express Server    │
-                    │   (Node.js API)     │
-                    │                     │
-                    │  - Routes           │
-                    │  - Business Logic   │
-                    │  - File Storage     │
-                    └─────────────────────┘
-                              ↓
-                    ┌─────────────────────┐
-                    │   PostgreSQL        │
-                    │   Database          │
-                    │                     │
-                    │  - Schema (Drizzle) │
-                    │  - Data Persistence │
-                    └─────────────────────┘
+
+---
+
+## Database Schema (ERD)
+
+```mermaid
+erDiagram
+    USER ||--o{ PORTFOLIO : creates
+    USER ||--o{ JOURNAL : writes
+    USER ||--o{ EXPERIENCE : has
+    USER ||--o{ CERTIFICATION : earns
+    USER ||--o{ PROJECT : showcases
+    
+    PORTFOLIO {
+        int id PK
+        int user_id FK
+        string title
+        text description
+        string image_url
+        timestamp created_at
+    }
+    
+    JOURNAL {
+        int id PK
+        int user_id FK
+        string title
+        text content
+        string category
+        timestamp published_at
+    }
+    
+    EXPERIENCE {
+        int id PK
+        int user_id FK
+        string company
+        string position
+        text description
+        date start_date
+        date end_date
+    }
+    
+    CERTIFICATION {
+        int id PK
+        int user_id FK
+        string title
+        string issuer
+        date issued_date
+        string credential_url
+    }
+    
+    PROJECT {
+        int id PK
+        int user_id FK
+        string name
+        text description
+        string tech_stack
+        string github_url
+        string demo_url
+    }
+    
+    USER {
+        int id PK
+        string name
+        string email
+        text bio
+        string avatar_url
+        timestamp created_at
+    }
 ```
 
 ---
@@ -193,93 +255,84 @@ katto.jsx/
 
 ### Client-Side Flow
 
-```
-Browser Load
-    ↓
-Vite Dev Server / Production Build
-    ↓
-React App Initialization
-    ↓
-Load Components:
-  - Layout (Navbar, Header)
-  - Pages (Home, Cebu, Bohol)
-  - Sections (Hero, Portfolio, Experience)
-  - UI Components (Buttons, Cards, etc.)
-    ↓
-Apply Styling:
-  - Tailwind CSS
-  - Custom CSS (LaserFlow effects)
-    ↓
-User Interactions:
-  - Click events
-  - Form submissions
-  - Navigation
-    ↓
-Optional: Fetch data from Server API
-    ↓
-Render Results to DOM
+```mermaid
+graph TD
+    A["Browser Load"] --> B["Vite Dev Server / Production Build"]
+    B --> C["React App Initialization"]
+    C --> D["Load Components"]
+    D --> E["Layout"]
+    D --> F["Pages"]
+    D --> G["Sections"]
+    D --> H["UI Components"]
+    E --> I["Apply Styling"]
+    F --> I
+    G --> I
+    H --> I
+    I --> J["Tailwind CSS + Custom CSS"]
+    J --> K["Render to DOM"]
+    K --> L["User Interactions"]
+    L --> M{API Needed?}
+    M -->|Yes| N["Fetch from Server"]
+    M -->|No| K
+    N --> O["Update State"]
+    O --> K
+    
+    style A fill:#e1f5ff
+    style C fill:#f3e5f5
+    style K fill:#e8f5e9
 ```
 
 ### Server-Side Flow
 
-```
-Client API Request
-    ↓
-Express Server receives request
-    ↓
-Route Handler processes request
-    ↓
-Decision:
-  ├─ Static file? → Serve from disk
-  ├─ API call? → Process & query database
-  └─ Not found? → 404 response
-    ↓
-Database Query (if needed):
-  - Drizzle ORM
-  - PostgreSQL
-    ↓
-Format Response (JSON)
-    ↓
-Send back to Client
-    ↓
-Client renders updated data
+```mermaid
+graph TD
+    A["Client API Request"] --> B["Express Server"]
+    B --> C["Route Handler"]
+    C --> D{Request Type?}
+    D -->|Static File| E["Serve from Disk"]
+    D -->|API Call| F["Process Logic"]
+    D -->|Not Found| G["Return 404"]
+    F --> H{Query DB?}
+    H -->|Yes| I["Drizzle ORM"]
+    H -->|No| J["Send Response"]
+    I --> K["PostgreSQL Query"]
+    K --> L["Return Data"]
+    L --> J
+    E --> J
+    J --> M["Format JSON Response"]
+    M --> N["Send to Client"]
+    N --> O["Client Renders"]
+    
+    style B fill:#e8f5e9
+    style K fill:#fff3e0
+    style O fill:#f3e5f5
 ```
 
 ### Build & Deployment Flow
 
-```
-Development
-    ↓
-Run: npm run dev
-    ↓
-Vite watches file changes
-    ↓
-Hot Module Replacement (HMR)
-    ↓
-Browser auto-refreshes
-
-
-Production Build
-    ↓
-Run: npm run build
-    ↓
-Vite bundles React app
-    ↓
-Output: dist/public/
-    ↓
-tsx bundles server code
-    ↓
-Output: dist/index.cjs
-    ↓
-Git push to GitHub
-    ↓
-Vercel detects push
-    ↓
-Vercel runs build command
-    ↓
-Deploy to CDN
-    ↓
-Live at: https://katto.jsx
+```mermaid
+graph TD
+    A["Development"] --> B["Run: npm run dev"]
+    B --> C["Vite watches files"]
+    C --> D["Hot Module Replacement"]
+    D --> E["Browser auto-refresh"]
+    
+    F["Production Build"] --> G["Run: npm run build"]
+    G --> H["Vite bundles React"]
+    H --> I["Output: dist/public/"]
+    G --> J["tsx bundles server"]
+    J --> K["Output: dist/index.cjs"]
+    I --> L["Git push to GitHub"]
+    K --> L
+    L --> M["Vercel detects push"]
+    M --> N["Run build command"]
+    N --> O["Deploy to CDN"]
+    O --> P["Live on Vercel"]
+    
+    style B fill:#e1f5ff
+    style E fill:#e8f5e9
+    style G fill:#fff3e0
+    style P fill:#f3e5f5
 ```
 
 ---
