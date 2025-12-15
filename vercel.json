@@ -1,9 +1,6 @@
 {
   "buildCommand": "npm run build",
-  "startCommand": "npm start",
   "outputDirectory": "dist",
-  "framework": "express",
-  "nodeVersion": "20.x",
-  "installCommand": "npm ci"
+  "nodeVersion": "20.x"
 }
 

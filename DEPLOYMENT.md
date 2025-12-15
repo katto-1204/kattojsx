@@ -37,7 +37,7 @@ DATABASE_URL=your_postgres_connection_string
 
 ```
 dist/
-├── index.cjs       (bundled server)
+├── index.cjs       (bundled server - auto-detected by Vercel)
 └── public/         (built React app)
 ```
 
