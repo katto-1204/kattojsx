@@ -1,0 +1,9 @@
+{
+  "name": "vivid-canvas-server",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "main": "index.cjs",
+  "scripts": {
+    "start": "node index.cjs"
+  }
+}

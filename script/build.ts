@@ -1,6 +1,6 @@
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
-import { rm, readFile } from "fs/promises";
+import { rm, readFile, copyFile } from "fs/promises";
 
 // server deps to bundle to reduce openat(2) syscalls
 // which helps cold start times
@@ -59,6 +59,10 @@ async function buildAll() {
     external: externals,
     logLevel: "info",
   });
+
+  // Copy package.json to dist for Vercel to recognize as Node app
+  console.log("copying package.json to dist...");
+  await copyFile("script/package.json.template", "dist/package.json");
 }
 
 buildAll().catch((err) => {
