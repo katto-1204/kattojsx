@@ -2,9 +2,15 @@ node_modules/
 .git/
 .env.local
 .env.*.local
-dist/
 *.log
 .DS_Store
 .cache/
 .local/
 N/
+download/
+download*/
+.cursor/
+.replit
+.gitignore
+README.md
+*.md
