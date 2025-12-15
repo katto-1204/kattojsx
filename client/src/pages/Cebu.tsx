@@ -1,9 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import imgCity from "@assets/generated_images/scenic_view_of_cebu_city_philippines.png";
-import imgHotel from "@assets/generated_images/luxury_hotel_interior_lobby_modern_design.png";
-import imgBuffet from "@assets/generated_images/delicious_buffet_spread_asian_cuisine.png";
 
 interface DayGallery {
   day: number;
@@ -47,9 +44,65 @@ const companies = [
 ];
 
 const cebuGalleryByDay: Record<number, string[]> = {
-  1: [imgCity, imgHotel, imgBuffet, imgCity],
-  2: [imgHotel, imgBuffet, imgCity, imgHotel],
-  3: [imgBuffet, imgCity, imgHotel, imgBuffet],
+  1: [
+    "/assets/cebubohol/day1/image copy 2.png",
+    "/assets/cebubohol/day1/image copy 3.png",
+    "/assets/cebubohol/day1/image copy 4.png",
+    "/assets/cebubohol/day1/image copy 5.png",
+    "/assets/cebubohol/day1/image copy 6.png",
+    "/assets/cebubohol/day1/image copy 7.png",
+    "/assets/cebubohol/day1/image copy 8.png",
+    "/assets/cebubohol/day1/image copy 9.png",
+    "/assets/cebubohol/day1/image copy 10.png",
+    "/assets/cebubohol/day1/image copy 11.png",
+    "/assets/cebubohol/day1/image copy 12.png",
+    "/assets/cebubohol/day1/image copy 13.png",
+    "/assets/cebubohol/day1/image copy.png",
+    "/assets/cebubohol/day1/image.png",
+  ],
+  2: [
+    "/assets/cebubohol/day2/image copy 2.png",
+    "/assets/cebubohol/day2/image copy 3.png",
+    "/assets/cebubohol/day2/image copy 4.png",
+    "/assets/cebubohol/day2/image copy 5.png",
+    "/assets/cebubohol/day2/image copy 6.png",
+    "/assets/cebubohol/day2/image copy 7.png",
+    "/assets/cebubohol/day2/image copy 8.png",
+    "/assets/cebubohol/day2/image copy 9.png",
+    "/assets/cebubohol/day2/image copy 10.png",
+    "/assets/cebubohol/day2/image copy 11.png",
+    "/assets/cebubohol/day2/image copy 12.png",
+    "/assets/cebubohol/day2/image copy 13.png",
+    "/assets/cebubohol/day2/image copy 14.png",
+    "/assets/cebubohol/day2/image copy 15.png",
+    "/assets/cebubohol/day2/image copy 16.png",
+    "/assets/cebubohol/day2/image copy 17.png",
+    "/assets/cebubohol/day2/image copy 18.png",
+    "/assets/cebubohol/day2/image copy 19.png",
+    "/assets/cebubohol/day2/image copy.png",
+    "/assets/cebubohol/day2/image.png",
+  ],
+  3: [
+    "/assets/cebubohol/day3/image copy 2.png",
+    "/assets/cebubohol/day3/image copy 3.png",
+    "/assets/cebubohol/day3/image copy 4.png",
+    "/assets/cebubohol/day3/image copy 5.png",
+    "/assets/cebubohol/day3/image copy 6.png",
+    "/assets/cebubohol/day3/image copy 7.png",
+    "/assets/cebubohol/day3/image copy 8.png",
+    "/assets/cebubohol/day3/image copy 9.png",
+    "/assets/cebubohol/day3/image copy 10.png",
+    "/assets/cebubohol/day3/image copy 11.png",
+    "/assets/cebubohol/day3/image copy 12.png",
+    "/assets/cebubohol/day3/image copy 13.png",
+    "/assets/cebubohol/day3/image copy 14.png",
+    "/assets/cebubohol/day3/image copy 15.png",
+    "/assets/cebubohol/day3/image copy 16.png",
+    "/assets/cebubohol/day3/image copy 17.png",
+    "/assets/cebubohol/day3/image copy 18.png",
+    "/assets/cebubohol/day3/image copy.png",
+    "/assets/cebubohol/day3/image.png",
+  ],
 };
 
 const CebuPage = () => {
@@ -133,7 +186,7 @@ const CebuPage = () => {
               <div className="max-w-7xl mx-auto">
                 <div className="flex items-start justify-between mb-6">
                   <div>
-                    <h2 className="text-5xl md:text-6xl font-display font-black text-orange-500 drop-shadow-[0_0_25px_rgba(249,115,22,0.6)]">
+                    <h2 className="text-5xl md:text-6xl font-display font-black text-pink-500 drop-shadow-[0_0_25px_rgba(236,72,153,0.6)]">
                       DAY {selectedDay}
                     </h2>
                     <p className="mt-2 text-sm uppercase tracking-[0.3em] text-muted-foreground">
@@ -176,7 +229,7 @@ const CebuPage = () => {
                     {selectedDay === 3 && (
                       <motion.button
                         onClick={() => setSelectedDay(null)}
-                        className="px-4 py-2 rounded-full bg-orange-500 text-black font-display text-xs uppercase tracking-[0.2em] shadow-lg hover:bg-orange-400"
+                        className="px-4 py-2 rounded-full bg-pink-500 text-black font-display text-xs uppercase tracking-[0.2em] shadow-lg hover:bg-pink-400"
                         whileHover={{ scale: 1.05 }}
                       >
                         End of Cebu Tour
@@ -230,7 +283,7 @@ const CebuPage = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-7xl md:text-9xl font-display font-black mb-4 text-orange-500 drop-shadow-[0_0_25px_rgba(249,115,22,0.6)]"
+            className="text-7xl md:text-9xl font-display font-black mb-4 text-pink-500 drop-shadow-[0_0_25px_rgba(236,72,153,0.6)]"
           >
             CEBU
           </motion.h1>
@@ -240,7 +293,7 @@ const CebuPage = () => {
             transition={{ delay: 0.2 }}
             className="text-xl text-muted-foreground"
           >
-            March 15-17, 2025
+            November 19 - 21, 2025
           </motion.p>
           <motion.button
             onClick={() => setLocation("/")}
@@ -316,7 +369,7 @@ const CebuPage = () => {
                     <div>
                       <span className="pill-solid mb-2 inline-block">Day {dayData.day}</span>
                       <h3 className="text-2xl font-display font-bold">
-                        March {14 + dayData.day}, 2025
+                        November {19 + dayData.day}, 2025
                       </h3>
                       <p className="text-muted-foreground mt-2">
                         {dayData.images.length} photos captured

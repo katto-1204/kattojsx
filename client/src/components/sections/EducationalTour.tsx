@@ -54,7 +54,7 @@ const companies: Company[] = [
   },
   {
     name: "WATT",
-    colors: "from-orange-500 to-yellow-400",
+    colors: "from-pink-500 to-pink-300",
     location: "cebu",
     logo: "/assets/companylogo/watt.png",
   },
@@ -140,8 +140,8 @@ export function EducationalTour() {
             onClick={() => setActiveLocation("cebu")}
             className={`px-8 py-4 rounded-full font-display font-bold text-lg transition-all border-2 ${
               activeLocation === "cebu"
-                ? "bg-orange-500 border-orange-500 text-black"
-                : "bg-transparent border-orange-500 text-orange-500"
+                ? "bg-pink-500 border-pink-500 text-black"
+                : "bg-transparent border-pink-500 text-pink-500"
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -152,8 +152,8 @@ export function EducationalTour() {
             onClick={() => setActiveLocation("bohol")}
             className={`px-8 py-4 rounded-full font-display font-bold text-lg transition-all border-2 ${
               activeLocation === "bohol"
-                ? "bg-white text-orange-500 border-orange-500"
-                : "bg-transparent text-white border-orange-500"
+                ? "bg-white text-pink-500 border-pink-500"
+                : "bg-transparent text-white border-pink-500"
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

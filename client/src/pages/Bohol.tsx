@@ -1,9 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import imgBohol from "@assets/generated_images/scenic_view_of_bohol_chocolate_hills.png";
-import imgHotel from "@assets/generated_images/luxury_hotel_interior_lobby_modern_design.png";
-import imgBuffet from "@assets/generated_images/delicious_buffet_spread_asian_cuisine.png";
 
 interface DayGallery {
   day: number;
@@ -27,7 +24,26 @@ const companies = [
   },
 ];
 
-const boholGalleryDay4: string[] = [imgBohol, imgHotel, imgBuffet, imgBohol];
+const boholGalleryDay4: string[] = [
+  "/assets/cebubohol/day4/image copy 2.png",
+  "/assets/cebubohol/day4/image copy 3.png",
+  "/assets/cebubohol/day4/image copy 4.png",
+  "/assets/cebubohol/day4/image copy 5.png",
+  "/assets/cebubohol/day4/image copy 6.png",
+  "/assets/cebubohol/day4/image copy 7.png",
+  "/assets/cebubohol/day4/image copy 8.png",
+  "/assets/cebubohol/day4/image copy 9.png",
+  "/assets/cebubohol/day4/image copy 10.png",
+  "/assets/cebubohol/day4/image copy 11.png",
+  "/assets/cebubohol/day4/image copy 12.png",
+  "/assets/cebubohol/day4/image copy 13.png",
+  "/assets/cebubohol/day4/image copy 14.png",
+  "/assets/cebubohol/day4/image copy 15.png",
+  "/assets/cebubohol/day4/image copy 16.png",
+  "/assets/cebubohol/day4/image copy 6.png",
+  "/assets/cebubohol/day4/image copy.png",
+  "/assets/cebubohol/day4/image.png",
+];
 
 const BoholPage = () => {
   const [, setLocation] = useLocation();
@@ -109,7 +125,7 @@ const BoholPage = () => {
               <div className="max-w-7xl mx-auto">
                 <div className="flex items-start justify-between mb-6">
                   <div>
-                    <h2 className="text-5xl md:text-6xl font-display font-black text-orange-500 drop-shadow-[0_0_25px_rgba(249,115,22,0.6)]">
+                    <h2 className="text-5xl md:text-6xl font-display font-black text-pink-500 drop-shadow-[0_0_25px_rgba(236,72,153,0.6)]">
                       DAY {selectedDay}
                     </h2>
                     <p className="mt-2 text-sm uppercase tracking-[0.3em] text-muted-foreground">
@@ -179,7 +195,7 @@ const BoholPage = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-7xl md:text-9xl font-display font-black mb-4 text-orange-500 drop-shadow-[0_0_25px_rgba(249,115,22,0.6)]"
+            className="text-7xl md:text-9xl font-display font-black mb-4 text-pink-500 drop-shadow-[0_0_25px_rgba(236,72,153,0.6)]"
           >
             BOHOL
           </motion.h1>
@@ -189,7 +205,7 @@ const BoholPage = () => {
             transition={{ delay: 0.2 }}
             className="text-xl text-muted-foreground"
           >
-            March 18, 2025
+            Marc, 2025
           </motion.p>
           <motion.button
             onClick={() => setLocation("/")}
@@ -264,7 +280,7 @@ const BoholPage = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <span className="pill-solid mb-2 inline-block">Day {dayData.day}</span>
-                      <h3 className="text-2xl font-display font-bold">March 18, 2025</h3>
+                      <h3 className="text-2xl font-display font-bold">nO2025</h3>
                       <p className="text-muted-foreground mt-2">
                         {dayData.images.length} photos captured
                       </p>

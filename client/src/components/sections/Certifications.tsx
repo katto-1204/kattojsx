@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import CardSwap, { Card } from "./CardSwap";
 
 const certifications = [
   { id: "codechum", title: "CODECHUM", year: "2024", image: "/assets/certificates/codechum cert.png" },
@@ -17,6 +18,13 @@ export function Certifications() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const activeCert = certifications.find(c => c.id === activeId) || certifications[0];
+
+  const handleCardClick = (index: number) => {
+    const cert = certifications[index];
+    if (!cert) return;
+    setActiveId(cert.id);
+    setIsModalOpen(true);
+  };
 
   return (
     <section id="certification" className="py-24 container mx-auto px-4">
@@ -49,27 +57,43 @@ export function Certifications() {
 
         {/* Right Side: Card Swap */}
         <div className="h-[500px] relative flex items-center justify-center">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeId}
-              initial={{ opacity: 0, x: 50, rotate: 5 }}
-              animate={{ opacity: 1, x: 0, rotate: 0 }}
-              exit={{ opacity: 0, x: -50, rotate: -5 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="relative w-full max-w-md aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl cursor-pointer group"
-              onClick={() => setIsModalOpen(true)}
+          <div style={{ height: "100%", position: "relative" }} className="w-full max-w-xl">
+            <CardSwap
+              width="100%"
+              height={320}
+              cardDistance={70}
+              verticalDistance={80}
+              delay={5000}
+              pauseOnHover
+              onCardClick={handleCardClick}
+              skewAmount={4}
             >
-              <img src={activeCert.image} alt={activeCert.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="text-white font-bold px-4 py-2 border border-white rounded-full backdrop-blur-md">View Certificate</span>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-          
-          {/* Background decoration */}
-          <div className="absolute inset-0 -z-10 flex items-center justify-center">
-            <div className="w-full max-w-md aspect-[4/3] bg-primary/10 rounded-2xl rotate-6 scale-95" />
-            <div className="w-full max-w-md aspect-[4/3] bg-primary/5 rounded-2xl -rotate-3 scale-90 absolute" />
+              {certifications.map((cert) => (
+                <Card key={cert.id} className="overflow-hidden backdrop-blur-xl">
+                  <div className="relative w-full h-full">
+                    <img
+                      src={cert.image}
+                      alt={cert.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
+                      <div>
+                        <p className="text-xs font-mono text-white/70 tracking-[0.25em] uppercase">
+                          Certification
+                        </p>
+                        <h3 className="text-lg font-semibold text-white leading-tight">
+                          {cert.title}
+                        </h3>
+                      </div>
+                      <span className="px-3 py-1 rounded-full bg-white/15 text-xs font-bold text-white border border-white/30">
+                        {cert.year}
+                      </span>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </CardSwap>
           </div>
         </div>
       </div>

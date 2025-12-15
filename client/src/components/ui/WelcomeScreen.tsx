@@ -37,8 +37,8 @@ export function WelcomeScreen() {
           exit={{ y: "-100%", transition: { duration: 0.8, ease: "easeInOut" } }}
         >
           {/* Animated background blobs */}
-          <motion.div
-            className="absolute -top-32 -left-32 w-80 h-80 bg-orange-500/40 rounded-full blur-3xl"
+      <motion.div
+        className="absolute -top-32 -left-32 w-80 h-80 bg-pink-500/40 rounded-full blur-3xl"
             initial={{ opacity: 0, scale: 0.8, x: -50, y: -50 }}
             animate={{ opacity: 1, scale: 1.1, x: 0, y: 0 }}
             transition={{ duration: 1.2, ease: "easeOut" }}

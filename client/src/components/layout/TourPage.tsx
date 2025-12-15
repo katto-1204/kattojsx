@@ -4,13 +4,14 @@ import { MapPin, Utensils, ArrowLeft, X, Building } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 
-// Images
-import img1 from "@assets/generated_images/scenic_view_of_cebu_city_philippines.png";
-import img2 from "@assets/generated_images/luxury_hotel_interior_lobby_modern_design.png";
-import img3 from "@assets/generated_images/delicious_buffet_spread_asian_cuisine.png";
-import img5 from "@assets/generated_images/fun_travel_selfie_with_roommate.png";
-
-const galleryImages = [img1, img2, img3, img1, img2, img3, img1, img2, img3, img1, img2, img3];
+const galleryImages = [
+  "/assets/cebubohol/day1/image copy 2.png",
+  "/assets/cebubohol/day2/image copy 5.png",
+  "/assets/cebubohol/day3/image copy 8.png",
+  "/assets/cebubohol/day4/image copy 10.png",
+  "/assets/cebubohol/day1/image copy 11.png",
+  "/assets/cebubohol/day2/image copy 14.png",
+];
 
 interface Company {
   name: string;
@@ -201,7 +202,7 @@ export function TourPage({ location, date, bgImage, days, hotels, buffets, compa
         {buffets && (
             <section>
                 <h2 className="text-3xl font-display font-bold mb-8 flex items-center gap-2">
-                    <Utensils className="text-orange-400" /> BUFFETS
+                    <Utensils className="text-pink-400" /> BUFFETS
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {buffets.map((buffet, i) => (
@@ -254,7 +255,7 @@ export function TourPage({ location, date, bgImage, days, hotels, buffets, compa
                     
                     <div className="grid md:grid-cols-2 gap-8 items-center text-left">
                         <div className="aspect-square rounded-2xl overflow-hidden rotate-[-3deg] shadow-lg border-4 border-white">
-                            <img src={img5} className="w-full h-full object-cover" alt="Roommate" />
+                            <img src="/assets/cebubohol/roommate/image copy 4.png" className="w-full h-full object-cover" alt="Roommate" />
                         </div>
                         <div className="space-y-6">
                             <h3 className="text-3xl font-bold">To my travel buddy,</h3>
