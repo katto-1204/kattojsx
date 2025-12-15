@@ -54,7 +54,7 @@ const companies: Company[] = [
   },
   {
     name: "WATT",
-    colors: "from-pink-500 to-pink-300",
+    colors: "from-orange-500 to-red-500",
     location: "cebu",
     logo: "/assets/companylogo/watt.png",
   },
@@ -140,8 +140,8 @@ export function EducationalTour() {
             onClick={() => setActiveLocation("cebu")}
             className={`px-8 py-4 rounded-full font-display font-bold text-lg transition-all border-2 ${
               activeLocation === "cebu"
-                ? "bg-pink-500 border-pink-500 text-black"
-                : "bg-transparent border-pink-500 text-pink-500"
+                ? "bg-orange-500 border-orange-500 text-black"
+                : "bg-transparent border-orange-500 text-orange-500"
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -152,8 +152,8 @@ export function EducationalTour() {
             onClick={() => setActiveLocation("bohol")}
             className={`px-8 py-4 rounded-full font-display font-bold text-lg transition-all border-2 ${
               activeLocation === "bohol"
-                ? "bg-white text-pink-500 border-pink-500"
-                : "bg-transparent text-white border-pink-500"
+                ? "bg-white text-orange-600 border-orange-500"
+                : "bg-transparent text-white border-orange-500"
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -316,22 +316,6 @@ export function EducationalTour() {
           </div>
         </motion.div>
 
-        {/* Special Page Link */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16 text-center"
-        >
-          <motion.button
-            onClick={() => setLocation("/my-roommate")}
-            className="px-8 py-4 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-display font-bold text-lg hover:shadow-lg hover:shadow-pink-500/30 transition-all"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            My Roommate
-          </motion.button>
-        </motion.div>
       </div>
     </section>
   );

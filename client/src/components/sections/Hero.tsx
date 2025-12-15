@@ -74,9 +74,15 @@ export function Hero() {
               DOWNLOAD CV
             </a>
           </Button>
-          <Button size="lg" variant="outline" className="rounded-full px-8 h-12 text-base bg-white/50 backdrop-blur-sm hover:bg-white/80 dark:bg-black/50 dark:hover:bg-black/80">
-            <Calendar className="mr-2 w-4 h-4" />
-            BOOK A CALL
+          <Button size="lg" variant="outline" className="rounded-full px-8 h-12 text-base bg-white/50 backdrop-blur-sm hover:bg-white/80 dark:bg-black/50 dark:hover:bg-black/80" asChild>
+            <a
+              href="https://cal.com/catherine-arnado-qjp0c2"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Calendar className="mr-2 w-4 h-4" />
+              BOOK A CALL
+            </a>
           </Button>
           <Button
             size="lg"
@@ -87,8 +93,14 @@ export function Hero() {
             <span className="font-semibold tracking-widest">(SMM)</span>
             <ExternalLink className="w-4 h-4" />
           </Button>
-          <Button size="icon" variant="secondary" className="rounded-full w-12 h-12">
-            <Github className="w-5 h-5" />
+          <Button size="icon" variant="secondary" className="rounded-full w-12 h-12" asChild>
+            <a
+              href="https://github.com/katto-1204"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Github className="w-5 h-5" />
+            </a>
           </Button>
         </motion.div>
       </div>

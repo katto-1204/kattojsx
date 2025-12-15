@@ -42,7 +42,10 @@ export function Certifications() {
                     ? "bg-primary text-white border-primary shadow-lg scale-105" 
                     : "bg-white dark:bg-zinc-900 border-border hover:border-primary/50"
                 }`}
-                onClick={() => setActiveId(cert.id)}
+                onClick={() => {
+                  setActiveId(cert.id);
+                  setIsModalOpen(true);
+                }}
               >
                 <h3 className="text-xl font-bold">{cert.title}</h3>
                 <span className={`px-3 py-1 rounded-full text-xs font-bold ${

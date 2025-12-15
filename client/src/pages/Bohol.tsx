@@ -161,26 +161,65 @@ const BoholPage = () => {
 
                 {/* Slow marquee of large images */}
                 <div className="space-y-8 overflow-hidden pt-4">
-                  {[0, 1].map((row) => (
-                    <div key={row} className="relative">
-                      <motion.div
-                        className="flex gap-6"
-                        animate={{ x: row === 0 ? [0, -800] : [-800, 0] }}
-                        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                      >
-                        {[...boholGalleryDay4, ...boholGalleryDay4].map((img, idx) => (
-                          <motion.div
-                            key={idx}
-                            className="flex-shrink-0 w-[320px] h-[220px] md:w-[420px] md:h-[280px] rounded-2xl overflow-hidden glass cursor-pointer"
-                            whileHover={{ scale: 1.05 }}
-                            onClick={() => setSelectedImage(img)}
-                          >
-                            <img src={img} className="w-full h-full object-cover" />
-                          </motion.div>
-                        ))}
-                      </motion.div>
-                    </div>
-                  ))}
+                  {/* Top row: natural order (1 -> N) */}
+                  <div className="relative">
+                    <motion.div
+                      className="flex gap-6"
+                      animate={{ x: [0, -800] }}
+                      transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                    >
+                      {[...boholGalleryDay4].map((img, idx) => (
+                        <motion.div
+                          key={`top-${idx}`}
+                          className="flex-shrink-0 w-[320px] h-[220px] md:w-[420px] md:h-[280px] rounded-2xl overflow-hidden glass cursor-pointer"
+                          whileHover={{ scale: 1.05 }}
+                          onClick={() => setSelectedImage(img)}
+                        >
+                          <img src={img} className="w-full h-full object-cover" />
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  </div>
+
+                  {/* Middle row: forward again for more coverage */}
+                  <div className="relative">
+                    <motion.div
+                      className="flex gap-6"
+                      animate={{ x: [-800, 0] }}
+                      transition={{ duration: 27, repeat: Infinity, ease: "linear" }}
+                    >
+                      {[...boholGalleryDay4].map((img, idx) => (
+                        <motion.div
+                          key={`mid-${idx}`}
+                          className="flex-shrink-0 w-[260px] h-[180px] md:w-[340px] md:h-[220px] rounded-2xl overflow-hidden glass cursor-pointer"
+                          whileHover={{ scale: 1.05 }}
+                          onClick={() => setSelectedImage(img)}
+                        >
+                          <img src={img} className="w-full h-full object-cover" />
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  </div>
+
+                  {/* Bottom row: reversed order (N -> 1) */}
+                  <div className="relative">
+                    <motion.div
+                      className="flex gap-6"
+                      animate={{ x: [-800, 0] }}
+                      transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                    >
+                      {[...boholGalleryDay4].slice().reverse().map((img, idx) => (
+                        <motion.div
+                          key={`bottom-${idx}`}
+                          className="flex-shrink-0 w-[320px] h-[220px] md:w-[420px] md:h-[280px] rounded-2xl overflow-hidden glass cursor-pointer"
+                          whileHover={{ scale: 1.05 }}
+                          onClick={() => setSelectedImage(img)}
+                        >
+                          <img src={img} className="w-full h-full object-cover" />
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -205,7 +244,7 @@ const BoholPage = () => {
             transition={{ delay: 0.2 }}
             className="text-xl text-muted-foreground"
           >
-            Marc, 2025
+            March, 2025
           </motion.p>
           <motion.button
             onClick={() => setLocation("/")}

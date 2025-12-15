@@ -27,10 +27,9 @@ interface TourPageProps {
   hotels: string[];
   buffets?: string[];
   companies?: Company[];
-  roommate?: boolean;
 }
 
-export function TourPage({ location, date, bgImage, days, hotels, buffets, companies, roommate }: TourPageProps) {
+export function TourPage({ location, date, bgImage, days, hotels, buffets, companies }: TourPageProps) {
   const [selectedHotel, setSelectedHotel] = useState<string | null>(null);
   const [loadingDay, setLoadingDay] = useState<number | null>(null);
   const [viewGallery, setViewGallery] = useState(false);
@@ -239,38 +238,6 @@ export function TourPage({ location, date, bgImage, days, hotels, buffets, compa
         )}
       </div>
 
-      {/* Roommate Section */}
-      {roommate && (
-        <section className="py-32 bg-pink-50 dark:bg-pink-950/20 relative overflow-hidden mt-24">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-pink-400/20 rounded-full blur-[100px] pointer-events-none" />
-            <div className="container mx-auto px-4 text-center relative z-10">
-                <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    transition={{ type: "spring" }}
-                    className="max-w-4xl mx-auto bg-white/80 dark:bg-black/40 backdrop-blur-xl p-12 rounded-[3rem] border border-pink-200 dark:border-pink-800 shadow-2xl"
-                >
-                    <span className="text-pink-500 font-bold tracking-widest uppercase mb-4 block">Special Dedication</span>
-                    <h2 className="text-5xl md:text-7xl font-display font-black mb-8 text-pink-600 dark:text-pink-400">MY ROOMMATE</h2>
-                    
-                    <div className="grid md:grid-cols-2 gap-8 items-center text-left">
-                        <div className="aspect-square rounded-2xl overflow-hidden rotate-[-3deg] shadow-lg border-4 border-white">
-                            <img src="/assets/cebubohol/roommate/image copy 4.png" className="w-full h-full object-cover" alt="Roommate" />
-                        </div>
-                        <div className="space-y-6">
-                            <h3 className="text-3xl font-bold">To my travel buddy,</h3>
-                            <p className="text-lg text-muted-foreground leading-relaxed">
-                                "Thank you for being the best roommate during this entire trip! From the late-night talks to the early morning alarms we almost missed. This tour wouldn't be half as fun without your chaos and laughter. Let's make more memories!"
-                            </p>
-                            <div className="font-handwriting text-3xl text-pink-500 rotate-[-5deg]">
-                                - Katto
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
-            </div>
-        </section>
-      )}
     </div>
   );
 }
