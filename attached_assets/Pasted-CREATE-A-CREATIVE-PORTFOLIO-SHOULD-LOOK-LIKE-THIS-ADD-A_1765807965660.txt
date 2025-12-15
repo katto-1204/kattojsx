@@ -1,0 +1,218 @@
+CREATE A CREATIVE PORTFOLIO
+
+SHOULD LOOK LIKE THIS, ADD ANIMATIONS, EFFECTS AND TRANSITIONS. I NEED THAT VIBE
+
+do not use any emojis, use svgs
+
+add smooth scroll
+
+use these components
+
+FINAL PORTFOLIO IDEA:
+
+
+FEATURES:
+parallax effect
+sfx on buttons, modals
+Dark mode and light mode toggle
+Responsive
+TRANSITIONS AND EFFECTS (IN OUT, UPWARDS, DOWNWARDS)
+EVERYTIME YOU SCROLL DOWN, THE TOP PART GETS GRADUAL BLUR
+ADD A CURSOR THAT FOLLOWS MAKE IT LOOKK GOOD
+Gradients
+
+Colors; LIGHT MODE
+
+WHITE (BG) BLACK (TEXTS) ORANGE (ACCENTS, BUTTONS, PILLS)
+GLASSMORPHISM
+
+
+
+
+NAVS 
+(position: on the bottom center of the screen) 
+(pill shaped, glassmorphism) 
+When a nav is normal or inactive, use outline icons
+When a nav is active, it opens into an Icon and name of the nav
+
+> HOME
+> PERSONAL
+> CERTIFICATION
+> EDUCATIONAL TOUR
+> JOURNAL
+
+
+
+WELCOME SCREEN: 
+> KATTO.JSX
+
+NAV: HOME 
+CENTER
+Chips: BSIT, 3rd Year
+
+H1: CATHERINE  (big)
+H1:  ARNADO (big) AND THE LINE SPACING SHOULD BE A BIT CLOSE
+H2: A CREATIVE FULL STACK DEV
+
+
+3 BUTTONS  [DOWNLOAD CV, BOOK A CALL, GITHUB ICON]
+
+
+
+NAV: PERSONAL INFORMATION:  (skillset, my language, tools, professional experience, selected works, visual portfolio)
+
+
+USE REACTBITS BENTO COMPONENT FOR THIS (skillset, my language, tools ONLY)
+
+SKILLSET (pills)
+Full Stack Developer, Graphic Designer, UI/UX, Video Editing, Social Media 
+
+MY LANGUAGE: ( use svg icons)
+HTML, CSS, JS, DJANGO, PYTHON, VUE, SVELTE, REACT, C++, JAVA, C, NEXTJS, PHP, MYSQL (ADD MORE)
+
+MY TOOLS: (icons)
+PHOTOSHOP, CANVA, FIGMA, MIRO, CAPCUT
+
+
+PROFESSIONAL EXPERIENCE:
+Use Scroll-Driven Interactive Timeline or AOS
+
+A dynamic and engaging way to showcase your professional journey, this timeline visually represents your career milestones and key experiences. As users scroll through the section, each point on the timeline lights up sequentially, offering an immersive, interactive experience that highlights your growth and achievements. This modern design pattern makes it easy to follow your career path and keeps the user engaged with fluid animations and smooth transitions. 
+
+FREELANCE DEVELOPER (2023-2025)
+GEE GRAPHICS - SOCIAL MEDIA MANAGER, GRAPHIC DESIGNER, LAYOUT ARTIST
+ITS - CREATIVES HEAD
+CETSO - CREATIVES MANAGER
+
+
+SELECTED WORKS:  
+(when hovered, an image of the project shows up on the right part of the screen)
+Numbering using roman numerals, tags (pills) (ui/ux, web, mobile, type of software) and year 
+
+
+CROSSCERT
+RENTO
+ECOIN
+EBURG
+GRILL BURG
+RAFAEL’S PIZZA 
+BST BINARY SEARCH TREE
+
+
+VISUAL PORTFOLIO:
+For this section, let’s use Interactive Marquee Card Grid OR SCROLL VELOCITY
+
+sample text for the label:
+PUBMATS
+Digital marketing, event promotions, and digital campaigns
+
+This component features a horizontally scrolling marquee of cards, with a fade effect on the left and right edges for a smooth, seamless transition. When hovered over, the selected card zooms in slightly, tilts, and reveals its title and details, while the other non-selected cards are blurred, enhancing focus on the active card.
+
+Each of them have at least 10 cards. 10 on top, 10 on bottom/
+PUBMATS (10)
+SHIRT DESIGNS/MERCH (10)
+LOGOFOLIO (10)
+TEAM ROSTERS/BANNERS (10)
+BACKGROUND ANIMATION (10)
+
+
+NAV: CERTIFICATES:
+H1: CERTIFICATIONS
+H2: NAME OF THE CERTIFICATION
+chips: year
+This section features a React Card Swap Component on the right side, where each certification is represented as a clickable tab. The tabs are displayed in a stack, with the top tab slightly offset to the left, showing the name of the certification (e.g., CODECHUM, GOOGLE, etc.). Upon clicking any certification tab, the corresponding certificate image smoothly swaps into view, with the image positioned centrally in the component for a clear focus.
+
+Additionally, when a certification is clicked, a modal is triggered, allowing the user to view the certificate up close for better visibility and detail. This modal enhances the interactive experience, providing a closer look at the certifications without leaving the page.
+
+The certificates included are:
+
+CODECHUM
+GOOGLE (Link to certificate)
+TOUR
+ITS
+PSITS NIKOLODEONS
+GEE GRAPHICS
+
+This design not only highlights each certification with a sleek card swap animation but also makes it easy for users to interact and explore the certifications in more detail.
+
+
+NAV: EDUC TOUR 2025
+
+COMPANIES: 5 CARDS IN A ROW
+(design: TILTED CARD)
+(NAME OF COMPANY: CENTER BOTTOM)
+(BG: COMPANY LOGO)
+
+WORLDTECH INFORMATION SOLUTIONS
+RIVAN IT CEBU
+CODECHUM
+MATA TECHNOLOGIES INC
+TAGBILARAN 911 
+
+
+Add another row of boxes for these companies with the same approach
+
+HCDC, BSIT, and WATT 
+
+
+
+TOGGLE BETWEEN:
+CEBU & BOHOL:
+
+HOTELS:
+BAI HOTEL (CEBU) (
+VISTA SUITES PANGLAO                       
+
+WHEN YOU CLICK THE PLACE there would be a loading screen that says DAY 1/2/3/4 , then go to the SELECTED PLACE/PAGE
+
+THEY should have:
+GALLERY FOR : 
+Each gallery should at least have 10 images each day. When you click a day, it would open a gallery. IT SHOULD BE LIKE AN AWWARDS READY WEBSITE 
+
+
+THE DAYS SHOULD HAVE A TIMELINE BUT VERTICAL AND THE POINTS MUST LIGHT WHEN IT’S MET . when the day is clicked, the images are on a running marquee, 
+DAY 1 2 3 (CEBU)
+DAY 4 (BOHOL)
+
+SPECIAL PAGE (MAKE IT COLOR PINK)
+MY ROOMMATE
+> add a message
+> make this section look really good
+
+                                                                                                                       
+BUFFETS: 
+SOMAC (cebu)
+BUFFET 101 (cebu)
+Cafe’ Bai Hotel (cebu)
+Vikings (cebu)
+
+
+NAV: JOURNALS
+
+
+A GALLERY OF IMAGES 
+
+AND ON THE BOTTOM PART,
+Add a message for every company.
+
+AFTER THE JOURNAL IS a: 
+Let's have
+a Chat
+Want to chat design, products, anything digital?  Hit me up!
+
+Let's Chat
+Get in Touch
+g11arnadoc@gmail.com
++905 682 9865
+Follow Me
+
+GITHUB LOGO, FB LOGO, IG LOGO
+
+
+
+
+Footer:
+KATTO.JSX 
+
+EVERYTHING SHOULD BE MOVING, APPEAR TRRANSITION
+
