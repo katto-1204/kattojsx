@@ -1,18 +1,361 @@
-import { TourPage } from "@/components/layout/TourPage";
-import boholBg from "@assets/generated_images/scenic_view_of_bohol_chocolate_hills.png";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 
-export default function Bohol() {
-  return (
-    <TourPage 
-      location="BOHOL"
-      date="MAY 2025"
-      bgImage={boholBg}
-      days={[4]}
-      hotels={["VISTA SUITES PANGLAO (BOHOL)"]}
-      companies={[
-        { name: "TAGBILARAN 911", color: "#22C55E", bg: "bg-green-50 dark:bg-green-950/20" }
-      ]}
-      roommate={false}
-    />
-  );
+interface DayGallery {
+  day: number;
+  images: string[];
 }
+
+const boholDays: DayGallery[] = [
+  { day: 1, images: Array.from({ length: 12 }, (_, i) => `Day 1 - Image ${i + 1}`) },
+];
+
+const buffets = [
+  { name: "Local Buffet Spot", location: "Tagbilaran City" },
+  { name: "Resort Buffet", location: "Panglao" },
+];
+
+const companies = [
+  { name: "Tagbilaran 911", color: "from-green-500 to-emerald-300" },
+];
+
+const BoholPage = () => {
+  const [, setLocation] = useLocation();
+  const [showLoading, setShowLoading] = useState(false);
+  const [loadingDay, setLoadingDay] = useState(0);
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [activeTimelineDay, setActiveTimelineDay] = useState(1);
+
+  const handleDayClick = (day: number) => {
+    setLoadingDay(day);
+    setShowLoading(true);
+    setTimeout(() => {
+      setShowLoading(false);
+      setSelectedDay(day);
+    }, 1500);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const dayIndex = Math.min(Math.floor(scrollY / 400) + 1, 1);
+      setActiveTimelineDay(dayIndex);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Loading Screen */}
+      <AnimatePresence>
+        {showLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-background flex items-center justify-center"
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="text-center"
+            >
+              <motion.h1
+                className="text-8xl md:text-9xl font-display font-black gradient-text"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 0.8, repeat: Infinity }}
+              >
+                DAY {loadingDay}
+              </motion.h1>
+              <motion.div
+                className="mt-8 w-48 h-1 bg-border mx-auto rounded-full overflow-hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <motion.div
+                  className="h-full bg-primary rounded-full"
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 1.5 }}
+                />
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Gallery Modal */}
+      <AnimatePresence>
+        {selectedDay !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm overflow-auto"
+          >
+            <div className="min-h-screen py-12 px-6">
+              <div className="max-w-7xl mx-auto">
+                <div className="flex items-center justify-between mb-12">
+                  <h2 className="text-4xl font-display font-black gradient-text">
+                    Day {selectedDay}
+                  </h2>
+                  <motion.button
+                    onClick={() => setSelectedDay(null)}
+                    className="p-3 glass rounded-full hover:bg-primary/20 transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                  </motion.button>
+                </div>
+
+                {/* Marquee Gallery */}
+                <div className="space-y-6 overflow-hidden">
+                  {[0, 1].map((row) => (
+                    <div key={row} className="relative">
+                      <motion.div
+                        className="flex gap-6"
+                        animate={{ x: row === 0 ? [0, -1000] : [-1000, 0] }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                      >
+                        {[
+                          ...boholDays[selectedDay - 1].images,
+                          ...boholDays[selectedDay - 1].images,
+                        ].map((img, idx) => (
+                          <motion.div
+                            key={idx}
+                            className="flex-shrink-0 w-72 h-48 glass rounded-xl overflow-hidden"
+                            whileHover={{ scale: 1.05 }}
+                          >
+                            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                              <span className="text-lg font-display font-bold">{img}</span>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-background" />
+        <div className="relative z-10 text-center px-6">
+          <motion.h1
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="text-7xl md:text-9xl font-display font-black mb-4 text-orange-500 drop-shadow-[0_0_25px_rgba(249,115,22,0.6)]"
+          >
+            BOHOL
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-xl text-muted-foreground"
+          >
+            March 18, 2025
+          </motion.p>
+          <motion.button
+            onClick={() => setLocation("/")}
+            className="mt-8 px-6 py-3 glass rounded-full hover:bg-primary/20 transition-colors"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            whileHover={{ scale: 1.05 }}
+          >
+            Back to Home
+          </motion.button>
+        </div>
+      </section>
+
+      {/* Vertical Timeline with Days */}
+      <section className="py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl font-display font-bold gradient-text mb-16 text-center"
+          >
+            Our Journey
+          </motion.h2>
+
+          <div className="flex gap-12">
+            {/* Vertical Timeline */}
+            <div className="hidden md:flex flex-col items-center">
+              <div className="relative h-[400px] w-1 bg-border rounded-full">
+                <motion.div
+                  className="absolute top-0 left-0 right-0 bg-primary rounded-full"
+                  style={{ height: `${(activeTimelineDay / 1) * 100}%` }}
+                  transition={{ duration: 0.3 }}
+                />
+                {[1].map((day) => (
+                  <motion.div
+                    key={day}
+                    className={`absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full border-2 transition-colors ${
+                      activeTimelineDay >= day
+                        ? "bg-primary border-primary"
+                        : "bg-background border-border"
+                    }`}
+                    style={{ top: "0%" }}
+                    whileHover={{ scale: 1.2 }}
+                  >
+                    {activeTimelineDay >= day && (
+                      <motion.div
+                        className="absolute inset-0 bg-primary rounded-full"
+                        animate={{ scale: [1, 1.5, 1], opacity: [1, 0, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Day Cards */}
+            <div className="flex-1 space-y-8">
+              {boholDays.map((dayData, index) => (
+                <motion.div
+                  key={dayData.day}
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="glass rounded-2xl p-8 cursor-pointer hover:glow-subtle transition-all"
+                  onClick={() => handleDayClick(dayData.day)}
+                  whileHover={{ scale: 1.02, x: 10 }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="pill-solid mb-2 inline-block">Day {dayData.day}</span>
+                      <h3 className="text-2xl font-display font-bold">March 18, 2025</h3>
+                      <p className="text-muted-foreground mt-2">
+                        {dayData.images.length} photos captured
+                      </p>
+                    </div>
+                    <div className="w-16 h-16 glass rounded-xl flex items-center justify-center">
+                      <span className="text-3xl font-display font-black text-primary">
+                        D{dayData.day}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Buffets Section */}
+      <section className="py-24 px-6 bg-gradient-to-b from-transparent to-primary/5">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl font-display font-bold gradient-text mb-12 text-center"
+          >
+            Buffets
+          </motion.h2>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {buffets.map((buffet, index) => (
+              <motion.div
+                key={buffet.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="glass rounded-xl p-6 hover:glow-subtle transition-all"
+                whileHover={{ scale: 1.05 }}
+              >
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-4">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="text-primary-foreground"
+                  >
+                    <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-display font-bold mb-1">{buffet.name}</h3>
+                <p className="text-muted-foreground text-sm">{buffet.location}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Companies Section */}
+      <section className="py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl font-display font-bold gradient-text mb-12 text-center"
+          >
+            Companies Visited
+          </motion.h2>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {companies.map((company, index) => (
+              <motion.div
+                key={company.name}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className={`rounded-2xl bg-gradient-to-br ${company.color} p-1`}
+                whileHover={{ scale: 1.02 }}
+              >
+                <div className="bg-background/90 rounded-xl p-8 h-full">
+                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-4">
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      className="text-primary"
+                    >
+                      <rect x="3" y="3" width="18" height="18" rx="2" />
+                      <path d="M9 9h6M9 13h6M9 17h4" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-display font-bold">{company.name}</h3>
+                  <span className="mt-4 inline-block pill-outline text-sm">Bohol</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default BoholPage;

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Lenis from "lenis";
 import { Navbar } from "@/components/layout/Navbar";
 import { TopHeader } from "@/components/layout/TopHeader";
+import Logo from "@/components/layout/Logo";
 import { WelcomeScreen } from "@/components/ui/WelcomeScreen";
 import { Hero } from "@/components/sections/Hero";
 import { Personal } from "@/components/sections/Personal";
@@ -37,6 +38,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/30">
       <WelcomeScreen />
       <CustomCursor />
+      <Logo />
       <TopHeader />
       <Navbar />
       

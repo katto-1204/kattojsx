@@ -1,82 +1,280 @@
-import { motion } from "framer-motion";
-import { Building, MapPin } from "lucide-react";
-import { Link } from "wouter";
-import cebu from "@assets/generated_images/scenic_view_of_cebu_city_philippines.png";
-import bohol from "@assets/generated_images/scenic_view_of_bohol_chocolate_hills.png";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { useLocation } from "wouter";
 
-const companies = [
-  "WORLDTECH INFORMATION SOLUTIONS",
-  "RIVAN IT CEBU",
-  "CODECHUM",
-  "MATA TECHNOLOGIES INC",
-  "TAGBILARAN 911"
-];
+interface Company {
+  name: string;
+  colors: string;
+  location: "cebu" | "bohol";
+}
 
-const schools = ["HCDC", "BSIT", "WATT"];
-
-const places = [
-  { name: "CEBU", image: cebu, hotels: ["BAI HOTEL", "SOMAC", "BUFFET 101"], link: "/cebu" },
-  { name: "BOHOL", image: bohol, hotels: ["VISTA SUITES PANGLAO"], link: "/bohol" }
+const companies: Company[] = [
+  { name: "WorldTech Information Solutions", colors: "from-red-500 to-white", location: "cebu" },
+  { name: "Rivan IT Cebu", colors: "from-sky-400 to-blue-800", location: "cebu" },
+  { name: "CodeChum", colors: "from-blue-500 to-white", location: "cebu" },
+  { name: "Mata Technologies Inc", colors: "from-white to-gray-900", location: "cebu" },
+  { name: "Tagbilaran 911", colors: "from-green-500 to-white", location: "bohol" },
+  { name: "HCDC", colors: "from-blue-600 to-yellow-500", location: "cebu" },
+  { name: "BSIT", colors: "from-blue-500 to-cyan-400", location: "cebu" },
+  { name: "WATT", colors: "from-orange-500 to-yellow-400", location: "cebu" },
 ];
 
 export function EducationalTour() {
+  const [activeLocation, setActiveLocation] = useState<"cebu" | "bohol">("cebu");
+  const [, setLocation] = useLocation();
+  const [routeLoading, setRouteLoading] = useState<"cebu" | "bohol" | null>(null);
+
+  const filteredCompanies = companies.filter((c) => c.location === activeLocation);
+  const row1 = filteredCompanies.slice(0, 5);
+  const row2 = filteredCompanies.slice(5);
+
+  const handleNavigate = (loc: "cebu" | "bohol") => {
+    setRouteLoading(loc);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    setTimeout(() => {
+      setLocation(`/${loc}`);
+    }, 1200);
+  };
+
   return (
-    <section id="tour" className="py-24 bg-muted/20">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-display font-bold mb-16 text-center">EDUC TOUR 2025</h2>
-        
-        {/* Companies Row 1 */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-          {companies.map((company, i) => (
-            <motion.div 
-              key={i}
-              className="bg-white dark:bg-zinc-900 rounded-xl p-6 h-48 flex flex-col items-center justify-between shadow-sm hover:shadow-xl transition-all border border-border/50 group"
-              whileHover={{ y: -10, rotateX: 5, rotateY: 5 }}
+    <section id="tour" className="min-h-screen py-24 px-6 relative">
+      {/* Route Loading Overlay */}
+      <AnimatePresence>
+        {routeLoading && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-background flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="text-center"
             >
-              <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center overflow-hidden">
-                <Building className="w-8 h-8 text-muted-foreground" />
-              </div>
-              <p className="text-center text-xs font-bold uppercase tracking-wider">{company}</p>
+              <motion.h1
+                className="text-5xl md:text-7xl font-display font-black gradient-text"
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 0.8, repeat: Infinity }}
+              >
+                GOING TO {routeLoading.toUpperCase()}
+              </motion.h1>
+              <motion.div
+                className="mt-6 w-40 h-1 bg-border mx-auto rounded-full overflow-hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <motion.div
+                  className="h-full bg-primary rounded-full"
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 1.2 }}
+                />
+              </motion.div>
             </motion.div>
-          ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16 text-center"
+        >
+          <h2 className="text-4xl md:text-6xl font-display font-black gradient-text mb-4">
+            Educational Tour 2025
+          </h2>
+          <p className="text-muted-foreground text-lg">
+            Exploring tech companies across the Philippines
+          </p>
+        </motion.div>
+
+        {/* Location Toggle */}
+        <div className="flex justify-center gap-4 mb-16">
+          <motion.button
+            onClick={() => setActiveLocation("cebu")}
+            className={`px-8 py-4 rounded-full font-display font-bold text-lg transition-all border-2 ${
+              activeLocation === "cebu"
+                ? "bg-orange-500 border-orange-500 text-black"
+                : "bg-transparent border-orange-500 text-orange-500"
+            }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            CEBU
+          </motion.button>
+          <motion.button
+            onClick={() => setActiveLocation("bohol")}
+            className={`px-8 py-4 rounded-full font-display font-bold text-lg transition-all border-2 ${
+              activeLocation === "bohol"
+                ? "bg-white text-orange-500 border-orange-500"
+                : "bg-transparent text-white border-orange-500"
+            }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            BOHOL
+          </motion.button>
         </div>
 
-        {/* Companies Row 2 */}
-        <div className="grid grid-cols-3 gap-4 mb-24 max-w-3xl mx-auto">
-          {schools.map((school, i) => (
-            <motion.div 
-              key={i}
-              className="bg-white dark:bg-zinc-900 rounded-xl p-6 h-32 flex items-center justify-center shadow-sm hover:shadow-xl transition-all border border-border/50"
-              whileHover={{ scale: 1.05 }}
-            >
-              <h3 className="text-xl font-bold">{school}</h3>
-            </motion.div>
-          ))}
-        </div>
+        {/* Companies Grid */}
+        <div className="space-y-8">
+          {/* Row 1 */}
+          <div className="flex flex-wrap justify-center gap-6">
+            {row1.map((company, index) => (
+              <motion.div
+                key={company.name}
+                initial={{ opacity: 0, y: 30, rotate: -5 }}
+                whileInView={{ opacity: 1, y: 0, rotate: index % 2 === 0 ? -3 : 3 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.05, rotate: 0, y: -10 }}
+                className={`w-56 h-72 rounded-2xl bg-gradient-to-br ${company.colors} p-1 cursor-pointer`}
+                onClick={() => handleNavigate(activeLocation)}
+              >
+                <div className="w-full h-full bg-background/80 backdrop-blur rounded-xl flex flex-col items-center justify-end p-6">
+                  <div className="flex-1 flex items-center justify-center">
+                    <svg
+                      width="60"
+                      height="60"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1"
+                      className="text-primary"
+                    >
+                      <rect x="3" y="3" width="18" height="18" rx="2" />
+                      <path d="M9 9h6M9 13h6M9 17h4" />
+                    </svg>
+                  </div>
+                  <h3 className="text-center font-display font-bold text-sm">
+                    {company.name}
+                  </h3>
+                </div>
+              </motion.div>
+            ))}
+          </div>
 
-        {/* Places Toggle */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {places.map((place, i) => (
-            <Link key={i} href={place.link}>
-                <motion.div 
-                  className="relative aspect-video rounded-3xl overflow-hidden cursor-pointer group"
-                  whileHover={{ scale: 1.02 }}
+          {/* Row 2 */}
+          {row2.length > 0 && (
+            <div className="flex flex-wrap justify-center gap-6">
+              {row2.map((company, index) => (
+                <motion.div
+                  key={company.name}
+                  initial={{ opacity: 0, y: 30, rotate: 5 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: index % 2 === 0 ? 3 : -3 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 + 0.3 }}
+                  whileHover={{ scale: 1.05, rotate: 0, y: -10 }}
+                  className={`w-56 h-72 rounded-2xl bg-gradient-to-br ${company.colors} p-1 cursor-pointer`}
+                  onClick={() => handleNavigate(activeLocation)}
                 >
-                  <img src={place.image} alt={place.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-                    <h3 className="text-4xl font-display font-bold text-white mb-2">{place.name}</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {place.hotels.map((hotel, j) => (
-                        <span key={j} className="text-xs font-bold text-white/80 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1">
-                          <MapPin className="w-3 h-3" /> {hotel}
-                        </span>
-                      ))}
+                  <div className="w-full h-full bg-background/80 backdrop-blur rounded-xl flex flex-col items-center justify-end p-6">
+                    <div className="flex-1 flex items-center justify-center">
+                      <svg
+                        width="60"
+                        height="60"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1"
+                        className="text-primary"
+                      >
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <path d="M9 9h6M9 13h6M9 17h4" />
+                      </svg>
                     </div>
+                    <h3 className="text-center font-display font-bold text-sm">
+                      {company.name}
+                    </h3>
                   </div>
                 </motion.div>
-            </Link>
-          ))}
+              ))}
+            </div>
+          )}
         </div>
+
+        {/* Hotels Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-24"
+        >
+          <h3 className="text-3xl font-display font-bold gradient-text mb-8 text-center">
+            Hotels
+          </h3>
+          <div className="flex flex-wrap justify-center gap-8">
+            <motion.div
+              className="glass rounded-2xl p-8 w-80 cursor-pointer hover:glow-subtle transition-all"
+              whileHover={{ scale: 1.02 }}
+              onClick={() => handleNavigate("cebu")}
+            >
+              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-4">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="text-primary-foreground"
+                >
+                  <path d="M3 21h18M5 21V7l8-4 8 4v14M9 21v-8h6v8" />
+                </svg>
+              </div>
+              <h4 className="text-xl font-display font-bold mb-2">BAI Hotel</h4>
+              <p className="text-muted-foreground">Cebu City, Philippines</p>
+              <span className="mt-4 inline-block pill-outline">Cebu</span>
+            </motion.div>
+
+            <motion.div
+              className="glass rounded-2xl p-8 w-80 cursor-pointer hover:glow-subtle transition-all"
+              whileHover={{ scale: 1.02 }}
+              onClick={() => handleNavigate("bohol")}
+            >
+              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center mb-4">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="text-white"
+                >
+                  <path d="M3 21h18M5 21V7l8-4 8 4v14M9 21v-8h6v8" />
+                </svg>
+              </div>
+              <h4 className="text-xl font-display font-bold mb-2">
+                Vista Suites Panglao
+              </h4>
+              <p className="text-muted-foreground">Bohol, Philippines</p>
+              <span className="mt-4 inline-block pill-outline">Bohol</span>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Special Page Link */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-16 text-center"
+        >
+          <motion.button
+            onClick={() => setLocation("/my-roommate")}
+            className="px-8 py-4 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-display font-bold text-lg hover:shadow-lg hover:shadow-pink-500/30 transition-all"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            My Roommate
+          </motion.button>
+        </motion.div>
       </div>
     </section>
   );
