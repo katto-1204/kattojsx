@@ -42,7 +42,8 @@ const MarqueeRow = ({ images, direction = "left", speed = 30 }: { images: string
         animate={{ x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"] }}
         transition={{ repeat: Infinity, duration: speed, ease: "linear" }}
       >
-        {[...images, ...images].map((img, i) => (
+        {/* Only slice 5 images as requested */}
+        {[...images.slice(0, 5), ...images.slice(0, 5)].map((img, i) => (
           <VisualCard key={i} image={img} index={i} />
         ))}
       </motion.div>
@@ -98,17 +99,17 @@ export function VisualPortfolio() {
                         <h3 className="text-2xl font-bold font-display uppercase tracking-tight">{cat.title}</h3>
                         <p className="text-sm text-muted-foreground">{cat.desc}</p>
                     </div>
-                    <span className="text-xs font-mono border border-border px-2 py-1 rounded hidden md:block">{cat.images.length} ITEMS</span>
+                    <span className="text-xs font-mono border border-border px-2 py-1 rounded hidden md:block">5 ITEMS</span>
                 </div>
 
                 {/* Fade Edges */}
                 <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
                 <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-                {/* Marquees */}
-                <MarqueeRow images={cat.images.slice(0, 10)} direction="left" speed={40 + i * 2} />
+                {/* Marquees - 5 on top, 5 on bottom */}
+                <MarqueeRow images={cat.images} direction="left" speed={40 + i * 2} />
                 <div className="mt-4">
-                    <MarqueeRow images={cat.images.slice(0, 10)} direction="right" speed={45 + i * 2} />
+                    <MarqueeRow images={cat.images} direction="right" speed={45 + i * 2} />
                 </div>
             </div>
         ))}
