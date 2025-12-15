@@ -9,11 +9,12 @@ import img4 from "@assets/generated_images/rento_mobile_app_screens_mockup.png";
 const projects = [
   { id: 1, title: "CROSSCERT", category: "Web Design", tags: ["UI/UX", "Web", "React"], year: "2024", image: img3 },
   { id: 2, title: "RENTO", category: "Mobile App", tags: ["UI/UX", "Mobile", "Figma"], year: "2024", image: img4 },
-  { id: 3, title: "ECOIN", category: "Fintech", tags: ["Web", "Blockchain", "Next.js"], year: "2023", image: img1 },
-  { id: 4, title: "EBURG", category: "Food Delivery", tags: ["Mobile", "App", "Prototyping"], year: "2023", image: img2 },
-  { id: 5, title: "GRILL BURG", category: "Branding", tags: ["Identity", "Social", "Canva"], year: "2022", image: img1 },
-  { id: 6, title: "RAFAEL'S PIZZA", category: "Social Media", tags: ["Marketing", "Graphics", "PS"], year: "2022", image: img2 },
-  { id: 7, title: "BST", category: "Algorithm Vis", tags: ["Dev", "C++", "Logic"], year: "2021", image: img3 },
+  { id: 3, title: "ITS VOTING SYSTEM (Under Maintenance)", category: "Full Stack App", tags: ["Dev", "React", "Node"], year: "2024", image: img1 },
+  { id: 4, title: "ECOIN", category: "Fintech", tags: ["Web", "Blockchain", "Next.js"], year: "2023", image: img1 },
+  { id: 5, title: "EBURG", category: "Food Delivery", tags: ["Mobile", "App", "Prototyping"], year: "2023", image: img2 },
+  { id: 6, title: "GRILL BURG", category: "Branding", tags: ["Identity", "Social", "Canva"], year: "2022", image: img1 },
+  { id: 7, title: "RAFAEL'S PIZZA", category: "Social Media", tags: ["Marketing", "Graphics", "PS"], year: "2022", image: img2 },
+  { id: 8, title: "BST", category: "Algorithm Vis", tags: ["Dev", "C++", "Logic"], year: "2021", image: img3 },
 ];
 
 const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];

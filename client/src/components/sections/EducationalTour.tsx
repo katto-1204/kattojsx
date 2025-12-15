@@ -40,9 +40,24 @@ const companies: Company[] = [
     location: "bohol",
     logo: "/assets/companylogo/CDRRMO.png",
   },
-  { name: "HCDC", colors: "from-blue-600 to-yellow-500", location: "cebu" },
-  { name: "BSIT", colors: "from-blue-500 to-cyan-400", location: "cebu" },
-  { name: "WATT", colors: "from-orange-500 to-yellow-400", location: "cebu" },
+  {
+    name: "HCDC",
+    colors: "from-blue-600 to-yellow-500",
+    location: "cebu",
+    logo: "/assets/companylogo/Copy of HCDC Logo (PNG).png",
+  },
+  {
+    name: "BSIT",
+    colors: "from-blue-500 to-cyan-400",
+    location: "cebu",
+    logo: "/assets/companylogo/[BLACK] ITS LOGO.png",
+  },
+  {
+    name: "WATT",
+    colors: "from-orange-500 to-yellow-400",
+    location: "cebu",
+    logo: "/assets/companylogo/watt.png",
+  },
 ];
 
 export function EducationalTour() {

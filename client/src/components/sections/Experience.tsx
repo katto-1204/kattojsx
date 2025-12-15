@@ -39,7 +39,16 @@ export function Experience() {
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section className="py-24 bg-muted/30 relative overflow-hidden">
+    <section className="py-24 relative overflow-hidden">
+      {/* Subtle animated gradient background */}
+      <motion.div
+        className="absolute inset-0 -z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-orange-950/40 dark:from-black dark:via-zinc-950 dark:to-orange-900/60" />
+      </motion.div>
       <div className="container mx-auto px-4" ref={containerRef}>
         <motion.div 
           initial={{ opacity: 0, y: 50 }}

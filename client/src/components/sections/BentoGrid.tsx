@@ -173,7 +173,7 @@ export const BentoGrid = () => {
           {skills.map((skill, index) => (
             <motion.span
               key={skill}
-              className="pill-solid"
+              className="px-4 py-1.5 rounded-full border border-white/30 bg-white/10 backdrop-blur-md text-xs font-medium uppercase tracking-wide text-foreground/80 dark:bg-white/5 dark:border-white/20 shadow-[0_0_15px_rgba(15,23,42,0.15)]"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.4, delay: 0.1 + index * 0.1 }}
