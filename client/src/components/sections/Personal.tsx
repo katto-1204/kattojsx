@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
-import portrait from "@assets/generated_images/professional_portrait_of_a_creative_female_developer.png";
 import { BentoGrid } from "@/components/sections/BentoGrid";
+import { useTheme } from "@/components/theme-provider";
 
 export function Personal() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <section id="personal" className="py-24 container mx-auto px-4">
       <motion.div 
@@ -25,7 +28,7 @@ export function Personal() {
           transition={{ duration: 0.5 }}
         >
           <img
-            src={portrait}
+            src={isDark ? "/profile-dark.png" : "/profile-day.png"}
             alt="Catherine Arnado"
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />

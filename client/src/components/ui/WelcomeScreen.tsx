@@ -5,10 +5,28 @@ export function WelcomeScreen() {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
+    // Play welcome SFX once on load
+    let audio: HTMLAudioElement | null = null;
+    try {
+      audio = new Audio("/sfx/welcomesfx.mp3");
+      audio.volume = 0.6;
+      audio.play().catch(() => {
+        // ignore autoplay blocking
+      });
+    } catch {
+      // ignore if audio fails
+    }
+
     const timer = setTimeout(() => {
       setShow(false);
     }, 2500);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      if (audio) {
+        audio.pause();
+        audio = null;
+      }
+    };
   }, []);
 
   return (
@@ -18,11 +36,31 @@ export function WelcomeScreen() {
           className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
           exit={{ y: "-100%", transition: { duration: 0.8, ease: "easeInOut" } }}
         >
+          {/* Animated background blobs */}
+          <motion.div
+            className="absolute -top-32 -left-32 w-80 h-80 bg-orange-500/40 rounded-full blur-3xl"
+            initial={{ opacity: 0, scale: 0.8, x: -50, y: -50 }}
+            animate={{ opacity: 1, scale: 1.1, x: 0, y: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+          />
+          <motion.div
+            className="absolute -bottom-40 right-0 w-96 h-96 bg-primary/30 rounded-full blur-3xl"
+            initial={{ opacity: 0, scale: 0.8, x: 50, y: 50 }}
+            animate={{ opacity: 1, scale: 1.2, x: 0, y: 0 }}
+            transition={{ duration: 1.4, ease: "easeOut", delay: 0.1 }}
+          />
+          <motion.div
+            className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(249,115,22,0.15),transparent_60%),radial-gradient(circle_at_bottom,_rgba(59,130,246,0.12),transparent_60%)]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          />
+
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="w-full h-full flex items-center justify-center"
+            className="w-full h-full flex items-center justify-center relative"
           >
             {/* Centered large logo-style welcome */}
             <motion.div
@@ -40,7 +78,7 @@ export function WelcomeScreen() {
                 }}
               />
 
-              <div className="glass-strong rounded-xl px-8 py-4 flex items-center gap-4">
+              <div className="glass-strong rounded-xl px-8 py-4 flex items-center gap-4 relative z-10">
                 <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center">
                   <span className="text-primary-foreground font-display font-bold text-2xl">
                     KT

@@ -23,6 +23,41 @@ export function Navbar() {
     audio.play().catch(e => console.log("Audio play failed", e));
   };
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleScrollHighlight = () => {
+      const sections = navItems
+        .map((item) => {
+          const id = item.href.replace("#", "");
+          const el = document.getElementById(id);
+          if (!el) return null;
+          const rect = el.getBoundingClientRect();
+          const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+          const visibleAmount = Math.max(
+            0,
+            Math.min(rect.bottom, viewportHeight * 0.8) - Math.max(rect.top, viewportHeight * 0.2),
+          );
+          return { name: item.name, visibleAmount };
+        })
+        .filter((s): s is { name: string; visibleAmount: number } => !!s);
+
+      if (!sections.length) return;
+
+      const mostVisible = sections.reduce((prev, curr) =>
+        curr.visibleAmount > prev.visibleAmount ? curr : prev,
+      );
+
+      if (mostVisible.visibleAmount > 0) {
+        setActive(mostVisible.name);
+      }
+    };
+
+    handleScrollHighlight();
+    window.addEventListener("scroll", handleScrollHighlight, { passive: true });
+    return () => window.removeEventListener("scroll", handleScrollHighlight);
+  }, []);
+
   return (
     <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center w-full max-w-fit px-4">
       <motion.div 

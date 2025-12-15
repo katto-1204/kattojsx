@@ -2,15 +2,14 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import certImage from "@assets/generated_images/certificate_of_achievement_mockup.png";
 
 const certifications = [
-  { id: "codechum", title: "CODECHUM", year: "2024", image: certImage },
-  { id: "google", title: "GOOGLE", year: "2023", image: certImage },
-  { id: "tour", title: "TOUR", year: "2025", image: certImage },
-  { id: "its", title: "ITS", year: "2023", image: certImage },
-  { id: "psits", title: "PSITS NIKOLODEONS", year: "2022", image: certImage },
-  { id: "gee", title: "GEE GRAPHICS", year: "2024", image: certImage },
+  { id: "codechum", title: "CODECHUM", year: "2024", image: "/assets/certificates/codechum cert.png" },
+  { id: "google", title: "GOOGLE DEVELOPER GROUP DAVAO", year: "2025", image: "/assets/certificates/GDG CERT.png" },
+  { id: "tour", title: "EDUCATIONAL TOUR 2025", year: "2025", image: "/assets/certificates/TOUR CERT.png" },
+  { id: "its", title: "ITS", year: "2023", image: "/assets/certificates/ITS CERT.png" },
+  { id: "psits", title: "PSITS NIKOLODEONS", year: "2024", image: "/assets/certificates/NIKOLODEONS.png" },
+  { id: "gee", title: "GEE GRAPHICS", year: "2025", image: "/assets/certificates/gee graphics cert.png" },
 ];
 
 export function Certifications() {

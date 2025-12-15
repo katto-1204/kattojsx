@@ -24,10 +24,26 @@ const buffets = [
 ];
 
 const companies = [
-  { name: "WorldTech Information Solutions", color: "from-red-500 to-red-300" },
-  { name: "Rivan IT Cebu", color: "from-sky-400 to-blue-700" },
-  { name: "CodeChum", color: "from-blue-500 to-blue-300" },
-  { name: "Mata Technologies Inc", color: "from-gray-800 to-gray-400" },
+  {
+    name: "WorldTech Information Solutions",
+    color: "from-red-500 to-red-300",
+    logo: "/assets/companylogo/WORLDTECH INFORMATION SOLUTIONS.png",
+  },
+  {
+    name: "Rivan IT Cebu",
+    color: "from-sky-400 to-blue-700",
+    logo: "/assets/companylogo/RIVAN IT CEBU.png",
+  },
+  {
+    name: "CodeChum",
+    color: "from-blue-500 to-blue-300",
+    logo: "/assets/companylogo/codechum.png",
+  },
+  {
+    name: "Mata Technologies Inc",
+    color: "from-gray-800 to-gray-400",
+    logo: "/assets/companylogo/MATA TECHNOLOGIES INC.png",
+  },
 ];
 
 const cebuGalleryByDay: Record<number, string[]> = {
@@ -39,6 +55,9 @@ const cebuGalleryByDay: Record<number, string[]> = {
 const CebuPage = () => {
   const [, setLocation] = useLocation();
   const [activeTimelineDay, setActiveTimelineDay] = useState(1);
+  const [showLoading, setShowLoading] = useState(false);
+  const [loadingDay, setLoadingDay] = useState<number | null>(null);
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedImageDay, setSelectedImageDay] = useState<number | null>(null);
 
@@ -52,8 +71,157 @@ const CebuPage = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const openDayGallery = (day: number) => {
+    setLoadingDay(day);
+    setShowLoading(true);
+    setTimeout(() => {
+      setShowLoading(false);
+      setSelectedDay(day);
+    }, 1200);
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      {/* DAY loading screen */}
+      <AnimatePresence>
+        {showLoading && loadingDay !== null && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-background flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="text-center"
+            >
+              <motion.h1
+                className="text-8xl md:text-9xl font-display font-black gradient-text"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 0.8, repeat: Infinity }}
+              >
+                DAY {loadingDay}
+              </motion.h1>
+              <motion.div
+                className="mt-8 w-48 h-1 bg-border mx-auto rounded-full overflow-hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <motion.div
+                  className="h-full bg-primary rounded-full"
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 1.1 }}
+                />
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Gallery Overlay */}
+      <AnimatePresence>
+        {selectedDay !== null && (
+          <motion.div
+            className="fixed inset-0 z-40 bg-background/95 backdrop-blur-md overflow-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className="min-h-screen py-10 px-6">
+              <div className="max-w-7xl mx-auto">
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <h2 className="text-5xl md:text-6xl font-display font-black text-orange-500 drop-shadow-[0_0_25px_rgba(249,115,22,0.6)]">
+                      DAY {selectedDay}
+                    </h2>
+                    <p className="mt-2 text-sm uppercase tracking-[0.3em] text-muted-foreground">
+                      Cebu Tour Gallery
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {[1, 2, 3].map((d) => (
+                        <motion.button
+                          key={d}
+                          onClick={() => openDayGallery(d)}
+                          className={`px-4 py-1 rounded-full text-xs font-mono border ${
+                            d === selectedDay
+                              ? "bg-primary text-primary-foreground border-primary"
+                              : "bg-background text-muted-foreground border-border hover:bg-muted"
+                          }`}
+                          whileHover={{ scale: 1.05 }}
+                        >
+                          Go to Day {d}
+                        </motion.button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-end gap-3">
+                    <button
+                      onClick={() => setSelectedDay(null)}
+                      className="p-2 rounded-full border border-border hover:bg-muted"
+                    >
+                      <span className="sr-only">Close gallery</span>
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path d="M18 6L6 18M6 6l12 12" />
+                      </svg>
+                    </button>
+                    {selectedDay === 3 && (
+                      <motion.button
+                        onClick={() => setSelectedDay(null)}
+                        className="px-4 py-2 rounded-full bg-orange-500 text-black font-display text-xs uppercase tracking-[0.2em] shadow-lg hover:bg-orange-400"
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        End of Cebu Tour
+                      </motion.button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Slow marquee of large images */}
+                <div className="space-y-8 overflow-hidden pt-4">
+                  {[0, 1].map((row) => (
+                    <div key={row} className="relative">
+                      <motion.div
+                        className="flex gap-6"
+                        animate={{ x: row === 0 ? [0, -800] : [-800, 0] }}
+                        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                      >
+                        {[...(cebuGalleryByDay[selectedDay] || []), ...(cebuGalleryByDay[selectedDay] || [])].map(
+                          (img, idx) => (
+                            <motion.div
+                              key={idx}
+                              className="flex-shrink-0 w-[320px] h-[220px] md:w-[420px] md:h-[280px] rounded-2xl overflow-hidden glass cursor-pointer"
+                              whileHover={{ scale: 1.05 }}
+                              onClick={() => {
+                                setSelectedImage(img);
+                                setSelectedImageDay(selectedDay);
+                              }}
+                            >
+                              <img
+                                src={img}
+                                className="w-full h-full object-cover"
+                              />
+                            </motion.div>
+                          ),
+                        )}
+                      </motion.div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-background" />
@@ -84,75 +252,6 @@ const CebuPage = () => {
           >
             Back to Home
           </motion.button>
-        </div>
-      </section>
-
-      {/* Gallery Section - Big DAY headings with large clickable images */}
-      <section className="py-24 px-6 bg-background">
-        <div className="max-w-6xl mx-auto">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl font-display font-bold gradient-text mb-12 text-center"
-          >
-            Cebu Gallery
-          </motion.h2>
-
-          <div className="space-y-16">
-            {[1, 2, 3].map((day) => (
-              <div key={day} className="space-y-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="flex items-baseline justify-between"
-                >
-                  <div>
-                    <p className="text-sm uppercase tracking-[0.3em] text-muted-foreground">
-                      DAY {day}
-                    </p>
-                    <h3 className="text-4xl md:text-5xl font-display font-black text-orange-500 drop-shadow-[0_0_20px_rgba(249,115,22,0.4)]">
-                      {day === 1 ? "Arrival & City Lights" : day === 2 ? "Exploring Cebu" : "Last Day Moments"}
-                    </h3>
-                  </div>
-                  <span className="hidden md:inline text-xs font-mono text-muted-foreground">
-                    {cebuGalleryByDay[day].length} photos
-                  </span>
-                </motion.div>
-
-                <div className="grid md:grid-cols-3 gap-6">
-                  {cebuGalleryByDay[day].map((img, idx) => (
-                    <motion.div
-                      key={idx}
-                      className="group relative overflow-hidden rounded-3xl aspect-[4/3] cursor-pointer"
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.05 }}
-                      whileHover={{ scale: 1.02, y: -4 }}
-                      onClick={() => {
-                        setSelectedImage(img);
-                        setSelectedImageDay(day);
-                      }}
-                    >
-                      <img
-                        src={img}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                      <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                        <p className="text-xs uppercase tracking-[0.2em]">Day {day}</p>
-                        <p className="text-sm font-medium">
-                          {day === 1 ? "City & Night Views" : day === 2 ? "Tour Highlights" : "Farewell Moments"}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -211,6 +310,7 @@ const CebuPage = () => {
                   transition={{ delay: index * 0.1 }}
                   className="glass rounded-2xl p-8 cursor-pointer hover:glow-subtle transition-all"
                   whileHover={{ scale: 1.02, x: 10 }}
+                  onClick={() => openDayGallery(dayData.day)}
                 >
                   <div className="flex items-center justify-between">
                     <div>
@@ -234,6 +334,41 @@ const CebuPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Fullscreen Image Viewer for gallery images */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative max-w-5xl w-full"
+            >
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute -top-10 right-0 text-white/80 hover:text-white text-sm uppercase tracking-[0.2em]"
+              >
+                Close
+              </button>
+              <div className="mb-4 text-sm text-white/80 uppercase tracking-[0.3em]">
+                {selectedImageDay ? `Day ${selectedImageDay}` : ""}
+              </div>
+              <div className="overflow-hidden rounded-3xl shadow-2xl border border-white/10">
+                <img
+                  src={selectedImage}
+                  className="w-full h-full object-contain max-h-[80vh]"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Buffets Section */}
       <section className="py-24 px-6 bg-gradient-to-b from-transparent to-primary/5">
@@ -303,19 +438,27 @@ const CebuPage = () => {
                 whileHover={{ scale: 1.02 }}
               >
                 <div className="bg-background/90 rounded-xl p-8 h-full">
-                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-4">
-                    <svg
-                      width="32"
-                      height="32"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      className="text-primary"
-                    >
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <path d="M9 9h6M9 13h6M9 17h4" />
-                    </svg>
+                  <div className="w-16 h-16 rounded-xl bg-background flex items-center justify-center mb-4 overflow-hidden">
+                    {company.logo ? (
+                      <img
+                        src={company.logo}
+                        alt={company.name}
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <svg
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        className="text-primary"
+                      >
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <path d="M9 9h6M9 13h6M9 17h4" />
+                      </svg>
+                    )}
                   </div>
                   <h3 className="text-xl font-display font-bold">{company.name}</h3>
                   <span className="mt-4 inline-block pill-outline text-sm">Cebu</span>

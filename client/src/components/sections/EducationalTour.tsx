@@ -6,14 +6,40 @@ interface Company {
   name: string;
   colors: string;
   location: "cebu" | "bohol";
+  logo?: string;
 }
 
 const companies: Company[] = [
-  { name: "WorldTech Information Solutions", colors: "from-red-500 to-white", location: "cebu" },
-  { name: "Rivan IT Cebu", colors: "from-sky-400 to-blue-800", location: "cebu" },
-  { name: "CodeChum", colors: "from-blue-500 to-white", location: "cebu" },
-  { name: "Mata Technologies Inc", colors: "from-white to-gray-900", location: "cebu" },
-  { name: "Tagbilaran 911", colors: "from-green-500 to-white", location: "bohol" },
+  {
+    name: "WorldTech Information Solutions",
+    colors: "from-red-500 to-white",
+    location: "cebu",
+    logo: "/assets/companylogo/WORLDTECH INFORMATION SOLUTIONS.png",
+  },
+  {
+    name: "Rivan IT Cebu",
+    colors: "from-sky-400 to-blue-800",
+    location: "cebu",
+    logo: "/assets/companylogo/RIVAN IT CEBU.png",
+  },
+  {
+    name: "CodeChum",
+    colors: "from-blue-500 to-white",
+    location: "cebu",
+    logo: "/assets/companylogo/codechum.png",
+  },
+  {
+    name: "Mata Technologies Inc",
+    colors: "from-white to-gray-900",
+    location: "cebu",
+    logo: "/assets/companylogo/MATA TECHNOLOGIES INC.png",
+  },
+  {
+    name: "Tagbilaran 911",
+    colors: "from-green-500 to-white",
+    location: "bohol",
+    logo: "/assets/companylogo/CDRRMO.png",
+  },
   { name: "HCDC", colors: "from-blue-600 to-yellow-500", location: "cebu" },
   { name: "BSIT", colors: "from-blue-500 to-cyan-400", location: "cebu" },
   { name: "WATT", colors: "from-orange-500 to-yellow-400", location: "cebu" },
@@ -138,18 +164,26 @@ export function EducationalTour() {
               >
                 <div className="w-full h-full bg-background/80 backdrop-blur rounded-xl flex flex-col items-center justify-end p-6">
                   <div className="flex-1 flex items-center justify-center">
-                    <svg
-                      width="60"
-                      height="60"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                      className="text-primary"
-                    >
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <path d="M9 9h6M9 13h6M9 17h4" />
-                    </svg>
+                    {company.logo ? (
+                      <img
+                        src={company.logo}
+                        alt={company.name}
+                        className="w-16 h-16 object-contain rounded-xl bg-background/80 p-1"
+                      />
+                    ) : (
+                      <svg
+                        width="60"
+                        height="60"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1"
+                        className="text-primary"
+                      >
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <path d="M9 9h6M9 13h6M9 17h4" />
+                      </svg>
+                    )}
                   </div>
                   <h3 className="text-center font-display font-bold text-sm">
                     {company.name}
@@ -175,18 +209,26 @@ export function EducationalTour() {
                 >
                   <div className="w-full h-full bg-background/80 backdrop-blur rounded-xl flex flex-col items-center justify-end p-6">
                     <div className="flex-1 flex items-center justify-center">
-                      <svg
-                        width="60"
-                        height="60"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1"
-                        className="text-primary"
-                      >
-                        <rect x="3" y="3" width="18" height="18" rx="2" />
-                        <path d="M9 9h6M9 13h6M9 17h4" />
-                      </svg>
+                      {company.logo ? (
+                        <img
+                          src={company.logo}
+                          alt={company.name}
+                          className="w-16 h-16 object-contain rounded-xl bg-background/80 p-1"
+                        />
+                      ) : (
+                        <svg
+                          width="60"
+                          height="60"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1"
+                          className="text-primary"
+                        >
+                          <rect x="3" y="3" width="18" height="18" rx="2" />
+                          <path d="M9 9h6M9 13h6M9 17h4" />
+                        </svg>
+                      )}
                     </div>
                     <h3 className="text-center font-display font-bold text-sm">
                       {company.name}

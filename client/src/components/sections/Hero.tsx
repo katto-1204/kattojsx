@@ -17,8 +17,12 @@ export function Hero() {
         className="absolute inset-0 z-0"
         style={{ opacity, filter: `blur(${blur}px)` }}
       >
-        <img src={abstractBg} alt="Background" className="w-full h-full object-cover opacity-50" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background" />
+        <img 
+          src={abstractBg} 
+          alt="Background" 
+          className="w-full h-full object-cover opacity-60 dark:opacity-30" 
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background dark:from-black/60 dark:via-background/70 dark:to-background" />
       </motion.div>
 
       <div className="container relative z-10 flex flex-col items-center text-center">
@@ -62,9 +66,11 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.8 }}
         >
-          <Button size="lg" className="rounded-full px-8 h-12 text-base group">
-            <Download className="mr-2 w-4 h-4 group-hover:animate-bounce" />
-            DOWNLOAD CV
+          <Button size="lg" className="rounded-full px-8 h-12 text-base group" asChild>
+            <a href="/assets/Arnado Catherine.pdf" download>
+              <Download className="mr-2 w-4 h-4 group-hover:animate-bounce" />
+              DOWNLOAD CV
+            </a>
           </Button>
           <Button size="lg" variant="outline" className="rounded-full px-8 h-12 text-base bg-white/50 backdrop-blur-sm hover:bg-white/80 dark:bg-black/50 dark:hover:bg-black/80">
             <Calendar className="mr-2 w-4 h-4" />
