@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Building, MapPin } from "lucide-react";
+import { Link } from "wouter";
 import cebu from "@assets/generated_images/scenic_view_of_cebu_city_philippines.png";
 import bohol from "@assets/generated_images/scenic_view_of_bohol_chocolate_hills.png";
-import companyLogo from "@assets/generated_images/certificate_of_achievement_mockup.png"; // Placeholder for company logo
 
 const companies = [
   "WORLDTECH INFORMATION SOLUTIONS",
@@ -15,8 +15,8 @@ const companies = [
 const schools = ["HCDC", "BSIT", "WATT"];
 
 const places = [
-  { name: "CEBU", image: cebu, hotels: ["BAI HOTEL", "SOMAC", "BUFFET 101"] },
-  { name: "BOHOL", image: bohol, hotels: ["VISTA SUITES PANGLAO"] }
+  { name: "CEBU", image: cebu, hotels: ["BAI HOTEL", "SOMAC", "BUFFET 101"], link: "/cebu" },
+  { name: "BOHOL", image: bohol, hotels: ["VISTA SUITES PANGLAO"], link: "/bohol" }
 ];
 
 export function EducationalTour() {
@@ -57,23 +57,24 @@ export function EducationalTour() {
         {/* Places Toggle */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {places.map((place, i) => (
-            <motion.div 
-              key={i}
-              className="relative aspect-video rounded-3xl overflow-hidden cursor-pointer group"
-              whileHover={{ scale: 1.02 }}
-            >
-              <img src={place.image} alt={place.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-                <h3 className="text-4xl font-display font-bold text-white mb-2">{place.name}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {place.hotels.map((hotel, j) => (
-                    <span key={j} className="text-xs font-bold text-white/80 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1">
-                      <MapPin className="w-3 h-3" /> {hotel}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+            <Link key={i} href={place.link}>
+                <motion.div 
+                  className="relative aspect-video rounded-3xl overflow-hidden cursor-pointer group"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <img src={place.image} alt={place.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+                    <h3 className="text-4xl font-display font-bold text-white mb-2">{place.name}</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {place.hotels.map((hotel, j) => (
+                        <span key={j} className="text-xs font-bold text-white/80 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1">
+                          <MapPin className="w-3 h-3" /> {hotel}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+            </Link>
           ))}
         </div>
       </div>
