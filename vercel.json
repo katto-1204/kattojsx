@@ -1,19 +1,9 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "installCommand": "npm ci",
   "env": {
     "NODE_ENV": "production"
-  },
-  "git": {
-    "deploymentEnabled": {
-      "main": true
-    }
-  },
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ':(exclude)README.md' || exit 1",
-  "functions": {
-    "dist/index.cjs": {
-      "maxDuration": 30
-    }
   }
 }
 
