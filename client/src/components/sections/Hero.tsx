@@ -88,10 +88,16 @@ export function Hero() {
             size="lg"
             variant="secondary"
             className="rounded-full px-8 h-12 text-base bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2"
-            onClick={() => setShowSmmPortfolio(true)}
+            asChild
           >
-            <span className="font-semibold tracking-widest">(SMM)</span>
-            <ExternalLink className="w-4 h-4" />
+            <a
+              href="https://kattojsx.my.canva.site/catherine-arnado-social-media-manager-portfolio"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="font-semibold tracking-widest">(SMM)</span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
           </Button>
           <Button size="icon" variant="secondary" className="rounded-full w-12 h-12" asChild>
             <a
@@ -105,37 +111,7 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* SMM Portfolio Embed */}
-      <AnimatePresence>
-        {showSmmPortfolio && (
-          <motion.div
-            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="relative w-full max-w-5xl h-[80vh] bg-background rounded-3xl overflow-hidden shadow-2xl border border-border"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-            >
-              <button
-                className="absolute top-4 right-4 z-10 inline-flex items-center justify-center rounded-full bg-black/70 text-white hover:bg-black px-3 py-2 text-xs font-semibold tracking-widest uppercase"
-                onClick={() => setShowSmmPortfolio(false)}
-              >
-                <X className="w-4 h-4 mr-1" />
-                Close
-              </button>
-              <iframe
-                title="Social Media Manager Portfolio - Catherine Arnado"
-                src="https://kattojsx.my.canva.site/catherine-arnado-social-media-manager-portfolio"
-                className="w-full h-full border-0"
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* SMM Portfolio Modal removed – SMM button now opens Canva in a new tab */}
 
       {/* Decorative Elements */}
       <div className="absolute top-1/4 left-10 w-24 h-24 bg-primary/20 rounded-full blur-3xl animate-blob" />

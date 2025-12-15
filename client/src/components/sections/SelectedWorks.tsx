@@ -19,7 +19,9 @@ const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "
 export function SelectedWorks() {
   const [hoveredProject, setHoveredProject] = useState<number | null>(0);
   const [previewOffset, setPreviewOffset] = useState(0);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const listRef = useRef<HTMLDivElement | null>(null);
+  const previewRef = useRef<HTMLDivElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -32,15 +34,64 @@ export function SelectedWorks() {
     };
   }, []);
 
+  // Track cursor position for subtle following effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Update preview position to align with project items
+  useEffect(() => {
+    const updatePreviewPosition = () => {
+      if (!listRef.current || hoveredProject === null) return;
+
+      const listItems = listRef.current.querySelectorAll('[data-project-index]');
+      const currentItem = listItems[hoveredProject] as HTMLElement;
+      
+      if (currentItem && listRef.current) {
+        const rect = currentItem.getBoundingClientRect();
+        const containerRect = listRef.current.getBoundingClientRect();
+        
+        // Calculate offset relative to the container
+        // Align preview top with the current project's top
+        const offset = rect.top - containerRect.top;
+        setPreviewOffset(Math.max(0, offset));
+      }
+    };
+
+    // Update on scroll
+    const handleScroll = () => {
+      updatePreviewPosition();
+    };
+
+    // Update on mouse move (for cursor following)
+    const handleMouseMove = () => {
+      updatePreviewPosition();
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    updatePreviewPosition(); // Initial check
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [hoveredProject]);
+
   const handleHover = (index: number, element: HTMLDivElement) => {
     setHoveredProject(index);
-
-    const listRect = listRef.current?.getBoundingClientRect();
-    const itemRect = element.getBoundingClientRect();
-    if (listRect) {
-      const listCenter = listRect.top + listRect.height / 2;
-      const itemCenter = itemRect.top + itemRect.height / 2;
-      setPreviewOffset(itemCenter - listCenter);
+    
+    // Immediately align preview with this project
+    if (listRef.current) {
+      const rect = element.getBoundingClientRect();
+      const containerRect = listRef.current.getBoundingClientRect();
+      const offset = rect.top - containerRect.top;
+      setPreviewOffset(Math.max(0, offset));
     }
 
     const audio = audioRef.current;
@@ -55,7 +106,7 @@ export function SelectedWorks() {
   };
 
   const handleHoverEnd = () => {
-    setHoveredProject(null);
+    // Don't clear on hover end - let scroll handler manage it
     const audio = audioRef.current;
     if (audio) {
       audio.pause();
@@ -74,6 +125,7 @@ export function SelectedWorks() {
             {projects.map((project, index) => (
               <motion.div 
                 key={project.id}
+                data-project-index={index}
                 className="group relative border-b border-border py-8 cursor-pointer"
                 onMouseEnter={(e) => handleHover(index, e.currentTarget)}
                 onMouseLeave={handleHoverEnd}
@@ -112,24 +164,42 @@ export function SelectedWorks() {
           </div>
         </div>
 
-        {/* Right Side: Image Preview (Sticky) */}
+        {/* Right Side: Image Preview (Flexible positioning) */}
         <div className="w-full lg:w-1/2 relative mt-10 lg:mt-0">
-          <div className="sticky top-32 w-full flex items-center justify-center">
+          <div className="relative w-full min-h-[460px]">
             <AnimatePresence mode="wait">
               {hoveredProject !== null ? (
                 <motion.div
+                  ref={previewRef}
                   key={hoveredProject}
-                  initial={{ opacity: 0, scale: 0.95, rotate: 2, y: previewOffset }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0, y: previewOffset }}
+                  initial={{ opacity: 0, scale: 0.95, rotate: 2 }}
+                  animate={{ 
+                    opacity: 1, 
+                    scale: 1, 
+                    rotate: 0,
+                  }}
                   exit={{ opacity: 0, scale: 0.95, rotate: -2 }}
-                  transition={{ duration: 0.4 }}
-                  className="relative w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl bg-background"
-                  style={{ transition: "transform 0.3s ease-out" }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="absolute left-0 right-0 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl bg-background"
+                  style={{ 
+                    top: `${previewOffset}px`,
+                    transform: `translateX(${typeof window !== 'undefined' && cursorPosition.x > window.innerWidth / 2 ? (cursorPosition.x - window.innerWidth / 2) * 0.03 : 0}px)`,
+                    transition: 'top 0.3s ease-out, transform 0.1s ease-out'
+                  }}
+                  whileHover={{
+                    rotateY: 5,
+                    rotateX: -3,
+                    transition: { duration: 0.3 }
+                  }}
                 >
-                    <img 
+                    <motion.img 
                         src={projects[hoveredProject].image} 
                         alt={projects[hoveredProject].title} 
                         className="w-full h-auto max-h-[560px] object-contain"
+                        whileHover={{
+                          scale: 1.02,
+                          transition: { duration: 0.3 }
+                        }}
                     />
                     <div className="absolute inset-0 bg-black/20" />
                     <div className="absolute bottom-8 left-8 bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl">
@@ -139,8 +209,8 @@ export function SelectedWorks() {
                     </div>
                 </motion.div>
               ) : (
-                <div className="flex items-center justify-center h-full w-full border-2 border-dashed border-border rounded-3xl">
-                  <p className="text-muted-foreground uppercase tracking-widest">
+                <div className="flex items-center justify-start h-full w-full border-2 border-dashed border-border rounded-3xl px-8">
+                  <p className="text-muted-foreground uppercase tracking-widest text-left">
                     Select a project to preview
                   </p>
                 </div>

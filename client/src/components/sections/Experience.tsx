@@ -47,7 +47,7 @@ export function Experience() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-pink-950/40 dark:from-black dark:via-zinc-950 dark:to-pink-900/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-orange-950/40 dark:from-black dark:via-zinc-950 dark:to-orange-900/60" />
       </motion.div>
       <div className="container mx-auto px-4" ref={containerRef}>
         <motion.div 
@@ -84,7 +84,15 @@ export function Experience() {
 
               {/* Content Card */}
               <div className={`ml-12 md:ml-0 md:w-[calc(50%-60px)] ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
-                <div className="bg-white dark:bg-zinc-900 p-10 rounded-3xl border border-border/50 shadow-lg hover:shadow-xl transition-all group hover:-translate-y-2">
+                <motion.div 
+                  className="bg-white dark:bg-zinc-900 p-10 rounded-3xl border border-border/50 shadow-lg hover:shadow-xl transition-all group"
+                  whileHover={{ 
+                    rotateY: 5,
+                    rotateX: -2,
+                    translateY: -8,
+                    transition: { duration: 0.3 }
+                  }}
+                >
                   <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">
                     {exp.period}
                   </span>
@@ -93,7 +101,7 @@ export function Experience() {
                   <p className="text-lg text-muted-foreground/80 leading-relaxed">
                     {exp.description}
                   </p>
-                </div>
+                </motion.div>
               </div>
               
               {/* Empty space for the other side */}

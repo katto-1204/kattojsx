@@ -66,8 +66,8 @@ export function Certifications() {
               height={320}
               cardDistance={70}
               verticalDistance={80}
-              delay={5000}
-              pauseOnHover
+              delay={4000}
+              pauseOnHover={false}
               onCardClick={handleCardClick}
               skewAmount={4}
             >

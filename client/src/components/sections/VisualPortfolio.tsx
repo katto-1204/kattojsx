@@ -149,16 +149,35 @@ const MarqueeRow = ({
   variant: Variant;
   onSelect: (src: string) => void;
 }) => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const effectiveSpeed = hoveredIndex !== null ? speed * 1.8 : speed;
+
   return (
     <div className="flex overflow-hidden py-4 px-4 md:px-8">
       <motion.div
         className="flex gap-4 w-max"
         animate={{ x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"] }}
-        transition={{ repeat: Infinity, duration: speed, ease: "linear" }}
+        transition={{ repeat: Infinity, duration: effectiveSpeed, ease: "linear" }}
       >
-        {[...images, ...images].map((img, i) => (
-          <VisualCard key={i} image={img} index={i} variant={variant} onSelect={onSelect} />
-        ))}
+        {[...images, ...images].map((img, i) => {
+          const logicalIndex = i % images.length;
+          const isActive = hoveredIndex === logicalIndex;
+          const isDimmed = hoveredIndex !== null && !isActive;
+
+          return (
+            <VisualCard
+              key={i}
+              image={img}
+              index={logicalIndex}
+              variant={variant}
+              onSelect={onSelect}
+              isDimmed={isDimmed}
+              onHover={() => setHoveredIndex(logicalIndex)}
+              onHoverEnd={() => setHoveredIndex(null)}
+            />
+          );
+        })}
       </motion.div>
     </div>
   );
@@ -169,11 +188,17 @@ const VisualCard = ({
   index,
   variant,
   onSelect,
+  isDimmed = false,
+  onHover,
+  onHoverEnd,
 }: {
   image: string;
   index: number;
   variant: Variant;
   onSelect: (src: string) => void;
+  isDimmed?: boolean;
+  onHover?: () => void;
+  onHoverEnd?: () => void;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -189,18 +214,27 @@ const VisualCard = ({
       className={`relative rounded-xl overflow-hidden shrink-0 cursor-pointer transition-all duration-300 ${baseClasses}`}
       style={{
         zIndex: isHovered ? 50 : 1,
-        filter: isHovered ? "blur(0px)" : "blur(0px)",
       }}
-      initial={{ opacity: 0, scale: 0.9, filter: "blur(12px)" }}
-      whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-      viewport={{ once: false, amount: 0.3 }}
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: false, amount: 0.2 }}
+      transition={{ 
+        duration: 0.6,
+        ease: "easeOut"
+      }}
       whileHover={{
-        scale: 1.1,
-        rotate: Math.random() * 4 - 2,
-        boxShadow: "0 20px 40px rgba(0,0,0,0.25)",
+        scale: 1.08,
+        rotate: -4,
+        boxShadow: "0 24px 45px rgba(0,0,0,0.3)",
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => {
+        setIsHovered(true);
+        onHover?.();
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        onHoverEnd?.();
+      }}
       onClick={() => onSelect(image)}
     >
       {image.endsWith(".mp4") ? (
@@ -215,9 +249,10 @@ const VisualCard = ({
       ) : (
         <img
           src={image}
-          className="w-full h-full object-cover transition-all duration-500"
+          className="w-full h-full object-cover transition-transform duration-300"
           style={{
-            transform: isHovered ? "scale(1.03)" : "scale(1)",
+            transform: isHovered ? "scale(1.05)" : "scale(1)",
+            filter: isDimmed ? "blur(3px) brightness(0.6)" : "none",
           }}
         />
       )}
@@ -260,9 +295,9 @@ export function VisualPortfolio() {
                     <span className="text-xs font-mono border border-border px-2 py-1 rounded hidden md:block">5 ITEMS</span>
                 </div>
 
-                {/* Fade Edges - dark and blurred right at the corners */}
-                <div className="absolute left-0 top-0 bottom-0 w-16 md:w-28 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10 pointer-events-none backdrop-blur-2xl" />
-                <div className="absolute right-0 top-0 bottom-0 w-16 md:w-28 bg-gradient-to-l from-black/80 via-black/40 to-transparent z-10 pointer-events-none backdrop-blur-2xl" />
+                {/* Fade Edges - softer, more natural blend on left and right */}
+                <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10 pointer-events-none backdrop-blur-xl" />
+                <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-l from-black/80 via-black/40 to-transparent z-10 pointer-events-none backdrop-blur-xl" />
 
                 {/* Marquees - 5 on top, 5 on bottom */}
                 {/* Top: natural order (1 → N) */}

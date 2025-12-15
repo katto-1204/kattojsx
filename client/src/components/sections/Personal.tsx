@@ -1,13 +1,34 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { BentoGrid } from "@/components/sections/BentoGrid";
 import { useTheme } from "@/components/theme-provider";
+import { useRef } from "react";
 
 export function Personal() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Orange progressive gradient based on scroll
+  const gradientOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.6, 0.3]);
+  const gradientPosition = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section id="personal" className="py-24 container mx-auto px-4">
+    <section id="personal" ref={sectionRef} className="py-24 container mx-auto px-4 relative overflow-hidden">
+      {/* Orange progressive gradient background */}
+      <motion.div
+        className="absolute inset-0 -z-10"
+        style={{
+          opacity: gradientOpacity,
+          background: `linear-gradient(to bottom, 
+            rgba(249, 115, 22, 0.1) 0%, 
+            rgba(249, 115, 22, 0.3) 50%, 
+            rgba(249, 115, 22, 0.1) 100%)`,
+        }}
+      />
       <motion.div 
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}

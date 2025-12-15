@@ -186,7 +186,7 @@ const CebuPage = () => {
               <div className="max-w-7xl mx-auto">
                 <div className="flex items-start justify-between mb-6">
                   <div>
-                    <h2 className="text-5xl md:text-6xl font-display font-black text-pink-500 drop-shadow-[0_0_25px_rgba(236,72,153,0.6)]">
+                    <h2 className="text-5xl md:text-6xl font-display font-black text-orange-500 drop-shadow-[0_0_25px_rgba(249,115,22,0.6)]">
                       DAY {selectedDay}
                     </h2>
                     <p className="mt-2 text-sm uppercase tracking-[0.3em] text-muted-foreground">
@@ -229,7 +229,7 @@ const CebuPage = () => {
                     {selectedDay === 3 && (
                       <motion.button
                         onClick={() => setSelectedDay(null)}
-                        className="px-4 py-2 rounded-full bg-pink-500 text-black font-display text-xs uppercase tracking-[0.2em] shadow-lg hover:bg-pink-400"
+                        className="px-4 py-2 rounded-full bg-orange-500 text-black font-display text-xs uppercase tracking-[0.2em] shadow-lg hover:bg-orange-400"
                         whileHover={{ scale: 1.05 }}
                       >
                         End of Cebu Tour
@@ -317,13 +317,69 @@ const CebuPage = () => {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-background" />
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-orange-500/5 to-background" />
+        <motion.div
+          className="absolute inset-0"
+          animate={{
+            background: [
+              "radial-gradient(circle at 20% 50%, rgba(249,115,22,0.15) 0%, transparent 50%)",
+              "radial-gradient(circle at 80% 50%, rgba(249,115,22,0.15) 0%, transparent 50%)",
+              "radial-gradient(circle at 50% 20%, rgba(249,115,22,0.15) 0%, transparent 50%)",
+              "radial-gradient(circle at 20% 50%, rgba(249,115,22,0.15) 0%, transparent 50%)",
+            ],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+        {/* Floating orbs */}
+        <motion.div
+          className="absolute top-20 left-20 w-64 h-64 bg-orange-500/20 rounded-full blur-3xl"
+          animate={{
+            x: [0, 100, 0],
+            y: [0, 50, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-20 w-80 h-80 bg-orange-400/15 rounded-full blur-3xl"
+          animate={{
+            x: [0, -80, 0],
+            y: [0, -60, 0],
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.4, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
         <div className="relative z-10 text-center px-6">
           <motion.h1
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-7xl md:text-9xl font-display font-black mb-4 text-pink-500 drop-shadow-[0_0_25px_rgba(236,72,153,0.6)]"
+            className="text-7xl md:text-9xl font-display font-black mb-4 text-orange-500 drop-shadow-[0_0_25px_rgba(249,115,22,0.6)]"
           >
             CEBU
           </motion.h1>
@@ -349,12 +405,40 @@ const CebuPage = () => {
       </section>
 
       {/* Vertical Timeline with Days */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-24 px-6 relative overflow-hidden">
+        {/* Animated background elements */}
+        <motion.div
+          className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.6, 0.3],
+            x: [0, 50, 0],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-0 right-1/4 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.4, 1],
+            opacity: [0.2, 0.5, 0.2],
+            x: [0, -40, 0],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <div className="max-w-6xl mx-auto relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="text-4xl font-display font-bold gradient-text mb-16 text-center"
           >
             Our Journey
@@ -397,12 +481,17 @@ const CebuPage = () => {
               {cebuDays.map((dayData, index) => (
                 <motion.div
                   key={dayData.day}
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, x: 50, scale: 0.95 }}
+                  whileInView={{ opacity: 1, x: 0, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
                   className="glass rounded-2xl p-8 cursor-pointer hover:glow-subtle transition-all"
-                  whileHover={{ scale: 1.02, x: 10 }}
+                  whileHover={{ 
+                    scale: 1.03, 
+                    x: 10,
+                    rotateY: 2,
+                    transition: { duration: 0.3 }
+                  }}
                   onClick={() => openDayGallery(dayData.day)}
                 >
                   <div className="flex items-center justify-between">
@@ -464,12 +553,25 @@ const CebuPage = () => {
       </AnimatePresence>
 
       {/* Buffets Section */}
-      <section className="py-24 px-6 bg-gradient-to-b from-transparent to-primary/5">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-24 px-6 bg-gradient-to-b from-transparent to-primary/5 relative overflow-hidden">
+        <motion.div
+          className="absolute top-1/2 left-0 w-72 h-72 bg-orange-500/5 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            x: [0, 100, 0],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <div className="max-w-6xl mx-auto relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="text-4xl font-display font-bold gradient-text mb-12 text-center"
           >
             Buffets
@@ -479,12 +581,17 @@ const CebuPage = () => {
             {buffets.map((buffet, index) => (
               <motion.div
                 key={buffet.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30, rotate: -5 }}
+                whileInView={{ opacity: 1, y: 0, rotate: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
                 className="glass rounded-xl p-6 hover:glow-subtle transition-all"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ 
+                  scale: 1.05,
+                  rotate: 2,
+                  y: -5,
+                  transition: { duration: 0.3 }
+                }}
               >
                 <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-4">
                   <svg
@@ -508,12 +615,25 @@ const CebuPage = () => {
       </section>
 
       {/* Companies Section */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-24 px-6 relative overflow-hidden">
+        <motion.div
+          className="absolute bottom-0 right-0 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 14,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <div className="max-w-6xl mx-auto relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="text-4xl font-display font-bold gradient-text mb-12 text-center"
           >
             Companies Visited
@@ -523,12 +643,17 @@ const CebuPage = () => {
             {companies.map((company, index) => (
               <motion.div
                 key={company.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.9, rotate: -3 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
                 className={`rounded-2xl bg-gradient-to-br ${company.color} p-1`}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ 
+                  scale: 1.05,
+                  rotate: 2,
+                  y: -8,
+                  transition: { duration: 0.3 }
+                }}
               >
                 <div className="bg-background/90 rounded-xl p-8 h-full">
                   <div className="w-16 h-16 rounded-xl bg-background flex items-center justify-center mb-4 overflow-hidden">
