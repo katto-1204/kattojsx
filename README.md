@@ -4,6 +4,45 @@ A creative full stack developer portfolio by Catherine Arnado. Built to showcase
 
 ---
 
+## How It Works
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         User's Browser                              │
+│                                                                     │
+│  ┌──────────────────────────────────────────────────────────────┐  │
+│  │              React Application (Client)                      │  │
+│  │                                                              │  │
+│  │  ┌──────────┐  ┌────────────┐  ┌──────────┐  ┌───────────┐ │  │
+│  │  │   Hero   │  │ Portfolio  │  │   Tour   │  │ Journal   │ │  │
+│  │  │ Section  │  │  Gallery   │  │  Pages   │  │  & Blog   │ │  │
+│  │  └──────────┘  └────────────┘  └──────────┘  └───────────┘ │  │
+│  │                                                              │  │
+│  │  React Components + Tailwind CSS + Radix UI + 3D Effects    │  │
+│  └──────────────────────────────────────────────────────────────┘  │
+│                          ↓ (HTTP/JSON)                             │
+└─────────────────────────────────────────────────────────────────────┘
+                              ↓
+                    ┌─────────────────────┐
+                    │   Express Server    │
+                    │   (Node.js API)     │
+                    │                     │
+                    │  - Routes           │
+                    │  - Business Logic   │
+                    │  - File Storage     │
+                    └─────────────────────┘
+                              ↓
+                    ┌─────────────────────┐
+                    │   PostgreSQL        │
+                    │   Database          │
+                    │                     │
+                    │  - Schema (Drizzle) │
+                    │  - Data Persistence │
+                    └─────────────────────┘
+```
+
+---
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -146,6 +185,101 @@ katto.jsx/
     ├── package.json                 # Dependencies & scripts
     ├── DEPLOYMENT.md                # Deployment documentation
     └── README.md                    # This file
+```
+
+---
+
+## Architecture & Data Flow
+
+### Client-Side Flow
+
+```
+Browser Load
+    ↓
+Vite Dev Server / Production Build
+    ↓
+React App Initialization
+    ↓
+Load Components:
+  - Layout (Navbar, Header)
+  - Pages (Home, Cebu, Bohol)
+  - Sections (Hero, Portfolio, Experience)
+  - UI Components (Buttons, Cards, etc.)
+    ↓
+Apply Styling:
+  - Tailwind CSS
+  - Custom CSS (LaserFlow effects)
+    ↓
+User Interactions:
+  - Click events
+  - Form submissions
+  - Navigation
+    ↓
+Optional: Fetch data from Server API
+    ↓
+Render Results to DOM
+```
+
+### Server-Side Flow
+
+```
+Client API Request
+    ↓
+Express Server receives request
+    ↓
+Route Handler processes request
+    ↓
+Decision:
+  ├─ Static file? → Serve from disk
+  ├─ API call? → Process & query database
+  └─ Not found? → 404 response
+    ↓
+Database Query (if needed):
+  - Drizzle ORM
+  - PostgreSQL
+    ↓
+Format Response (JSON)
+    ↓
+Send back to Client
+    ↓
+Client renders updated data
+```
+
+### Build & Deployment Flow
+
+```
+Development
+    ↓
+Run: npm run dev
+    ↓
+Vite watches file changes
+    ↓
+Hot Module Replacement (HMR)
+    ↓
+Browser auto-refreshes
+
+
+Production Build
+    ↓
+Run: npm run build
+    ↓
+Vite bundles React app
+    ↓
+Output: dist/public/
+    ↓
+tsx bundles server code
+    ↓
+Output: dist/index.cjs
+    ↓
+Git push to GitHub
+    ↓
+Vercel detects push
+    ↓
+Vercel runs build command
+    ↓
+Deploy to CDN
+    ↓
+Live at: https://katto.jsx
 ```
 
 ---
