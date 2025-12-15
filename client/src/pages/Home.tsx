@@ -5,6 +5,7 @@ import { Hero } from "@/components/sections/Hero";
 import { Personal } from "@/components/sections/Personal";
 import { Experience } from "@/components/sections/Experience";
 import { SelectedWorks } from "@/components/sections/SelectedWorks";
+import { VisualPortfolio } from "@/components/sections/VisualPortfolio";
 import { Certifications } from "@/components/sections/Certifications";
 import { EducationalTour } from "@/components/sections/EducationalTour";
 import { Journal } from "@/components/sections/Journal";
@@ -41,6 +42,7 @@ export default function Home() {
         <Personal />
         <Experience />
         <SelectedWorks />
+        <VisualPortfolio />
         <Certifications />
         <EducationalTour />
         <Journal />
