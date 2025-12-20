@@ -3,15 +3,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
 const projects = [
-  { id: 1, title: "CROSSCERT", category: "Web Design", tags: ["UI/UX", "Web", "Next.js"], year: "2024", image: "/assets/projects/CROSSCERT (1).png" },
-  { id: 2, title: "RENTO", category: "Mobile App", tags: ["UI/UX", "Mobile", "Figma"], year: "2024", image: "/assets/projects/project1.RENTO.png" },
-  { id: 3, title: "ITS VOTING SYSTEM (Under Maintenance)", category: "Full Stack App", tags: ["Dev", "React", "Node"], year: "2024", image: "/assets/projects/itsvoting.png" },
-  { id: 4, title: "ECOIN", category: "Fintech", tags: ["Web", "MySQL", "Next.js"], year: "2023", image: "/assets/projects/ECOIN.png" },
-  { id: 5, title: "EBURG", category: "Food Delivery", tags: ["Mobile", "POS", "Prototyping"], year: "2023", image: "/assets/projects/eburg.png" },
-  { id: 6, title: "GRILL BURG", category: "Branding", tags: ["Identity", "Social", "Canva"], year: "2022", image: "/assets/projects/grill.gif" },
-  { id: 7, title: "Rafael's Pizza", category: "Algorithm Vis", tags: ["Dev", "C++", "Logic"], year: "2021", image: "/assets/projects/raf.gif" },
-  { id: 8, title: "Chicks Ahoy", category: "Food", tags: ["Dev", "WEB", "Logic"], year: "2021", image: "/assets/projects/chick1.png" },
-  { id: 9, title: "Gee Graphics OM", category: "Design System", tags: ["Dev", "React", "Dashboard"], year: "2021", image: "/assets/projects/GEE GRAPHICSS .png" },
+  { id: 1, title: "CROSSCERT", category: "Web Design", tags: ["UI/UX", "Web", "Next.js"], year: "2025", image: "/assets/projects/CROSSCERT (1).png" },
+  { id: 2, title: "RENTO", category: "Mobile App", tags: ["UI/UX", "Mobile", "Figma"], year: "2025", image: "/assets/projects/project1.RENTO.png" },
+  { id: 3, title: "ITS VOTING SYSTEM (Under Maintenance)", category: "Full Stack App", tags: ["Dev", "React", "Node"], year: "2025", image: "/assets/projects/itsvoting.png" },
+  { id: 4, title: "ECOIN", category: "Fintech", tags: ["Web", "MySQL", "Next.js"], year: "2025", image: "/assets/projects/ECOIN.png" },
+  { id: 5, title: "EBURG", category: "Food Delivery", tags: ["Mobile", "POS", "Prototyping"], year: "2025", image: "/assets/projects/eburg.png" },
+  { id: 6, title: "GRILL BURG", category: "Branding", tags: ["Identity", "Social", "Canva"], year: "2023", image: "/assets/projects/grill.gif" },
+  { id: 7, title: "Rafael's Pizza", category: "Algorithm Vis", tags: ["Dev", "C++", "Logic"], year: "2023", image: "/assets/projects/raf.gif" },
+  { id: 8, title: "Chicks Ahoy", category: "Food", tags: ["Dev", "WEB", "Logic"], year: "2025", image: "/assets/projects/chick1.png" },
+  { id: 9, title: "Gee Graphics OM", category: "Design System", tags: ["Dev", "React", "Dashboard"], year: "2025", image: "/assets/projects/GEE GRAPHICSS .png" },
 ];
 
 const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
