@@ -41,22 +41,27 @@ const companies: Company[] = [
     location: "bohol",
     logo: "/assets/companylogo/CDRRMO.png",
   },
+];
+
+type Org = {
+  name: string;
+  colors: string;
+  logo?: string;
+};
+const mainOrgs: Org[] = [
   {
     name: "HCDC",
     colors: "from-blue-600 to-yellow-500",
-    location: "cebu",
     logo: "/assets/companylogo/Copy of HCDC Logo (PNG).png",
   },
   {
     name: "BSIT",
     colors: "from-blue-500 to-cyan-400",
-    location: "cebu",
     logo: "/assets/companylogo/[BLACK] ITS LOGO.png",
   },
   {
     name: "WATT",
     colors: "from-orange-500 to-red-500",
-    location: "cebu",
     logo: "/assets/companylogo/watt.png",
   },
 ];
@@ -68,9 +73,11 @@ export function EducationalTour() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
+
+  // Always show HCDC, BSIT, WATT as a separate row
   const filteredCompanies = companies.filter((c) => c.location === activeLocation);
-  const row1 = filteredCompanies.slice(0, 5);
-  const row2 = filteredCompanies.slice(5);
+  const orgsRow = mainOrgs;
+  const row1 = filteredCompanies;
 
   const handleNavigate = (loc: "cebu" | "bohol") => {
     setRouteLoading(loc);
@@ -168,8 +175,9 @@ export function EducationalTour() {
         </div>
 
         {/* Companies Grid */}
+
         <div className="space-y-8">
-          {/* Row 1 */}
+          {/* Companies Row */}
           <div className="flex flex-wrap justify-center gap-6">
             {row1.map((company, index) => (
               <motion.div
@@ -213,19 +221,23 @@ export function EducationalTour() {
             ))}
           </div>
 
-          {/* Row 2 */}
-          {row2.length > 0 && (
+          {/* Main Orgs Row (HCDC, BSIT, WATT) */}
+          <div className="mt-8">
+            <div className="mb-4 text-center">
+              <span className="text-lg font-semibold text-primary">Our School, Program, and Agency</span>
+              <p className="text-muted-foreground text-sm mt-1"></p>
+            </div>
             <div className="flex flex-wrap justify-center gap-6">
-              {row2.map((company, index) => (
+              {orgsRow.map((company, index) => (
                 <motion.div
                   key={company.name}
-                  initial={{ opacity: 0, y: 30, rotate: 5 }}
-                  whileInView={{ opacity: 1, y: 0, rotate: index % 2 === 0 ? 3 : -3 }}
+                  initial={{ opacity: 0, y: 30, rotate: -5 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: index % 2 === 0 ? -3 : 3 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 + 0.3 }}
+                  transition={{ delay: index * 0.1 }}
                   whileHover={{ scale: 1.05, rotate: 0, y: -10 }}
                   className={`w-56 h-72 rounded-2xl bg-gradient-to-br ${company.colors} p-1 cursor-pointer`}
-                  onClick={() => handleNavigate(activeLocation)}
+                  // No navigation for these cards
                 >
                   <div className="w-full h-full bg-background/80 backdrop-blur rounded-xl flex flex-col items-center justify-end p-6">
                     <div className="flex-1 flex items-center justify-center">
@@ -257,7 +269,7 @@ export function EducationalTour() {
                 </motion.div>
               ))}
             </div>
-          )}
+          </div>
         </div>
 
         {/* Hotels Section */}

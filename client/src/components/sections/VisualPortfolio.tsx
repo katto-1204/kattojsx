@@ -19,41 +19,10 @@ const PUBMAT_IMAGES: string[] = [
   "/assets/pubmats/ITS TEACHERS DAY.png",
   "/assets/pubmats/its.head.png",
   "/assets/pubmats/its.pub.png",
-  "/assets/pubmats/katgi anniv.png",
-  "/assets/pubmats/mathsci.png",
-  "/assets/pubmats/mlvn.b.png",
-  "/assets/pubmats/mlvn.w.png",
-  "/assets/pubmats/p.bsit orientation.png",
-  "/assets/pubmats/p.call.png",
-  "/assets/pubmats/p.d-day.png",
-  "/assets/pubmats/p.jingle.png",
-  "/assets/pubmats/p.pres.png",
-  "/assets/pubmats/p.presnew.png",
-  "/assets/pubmats/p.rank.png",
-  "/assets/pubmats/p.reward.png",
-  "/assets/pubmats/p.shirtdes.png",
-  "/assets/pubmats/p.techtalk.png",
-  "/assets/pubmats/project pitch.png",
-];
-
-const LOGO_IMAGES: string[] = [
-  "/assets/logos/image copy 2.png",
-  "/assets/logos/image copy.png",
-  "/assets/logos/image.png",
-  "/assets/logos/logo1.png",
-  "/assets/logos/logo2.png",
-  "/assets/logos/logo3.png",
-  "/assets/logos/logo4.png",
-];
-
-const BACK_ANIM_IMAGES: string[] = [
-  "/assets/backanim/backanim1.mp4",
-  "/assets/backanim/backanim2.mp4",
-  "/assets/backanim/backanim3.gif",
-  "/assets/backanim/BSIT ORIENTATION.gif",
 ];
 
 const MERCH_IMAGES: string[] = [
+  // Add your merch image paths here
   "/assets/merch/CIPHERS.png",
   "/assets/merch/entry 5 (red).png",
   "/assets/merch/entry 6 (black).png",
@@ -85,7 +54,19 @@ const MERCH_IMAGES: string[] = [
   "/assets/merch/merch14.png",
 ];
 
+const LOGO_IMAGES: string[] = [
+  // Add your logo image paths here
+  "/assets/logos/image copy 2.png",
+  "/assets/logos/image copy.png",
+  "/assets/logos/image.png",
+  "/assets/logos/logo1.png",
+  "/assets/logos/logo2.png",
+  "/assets/logos/logo3.png",
+  "/assets/logos/logo4.png",
+];
+
 const TEAM_ROSTER_IMAGES: string[] = [
+  // Add your team roster image paths here
   "/assets/teamrosters/ban1.png",
   "/assets/teamrosters/ban2.png",
   "/assets/teamrosters/ban3.png",
@@ -96,6 +77,14 @@ const TEAM_ROSTER_IMAGES: string[] = [
   "/assets/teamrosters/ros1.png",
   "/assets/teamrosters/ros2.png",
   "/assets/teamrosters/ros3.png",
+];
+
+const BACK_ANIM_IMAGES: string[] = [
+  // Add your background animation paths here
+  "/assets/backanim/backanim1.mp4",
+  "/assets/backanim/backanim2.mp4",
+  "/assets/backanim/backanim3.gif",
+  "/assets/backanim/BSIT ORIENTATION.gif",
 ];
 
 const categories: {
@@ -287,17 +276,19 @@ export function VisualPortfolio() {
       <div className="space-y-24">
         {categories.map((cat, i) => (
             <div key={i} className="relative">
-                <div className="container mx-auto px-6 md:px-12 mb-8 flex items-end justify-between">
-                    <div>
-                        <h3 className="text-2xl font-bold font-display uppercase tracking-tight">{cat.title}</h3>
-                        <p className="text-sm text-muted-foreground">{cat.desc}</p>
-                    </div>
-                    <span className="text-xs font-mono border border-border px-2 py-1 rounded hidden md:block">5 ITEMS</span>
+              <div className="container mx-auto px-6 md:px-12 mb-8 flex items-end justify-between z-30 relative">
+                <div>
+                  <h3 className="text-4xl md:text-5xl font-extrabold font-display uppercase tracking-tight drop-shadow-lg">{cat.title}</h3>
+                  <p className="text-lg md:text-xl text-muted-foreground font-semibold drop-shadow">{cat.desc}</p>
                 </div>
+                <span className="text-base md:text-lg font-mono border border-border px-4 py-2 rounded hidden md:block bg-background/80 z-40">{cat.images.length} ITEMS</span>
+              </div>
 
-                {/* Fade Edges - softer, more natural blend on left and right */}
-                <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10 pointer-events-none backdrop-blur-xl" />
-                <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-l from-black/80 via-black/40 to-transparent z-10 pointer-events-none backdrop-blur-xl" />
+                {/* Fade Edges - only left and right, no blur on whole container */}
+                <div className="pointer-events-none">
+                  <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-background via-background/60 to-transparent z-10" />
+                  <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-background via-background/60 to-transparent z-10" />
+                </div>
 
                 {/* Marquees - 5 on top, 5 on bottom */}
                 {/* Top: natural order (1 → N) */}
