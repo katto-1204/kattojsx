@@ -40,14 +40,14 @@ export function Hero() {
         </motion.div>
 
         <motion.h1 
-          className="text-6xl md:text-8xl lg:text-[10rem] font-display font-black tracking-tighter leading-[0.85] mb-2 uppercase"
+          className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] font-display font-black tracking-tighter leading-[0.95] mb-2 uppercase break-words"
           style={{ y: y1 }}
         >
           CATHERINE
         </motion.h1>
         
         <motion.h1 
-          className="text-6xl md:text-8xl lg:text-[10rem] font-display font-black tracking-tighter leading-[0.85] text-primary mb-6 uppercase"
+          className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] font-display font-black tracking-tighter leading-[0.95] text-primary mb-6 uppercase break-words"
           style={{ y: y2 }}
         >
           ARNADO
