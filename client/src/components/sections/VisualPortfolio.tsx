@@ -274,24 +274,47 @@ export function VisualPortfolio() {
       </div>
 
       <div className="space-y-24">
-        {categories.map((cat, i) => (
-            <div key={i} className="relative">
-              <div className="container mx-auto px-6 md:px-12 mb-8 flex items-end justify-between z-30 relative">
-                <div>
-                  <h3 className="text-4xl md:text-5xl font-extrabold font-display uppercase tracking-tight drop-shadow-lg">{cat.title}</h3>
-                  <p className="text-lg md:text-xl text-muted-foreground font-semibold drop-shadow">{cat.desc}</p>
+        {categories.map((cat, i) => {
+          // LOGOFOLIO: 1 row only
+          if (cat.title === "LOGOFOLIO") {
+            return (
+              <div key={i} className="relative">
+                <div className="container mx-auto px-6 md:px-12 mb-8 flex items-end justify-between z-30 relative">
+                  <div>
+                    <h3 className="text-4xl md:text-5xl font-extrabold font-display uppercase tracking-tight drop-shadow-lg">{cat.title}</h3>
+                    <p className="text-lg md:text-xl text-muted-foreground font-semibold drop-shadow">{cat.desc}</p>
+                  </div>
+                  <span className="text-base md:text-lg font-mono border border-border px-4 py-2 rounded hidden md:block bg-background/80 z-40">{cat.images.length} ITEMS</span>
                 </div>
-                <span className="text-base md:text-lg font-mono border border-border px-4 py-2 rounded hidden md:block bg-background/80 z-40">{cat.images.length} ITEMS</span>
-              </div>
-
-                {/* Fade Edges - only left and right, no blur on whole container */}
                 <div className="pointer-events-none">
                   <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-background via-background/60 to-transparent z-10" />
                   <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-background via-background/60 to-transparent z-10" />
                 </div>
-
-                {/* Marquees - 5 on top, 5 on bottom */}
-                {/* Top: natural order (1 → N) */}
+                <MarqueeRow
+                  images={cat.images}
+                  direction="left"
+                  speed={30 + i * 2}
+                  variant={cat.variant}
+                  onSelect={setLightboxSrc}
+                />
+              </div>
+            );
+          }
+          // TEAM ROSTERS/BANNERS: 1-10 top, 10-1 bottom
+          if (cat.title === "TEAM ROSTERS/BANNERS") {
+            return (
+              <div key={i} className="relative">
+                <div className="container mx-auto px-6 md:px-12 mb-8 flex items-end justify-between z-30 relative">
+                  <div>
+                    <h3 className="text-4xl md:text-5xl font-extrabold font-display uppercase tracking-tight drop-shadow-lg">{cat.title}</h3>
+                    <p className="text-lg md:text-xl text-muted-foreground font-semibold drop-shadow">{cat.desc}</p>
+                  </div>
+                  <span className="text-base md:text-lg font-mono border border-border px-4 py-2 rounded hidden md:block bg-background/80 z-40">{cat.images.length} ITEMS</span>
+                </div>
+                <div className="pointer-events-none">
+                  <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-background via-background/60 to-transparent z-10" />
+                  <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-background via-background/60 to-transparent z-10" />
+                </div>
                 <MarqueeRow
                   images={cat.images}
                   direction="left"
@@ -300,17 +323,75 @@ export function VisualPortfolio() {
                   onSelect={setLightboxSrc}
                 />
                 <div className="mt-4">
-                    {/* Bottom: reversed order (N → 1) */}
-                    <MarqueeRow
-                      images={[...cat.images].reverse()}
-                      direction="right"
-                      speed={35 + i * 2}
-                      variant={cat.variant}
-                      onSelect={setLightboxSrc}
-                    />
+                  <MarqueeRow
+                    images={[...cat.images].reverse()}
+                    direction="right"
+                    speed={35 + i * 2}
+                    variant={cat.variant}
+                    onSelect={setLightboxSrc}
+                  />
                 </div>
+              </div>
+            );
+          }
+          // BACKGROUND ANIMATION: 1 row only
+          if (cat.title === "BACKGROUND ANIMATION") {
+            return (
+              <div key={i} className="relative">
+                <div className="container mx-auto px-6 md:px-12 mb-8 flex items-end justify-between z-30 relative">
+                  <div>
+                    <h3 className="text-4xl md:text-5xl font-extrabold font-display uppercase tracking-tight drop-shadow-lg">{cat.title}</h3>
+                    <p className="text-lg md:text-xl text-muted-foreground font-semibold drop-shadow">{cat.desc}</p>
+                  </div>
+                  <span className="text-base md:text-lg font-mono border border-border px-4 py-2 rounded hidden md:block bg-background/80 z-40">{cat.images.length} ITEMS</span>
+                </div>
+                <div className="pointer-events-none">
+                  <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-background via-background/60 to-transparent z-10" />
+                  <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-background via-background/60 to-transparent z-10" />
+                </div>
+                <MarqueeRow
+                  images={cat.images}
+                  direction="left"
+                  speed={30 + i * 2}
+                  variant={cat.variant}
+                  onSelect={setLightboxSrc}
+                />
+              </div>
+            );
+          }
+          // Default: 2 rows (top and bottom)
+          return (
+            <div key={i} className="relative">
+              <div className="container mx-auto px-6 md:px-12 mb-8 flex items-end justify-between z-30 relative">
+                <div>
+                  <h3 className="text-4xl md:text-5xl font-extrabold font-display uppercase tracking-tight drop-shadow-lg">{cat.title}</h3>
+                  <p className="text-lg md:text-xl text-muted-foreground font-semibold drop-shadow">{cat.desc}</p>
+                </div>
+                <span className="text-base md:text-lg font-mono border border-border px-4 py-2 rounded hidden md:block bg-background/80 z-40">{cat.images.length} ITEMS</span>
+              </div>
+              <div className="pointer-events-none">
+                <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-background via-background/60 to-transparent z-10" />
+                <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-background via-background/60 to-transparent z-10" />
+              </div>
+              <MarqueeRow
+                images={cat.images}
+                direction="left"
+                speed={30 + i * 2}
+                variant={cat.variant}
+                onSelect={setLightboxSrc}
+              />
+              <div className="mt-4">
+                <MarqueeRow
+                  images={[...cat.images].reverse()}
+                  direction="right"
+                  speed={35 + i * 2}
+                  variant={cat.variant}
+                  onSelect={setLightboxSrc}
+                />
+              </div>
             </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Lightbox viewer */}

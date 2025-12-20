@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import { Briefcase } from "lucide-react";
 
 const experiences = [
@@ -7,31 +7,58 @@ const experiences = [
     role: "FREELANCE DEVELOPER",
     period: "2023-2025",
     company: "Self-employed",
-    description: "Developing custom web solutions for various clients using React and Next.js."
+    description: "Developing custom web solutions for various clients using React and Next.js.",
+    milestone: true
   },
   {
     role: "SOCIAL MEDIA MANAGER, GRAPHIC DESIGNER",
     period: "2024",
     company: "GEE GRAPHICS",
-    description: "Managed social media presence and created visual assets for marketing campaigns."
+    description: "Managed social media presence and created visual assets for marketing campaigns.",
+    milestone: true
   },
   {
     role: "CREATIVES HEAD",
-    period: "2023",
+    period: "2025",
     company: "ITS",
-    description: "Led the creative team in designing event materials and digital content."
+    description: "Led the creative team in designing event materials and digital content.",
+    milestone: true
   },
   {
     role: "CREATIVES MANAGER",
-    period: "2022",
+    period: "2025",
     company: "CETSO",
-    description: "Oversaw creative direction for organizational projects and branding."
+    description: "Oversaw creative direction for organizational projects and branding.",
+    milestone: true
   }
 ];
 
 export function Experience() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [clickedCard, setClickedCard] = useState<number | null>(null);
+  // Only color the card if its center has passed the viewport center (milestone reached)
+  const [reachedMilestone, setReachedMilestone] = useState<number>(0);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!cardRefs.current.length) return;
+      const viewportCenter = window.innerHeight / 2;
+      let lastReached = 0;
+      cardRefs.current.forEach((el, idx) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        if (cardCenter < viewportCenter) {
+          lastReached = idx;
+        }
+      });
+      setReachedMilestone(lastReached);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -39,58 +66,54 @@ export function Experience() {
 
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
+  // Gradual grid gradient background using scroll progress
+  const gridOpacity = useTransform(scrollYProgress, [0, 1], [0.2, 0.7]);
+  const gridColor = useTransform(scrollYProgress, [0, 1], [
+    'rgba(249,115,22,0.1)',
+    'rgba(249,115,22,0.25)'
+  ]);
+  const gridColor2 = useTransform(scrollYProgress, [0, 1], [
+    'rgba(249,115,22,0.15)',
+    'rgba(249,115,22,0.35)'
+  ]);
+
+  // Use CSS variables for reactivity
+  const gridBgRef = useRef<HTMLDivElement>(null);
+  const gridBg2Ref = useRef<HTMLDivElement>(null);
+  useMotionValueEvent(gridColor, "change", (v) => {
+    if (gridBgRef.current) gridBgRef.current.style.setProperty('--grid-color', v);
+  });
+  useMotionValueEvent(gridColor2, "change", (v) => {
+    if (gridBg2Ref.current) gridBg2Ref.current.style.setProperty('--grid-color2', v);
+  });
+
   return (
     <section className="py-24 relative overflow-hidden">
-      {/* Animated Grid Background */}
+      {/* Animated Grid Background with scroll-based gradient */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-orange-950/40 dark:from-black dark:via-zinc-950 dark:to-orange-900/60" />
-        {/* Grid Pattern */}
-        <div 
-          className="absolute inset-0 opacity-20"
+        {/* Place the gradient background at the very back */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-orange-100 to-orange-200/60" />
+        {/* Grid layers above the gradient */}
+        <motion.div
+          ref={gridBgRef}
+          className="absolute inset-0"
           style={{
-            backgroundImage: `
-              linear-gradient(rgba(249, 115, 22, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(249, 115, 22, 0.1) 1px, transparent 1px)
-            `,
+            opacity: 1,
+            backgroundImage: `linear-gradient(#f97316 2px, transparent 2px), linear-gradient(90deg, #f97316 2px, transparent 2px)`,
             backgroundSize: '50px 50px',
+            transition: 'background-image 0.3s',
+            zIndex: 1,
           }}
         />
-        {/* Animated Grid Lines */}
         <motion.div
+          ref={gridBg2Ref}
           className="absolute inset-0"
-          animate={{
-            backgroundPosition: ['0px 0px', '50px 50px'],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
           style={{
-            backgroundImage: `
-              linear-gradient(rgba(249, 115, 22, 0.2) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(249, 115, 22, 0.2) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-          }}
-        />
-        {/* Animated Grid Lines - Reverse Direction */}
-        <motion.div
-          className="absolute inset-0"
-          animate={{
-            backgroundPosition: ['50px 50px', '0px 0px'],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(249, 115, 22, 0.15) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(249, 115, 22, 0.15) 1px, transparent 1px)
-            `,
+            opacity: 1,
+            backgroundImage: `linear-gradient(#fbbf24 2px, transparent 2px), linear-gradient(90deg, #fbbf24 2px, transparent 2px)`,
             backgroundSize: '75px 75px',
+            transition: 'background-image 0.3s',
+            zIndex: 2,
           }}
         />
       </div>
@@ -118,10 +141,11 @@ export function Experience() {
           {experiences.map((exp, index) => (
             <motion.div 
               key={index}
+              ref={el => { cardRefs.current[index] = el; }}
               className={`relative flex items-start md:items-center gap-8 mb-24 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               {/* Timeline Point */}
@@ -130,7 +154,12 @@ export function Experience() {
               {/* Content Card */}
               <div className={`ml-12 md:ml-0 md:w-[calc(50%-60px)] ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
                 <motion.div 
-                  className="bg-white dark:bg-zinc-900 p-10 rounded-3xl border border-border/50 shadow-lg hover:shadow-xl transition-all group cursor-pointer"
+                  className={
+                    `p-10 rounded-3xl border border-border/50 shadow-lg hover:shadow-xl transition-all group cursor-pointer ` +
+                    (reachedMilestone === index
+                      ? 'bg-orange-400 text-black border-orange-500'
+                      : 'bg-white dark:bg-zinc-900 text-inherit')
+                  }
                   whileHover={{ 
                     rotateY: 5,
                     rotateX: -2,
@@ -151,17 +180,30 @@ export function Experience() {
                     setClickedCard(clickedCard === index ? null : index);
                   }}
                 >
-                  <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">
+                  <span className={
+                    `inline-block px-4 py-1.5 rounded-full text-sm font-bold mb-4 ` +
+                    (reachedMilestone === index
+                      ? 'bg-black/10 text-black border border-black'
+                      : 'bg-primary/10 text-primary')
+                  }>
                     {exp.period}
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-bold mb-2 group-hover:text-primary transition-colors">{exp.role}</h3>
-                  <h4 className="text-base font-bold text-muted-foreground mb-4 uppercase tracking-wider">{exp.company}</h4>
-                  <p className="text-lg text-muted-foreground/80 leading-relaxed">
+                  <h3 className={
+                    `text-2xl md:text-3xl font-bold mb-2 transition-colors ` +
+                    (reachedMilestone === index ? 'text-black' : 'group-hover:text-primary')
+                  }>{exp.role}</h3>
+                  <h4 className={
+                    `text-base font-bold mb-4 uppercase tracking-wider ` +
+                    (reachedMilestone === index ? 'text-black/80' : 'text-muted-foreground')
+                  }>{exp.company}</h4>
+                  <p className={
+                    `text-lg leading-relaxed ` +
+                    (reachedMilestone === index ? 'text-black/80' : 'text-muted-foreground/80')
+                  }>
                     {exp.description}
                   </p>
                 </motion.div>
               </div>
-              
               {/* Empty space for the other side */}
               <div className="hidden md:block md:w-[calc(50%-60px)]" />
             </motion.div>
