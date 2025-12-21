@@ -162,7 +162,7 @@ export function WelcomeScreen() {
 
               {/* Main Logo Card */}
               <motion.div
-                className="relative bg-gradient-to-br from-zinc-900/90 via-black/90 to-zinc-900/90 backdrop-blur-xl rounded-2xl px-12 py-8 border border-orange-500/30 shadow-2xl"
+                className="relative bg-gradient-to-br from-zinc-900/90 via-black/90 to-zinc-900/90 backdrop-blur-xl rounded-2xl px-6 py-6 sm:px-10 sm:py-8 md:px-12 md:py-10 border border-orange-500/30 shadow-2xl w-[90vw] max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
@@ -180,10 +180,10 @@ export function WelcomeScreen() {
                   }}
                 />
 
-                <div className="flex items-center gap-6 relative z-10">
+                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 relative z-10 w-full">
                   {/* Logo Icon */}
                   <motion.div
-                    className="w-16 h-16 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/50"
+                    className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/50 mb-2 sm:mb-0"
                     initial={{ rotate: -180, scale: 0 }}
                     animate={{ rotate: 0, scale: 1 }}
                     transition={{ 
@@ -192,15 +192,18 @@ export function WelcomeScreen() {
                       ease: [0.34, 1.56, 0.64, 1]
                     }}
                   >
-                    <span className="text-white font-display font-black text-3xl">
-                      KT
-                    </span>
+                    <img
+                      src="/favicon%20(2).png"
+                      alt="Katto Logo"
+                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain"
+                      draggable="false"
+                    />
                   </motion.div>
 
                   {/* Brand Name */}
-                  <div className="flex flex-col">
+                  <div className="flex flex-col items-center sm:items-start">
                     <motion.span
-                      className="font-display font-black text-5xl tracking-tight text-white"
+                      className="font-display font-black text-3xl sm:text-4xl md:text-5xl tracking-tight text-white"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.5, duration: 0.6 }}
@@ -208,7 +211,7 @@ export function WelcomeScreen() {
                       KATTO
                     </motion.span>
                     <motion.span
-                      className="font-display font-black text-5xl tracking-tight text-orange-500"
+                      className="font-display font-black text-3xl sm:text-4xl md:text-5xl tracking-tight text-orange-500"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.7, duration: 0.6 }}
@@ -253,12 +256,12 @@ export function WelcomeScreen() {
 
             {/* Subtitle */}
             <motion.p
-              className="mt-8 text-zinc-400 font-display text-sm uppercase tracking-[0.3em]"
+              className="mt-6 sm:mt-8 text-zinc-400 font-display text-xs sm:text-sm md:text-base uppercase tracking-[0.3em] text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.6 }}
             >
-              Creative Full Stack Developer
+              
             </motion.p>
           </motion.div>
 

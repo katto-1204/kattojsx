@@ -95,6 +95,15 @@ const languages = [
   { name: "Java", icon: <JavaIcon /> },
   { name: "C++", icon: <CppIcon /> },
   { name: "Django", icon: <DjangoIcon /> },
+  // Added languages/technologies below (text-only if no icon)
+  { name: "FIREBASE", icon: <span className="w-8 h-8 flex items-center justify-center font-bold">FB</span> },
+  { name: "SUPABASE", icon: <span className="w-8 h-8 flex items-center justify-center font-bold">SB</span> },
+  { name: "REACT NATIVE", icon: <span className="w-8 h-8 flex items-center justify-center font-bold">RN</span> },
+  { name: "FLASK", icon: <span className="w-8 h-8 flex items-center justify-center font-bold">FL</span> },
+  { name: "JUPYTR NOTEBOOK", icon: <span className="w-8 h-8 flex items-center justify-center font-bold">JN</span> },
+  { name: "TURSODB", icon: <span className="w-8 h-8 flex items-center justify-center font-bold">TD</span> },
+  { name: "DRIZZLE", icon: <span className="w-8 h-8 flex items-center justify-center font-bold">DZ</span> },
+  { name: "PRISMA", icon: <span className="w-8 h-8 flex items-center justify-center font-bold">PR</span> },
 ];
 
 // Tool icons
