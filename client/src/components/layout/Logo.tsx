@@ -19,10 +19,13 @@ const Logo = () => {
         />
 
         <div className="glass-strong rounded-lg px-3 sm:px-4 py-1.5 sm:py-2 flex items-center gap-2">
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-display font-bold text-xs sm:text-sm">
-              KT
-            </span>
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-primary flex items-center justify-center overflow-hidden">
+            <img
+              src="/favicon%20(2).png"
+              alt="Katto Logo"
+              className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+              draggable="false"
+            />
           </div>
           <span className="font-display font-bold text-base sm:text-lg tracking-tight whitespace-nowrap">
             KATTO<span className="text-primary">.JSX</span>
