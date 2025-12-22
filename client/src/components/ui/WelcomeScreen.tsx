@@ -132,10 +132,11 @@ export function WelcomeScreen() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
             className="w-full h-full flex flex-col items-center justify-center relative z-10"
+            style={{ minHeight: '100vh' }}
           >
             {/* Logo Container with Enhanced Animation */}
             <motion.div
-              className="relative"
+              className="relative flex flex-col items-center justify-center"
               initial={{ scale: 0.8, opacity: 0, y: 30 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               transition={{ 
@@ -180,7 +181,7 @@ export function WelcomeScreen() {
                   }}
                 />
 
-                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 relative z-10 w-full">
+                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 relative z-10 w-full justify-center">
                   {/* Logo Icon */}
                   <motion.div
                     className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/50 mb-2 sm:mb-0"

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 const Logo = () => {
   return (
     <motion.div
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-fit max-w-full px-2 sm:top-6"
+      className="fixed top-4 left-0 z-50 w-fit max-w-full px-4 sm:top-6 sm:px-6"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.2 }}

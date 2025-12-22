@@ -15,8 +15,8 @@ export function Hero() {
 
   return (
     <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16 pb-20 sm:pt-20 sm:pb-32">
-      {/* Centered KATTO.JSX Logo at the top */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full flex justify-center z-50 pointer-events-none">
+      {/* Logo at the top left */}
+      <div className="absolute top-0 left-0 w-fit flex justify-start z-50 pointer-events-none p-4 sm:p-6">
         <Logo />
       </div>
       {/* Background with blur effect on scroll */}
@@ -68,18 +68,18 @@ export function Hero() {
         </motion.h2>
 
         <motion.div 
-          className="flex flex-col xs:flex-row flex-wrap gap-3 sm:gap-4 justify-center items-center w-full max-w-2xl mx-auto"
+          className="flex flex-row flex-wrap gap-3 sm:gap-4 justify-center items-center w-full max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.8 }}
         >
-          <Button size="lg" className="rounded-full px-6 sm:px-8 h-12 text-sm sm:text-base group w-full xs:w-auto" asChild>
+          <Button size="lg" className="rounded-full px-6 sm:px-8 h-12 text-sm sm:text-base group" asChild>
             <a href="/assets/Arnado Catherine.pdf" download>
               <Download className="mr-2 w-4 h-4 group-hover:animate-bounce" />
               DOWNLOAD CV
             </a>
           </Button>
-          <Button size="lg" variant="outline" className="rounded-full px-6 sm:px-8 h-12 text-sm sm:text-base bg-white/50 backdrop-blur-sm hover:bg-white/80 dark:bg-black/50 dark:hover:bg-black/80 w-full xs:w-auto" asChild>
+          <Button size="lg" variant="outline" className="rounded-full px-6 sm:px-8 h-12 text-sm sm:text-base bg-white/50 backdrop-blur-sm hover:bg-white/80 dark:bg-black/50 dark:hover:bg-black/80" asChild>
             <a
               href="https://cal.com/catherine-arnado-qjp0c2"
               target="_blank"
@@ -92,7 +92,7 @@ export function Hero() {
           <Button
             size="lg"
             variant="secondary"
-            className="rounded-full px-6 sm:px-8 h-12 text-sm sm:text-base bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2 w-full xs:w-auto"
+            className="rounded-full px-6 sm:px-8 h-12 text-sm sm:text-base bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2"
             asChild
           >
             <a
