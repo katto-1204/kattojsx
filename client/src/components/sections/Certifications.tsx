@@ -11,6 +11,8 @@ const certifications = [
   { id: "its", title: "ITS", year: "2023", image: "/assets/certificates/ITS CERT.png" },
   { id: "psits", title: "PSITS NIKOLODEONS", year: "2024", image: "/assets/certificates/NIKOLODEONS.png" },
   { id: "gee", title: "GEE GRAPHICS", year: "2025", image: "/assets/certificates/gee graphics cert.png" },
+  { id: "bitdegree", title: "BITDEGREE", year: "2024", image: "/assets/certificates/bitdegree.png" },
+  { id: "cetso", title: "CETSO", year: "2024", image: "/assets/certificates/CETSO.png" },
 ];
 
 export function Certifications() {
@@ -29,28 +31,26 @@ export function Certifications() {
   return (
     <section id="certification" className="py-24 container mx-auto px-4">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        
+
         {/* Left Side: List */}
         <div>
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-12">CERTIFICATIONS</h2>
           <div className="flex flex-col gap-4">
             {certifications.map((cert) => (
-              <div 
+              <div
                 key={cert.id}
-                className={`group cursor-pointer p-6 rounded-2xl border transition-all duration-300 flex justify-between items-center ${
-                  activeId === cert.id 
-                    ? "bg-primary text-white border-primary shadow-lg scale-105" 
+                className={`group cursor-pointer p-6 rounded-2xl border transition-all duration-300 flex justify-between items-center ${activeId === cert.id
+                    ? "bg-primary text-white border-primary shadow-lg scale-105"
                     : "bg-white dark:bg-zinc-900 border-border hover:border-primary/50"
-                }`}
+                  }`}
                 onClick={() => {
                   setActiveId(cert.id);
                   setIsModalOpen(true);
                 }}
               >
                 <h3 className="text-xl font-bold">{cert.title}</h3>
-                <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                  activeId === cert.id ? "bg-white/20 text-white" : "bg-primary/10 text-primary"
-                }`}>
+                <span className={`px-3 py-1 rounded-full text-xs font-bold ${activeId === cert.id ? "bg-white/20 text-white" : "bg-primary/10 text-primary"
+                  }`}>
                   {cert.year}
                 </span>
               </div>
@@ -104,33 +104,33 @@ export function Certifications() {
       {/* Modal */}
       <AnimatePresence>
         {isModalOpen && (
-          <motion.div 
+          <motion.div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsModalOpen(false)}
           >
-            <motion.div 
+            <motion.div
               className="bg-white dark:bg-zinc-900 rounded-3xl overflow-hidden max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl relative"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 className="absolute top-4 right-4 z-10 bg-black/20 hover:bg-black/40 text-white rounded-full"
                 onClick={() => setIsModalOpen(false)}
               >
                 <X className="w-5 h-5" />
               </Button>
-              
+
               <div className="h-full overflow-auto p-2">
                 <img src={activeCert.image} alt={activeCert.title} className="w-full h-auto rounded-xl" />
               </div>
-              
+
               <div className="p-6 border-t flex justify-between items-center">
                 <div>
                   <h3 className="text-2xl font-bold">{activeCert.title}</h3>
