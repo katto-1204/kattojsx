@@ -3,7 +3,8 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { Download, Calendar, Github, X, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/layout/Logo";
-import abstractBg from "@assets/generated_images/abstract_orange_and_white_glassmorphism_background.png";
+// import abstractBg from "@assets/generated_images/abstract_orange_and_white_glassmorphism_background.png";
+const abstractBg = "/assets/generated_images/abstract_orange_and_white_glassmorphism_background.png";
 
 export function Hero() {
   const [showSmmPortfolio, setShowSmmPortfolio] = useState(false);
@@ -20,14 +21,14 @@ export function Hero() {
         <Logo />
       </div>
       {/* Background with blur effect on scroll */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 z-0"
         style={{ opacity, filter: `blur(${blur}px)` }}
       >
-        <img 
-          src={abstractBg} 
-          alt="Background" 
-          className="w-full h-full object-cover opacity-60 dark:opacity-30" 
+        <img
+          src={abstractBg}
+          alt="Background"
+          className="w-full h-full object-cover opacity-60 dark:opacity-30"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background dark:from-black/60 dark:via-background/70 dark:to-background" />
       </motion.div>
@@ -44,21 +45,21 @@ export function Hero() {
           </span>
         </motion.div>
 
-        <motion.h1 
+        <motion.h1
           className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-[10rem] font-display font-black tracking-tighter leading-[1.05] mb-1 sm:mb-2 uppercase break-words"
           style={{ y: y1 }}
         >
           CATHERINE
         </motion.h1>
-        
-        <motion.h1 
+
+        <motion.h1
           className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-[10rem] font-display font-black tracking-tighter leading-[1.05] text-primary mb-4 sm:mb-6 uppercase break-words"
           style={{ y: y2 }}
         >
           ARNADO
         </motion.h1>
 
-        <motion.h2 
+        <motion.h2
           className="text-base xs:text-lg md:text-2xl font-light tracking-wide text-muted-foreground mb-8 sm:mb-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -67,7 +68,7 @@ export function Hero() {
           A CREATIVE FULL STACK DEV
         </motion.h2>
 
-        <motion.div 
+        <motion.div
           className="flex flex-row flex-wrap gap-3 sm:gap-4 justify-center items-center w-full max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

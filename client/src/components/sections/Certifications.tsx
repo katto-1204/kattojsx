@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import CardSwap, { Card } from "./CardSwap";
 
 const certifications = [
+  { id: "bitdegree", title: "BITDEGREE", year: "2023", image: "/assets/certificates/bitdegree.png" },
   { id: "codechum", title: "CODECHUM", year: "2024", image: "/assets/certificates/codechum cert.png" },
+  { id: "psits", title: "PSITS NIKOLODEONS", year: "2024", image: "/assets/certificates/NIKOLODEONS.png" },
   { id: "google", title: "GOOGLE DEVELOPER GROUP DAVAO", year: "2025", image: "/assets/certificates/GDG CERT.png" },
   { id: "tour", title: "EDUCATIONAL TOUR 2025", year: "2025", image: "/assets/certificates/TOUR CERT.png" },
   { id: "its", title: "ITS", year: "2025", image: "/assets/certificates/ITS CERT.png" },
-  { id: "psits", title: "PSITS NIKOLODEONS", year: "2024", image: "/assets/certificates/NIKOLODEONS.png" },
   { id: "gee", title: "GEE GRAPHICS", year: "2025", image: "/assets/certificates/gee graphics cert.png" },
-  { id: "bitdegree", title: "BITDEGREE", year: "2023", image: "/assets/certificates/bitdegree.png" },
   { id: "cetso", title: "CETSO", year: "2026", image: "/assets/certificates/CETSO.png" },
 ];
 

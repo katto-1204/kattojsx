@@ -3,47 +3,75 @@ import { motion } from "framer-motion";
 const Logo = () => {
   return (
     <motion.div
-      className="fixed top-4 left-0 z-50 w-fit max-w-full px-4 sm:top-6 sm:px-6"
+      className="fixed top-4 left-0 z-50 px-4 sm:top-6 sm:px-6 scale-[0.8] sm:scale-100 origin-top-left"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.2 }}
     >
-      <motion.div className="relative" whileHover={{ scale: 1.05 }}>
-        {/* Decorative corner brackets */}
-        <div
-          className="absolute -inset-2 border-2 border-primary rounded-lg opacity-50 pointer-events-none"
-          style={{
-            clipPath:
-              "polygon(0 0, 30% 0, 30% 10%, 10% 10%, 10% 30%, 0 30%, 0 0, 100% 0, 100% 30%, 90% 30%, 90% 10%, 70% 10%, 70% 0, 100% 100%, 70% 100%, 70% 90%, 90% 90%, 90% 70%, 100% 70%, 0 100%, 0 70%, 10% 70%, 10% 90%, 30% 90%, 30% 100)",
+      <motion.div
+        className="relative group cursor-pointer"
+        whileHover="hover"
+        initial="initial"
+        whileTap={{ scale: 0.95 }}
+      >
+        {/* Decorative corner accents - Top Left & Bottom Right */}
+        <motion.div
+          variants={{
+            initial: { opacity: 0.6, x: 0, y: 0 },
+            hover: { opacity: 1, x: -2, y: -2 }
           }}
+          className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-primary rounded-tl-lg transition-colors"
+        />
+        <motion.div
+          variants={{
+            initial: { opacity: 0.6, x: 0, y: 0 },
+            hover: { opacity: 1, x: 2, y: 2 }
+          }}
+          className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-primary rounded-br-lg transition-colors"
         />
 
-        <div className="glass-strong rounded-lg px-3 sm:px-4 py-1.5 sm:py-2 flex items-center gap-2">
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-primary flex items-center justify-center overflow-hidden">
+        {/* Decorative faint circles */}
+        <motion.div
+          variants={{
+            initial: { scale: 1, rotate: 0 },
+            hover: { scale: 1.2, rotate: 90 }
+          }}
+          className="absolute -top-3 -right-3 w-8 h-8 rounded-full border border-primary/20 -z-10 bg-primary/5"
+        />
+        <div className="absolute -bottom-1 -left-1 w-2 h-2 rounded-full bg-primary/40" />
+
+        {/* Main Pill Container */}
+        <div className="bg-white/90 dark:bg-[#111]/90 border border-zinc-200 dark:border-white/10 rounded-2xl py-2 px-4 flex items-center gap-3 shadow-xl backdrop-blur-md transition-colors duration-300">
+
+          {/* Logo Circle with Image */}
+          <motion.div
+            className="w-10 h-10 rounded-full bg-[#ff5500] flex items-center justify-center shadow-[0_0_15px_rgba(255,85,0,0.3)] overflow-hidden"
+            variants={{
+              initial: { rotate: 0 },
+              hover: { rotate: 360, transition: { duration: 0.8, ease: "backOut" } }
+            }}
+          >
             <img
-              src="/favicon%20(2).png"
+              src="/favicon.png"
               alt="Katto Logo"
-              className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+              className="w-full h-full object-cover p-0"
               draggable="false"
             />
-          </div>
-          <span className="font-display font-bold text-base sm:text-lg tracking-tight whitespace-nowrap">
-            KATTO<span className="text-primary">.JSX</span>
-          </span>
-        </div>
+          </motion.div>
 
-        {/* Animated dot */}
-        <motion.div
-          className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full"
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        />
+          {/* Text */}
+          <div className="flex items-baseline">
+            <span className="font-display font-black text-xl text-zinc-800 dark:text-white tracking-wide transition-colors duration-300">
+              KATTO
+            </span>
+            <span className="font-display font-bold text-xl text-[#ff5500]">
+              .JSX
+            </span>
+          </div>
+        </div>
       </motion.div>
     </motion.div>
   );
 };
 
 export default Logo;
-
-
-
