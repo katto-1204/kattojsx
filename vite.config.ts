@@ -41,11 +41,12 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
+    port: 5001,
+    strictPort: false,
     host: "0.0.0.0",
-    allowedHosts: true,
-    fs: {
-      strict: true,
-      deny: ["**/.*"],
+    hmr: {
+      clientPort: 443,
     },
+    allowedHosts: true,
   },
 });

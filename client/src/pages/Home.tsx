@@ -14,8 +14,15 @@ import { EducationalTour } from "@/components/sections/EducationalTour";
 import { Journal } from "@/components/sections/Journal";
 import { Footer } from "@/components/sections/Footer";
 import { CustomCursor } from "@/components/ui/CustomCursor";
+import { HeroScene } from "@/components/3d/HeroScene";
+
+import { useScroll, useTransform } from "framer-motion";
 
 export default function Home() {
+  const { scrollYProgress } = useScroll();
+  // Logo appears only AFTER the 3D logo finishes traveling (progress > 0.5)
+  const logoOpacity = useTransform(scrollYProgress, [0.5, 0.55], [0, 1]);
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -38,10 +45,12 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/30">
       <WelcomeScreen />
       <CustomCursor />
-      <Logo />
+      {/* 3D Logo Scene - FIXED as THE permanent logo, travels to top-left and stays there */}
+      <HeroScene scrollProgress={scrollYProgress} />
+      {/* Removed 2D Logo - Logo3D is now THE header logo */}
       <TopHeader />
       <Navbar />
-      
+
       <main className="flex flex-col w-full overflow-hidden">
         <Hero />
         <Personal />
@@ -52,7 +61,7 @@ export default function Home() {
         <EducationalTour />
         <Journal />
       </main>
-      
+
       <Footer />
     </div>
   );

@@ -9,17 +9,15 @@ const abstractBg = "/assets/generated_images/abstract_orange_and_white_glassmorp
 export function Hero() {
   const [showSmmPortfolio, setShowSmmPortfolio] = useState(false);
   const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+  const x1 = useTransform(scrollY, [0, 500], [0, 200]);
+  const x2 = useTransform(scrollY, [0, 500], [0, -200]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
   const blur = useTransform(scrollY, [0, 300], [0, 10]);
+  const textBlur = useTransform(scrollY, [0, 300], [0, 5]);
 
   return (
     <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16 pb-20 sm:pt-20 sm:pb-32">
-      {/* Logo at the top left */}
-      <div className="absolute top-0 left-0 w-fit flex justify-start z-50 pointer-events-none p-4 sm:p-6">
-        <Logo />
-      </div>
+
       {/* Background with blur effect on scroll */}
       <motion.div
         className="absolute inset-0 z-0"
@@ -47,14 +45,14 @@ export function Hero() {
 
         <motion.h1
           className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-[10rem] font-display font-black tracking-tighter leading-[1.05] mb-1 sm:mb-2 uppercase break-words"
-          style={{ y: y1 }}
+          style={{ x: x1, filter: `blur(${textBlur}px)` }}
         >
           CATHERINE
         </motion.h1>
 
         <motion.h1
           className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-[10rem] font-display font-black tracking-tighter leading-[1.05] text-primary mb-4 sm:mb-6 uppercase break-words"
-          style={{ y: y2 }}
+          style={{ x: x2, filter: `blur(${textBlur}px)` }}
         >
           ARNADO
         </motion.h1>

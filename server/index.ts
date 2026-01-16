@@ -84,7 +84,7 @@ app.use((req, res, next) => {
   // On Vercel, PORT is set automatically. Default to 5000 for local dev.
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || "5000", 10);
+  const port = parseInt(process.env.PORT || "5001", 10);
   httpServer.listen(
     {
       port,
