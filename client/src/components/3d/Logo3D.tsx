@@ -86,22 +86,48 @@ export function Logo3D({ scrollProgress = 0, ...props }: any) {
         // Persistent visibility - no fade out
         const opacity = 1;
 
-        meshRef.current.scale.lerp(new THREE.Vector3(finalScale, finalScale, finalScale), 0.1);
-        meshRef.current.position.set(targetX, targetY, targetZ);
+        // Footer Animation Logic (Check if near bottom)
+        const isFooter = scrollProgress > 0.94;
 
-        // Rotation Logic
-        // Mouse tilt on X (Vertical tilt) - kept small
-        meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, -mouseY, 0.1);
+        if (isFooter) {
+            // FOOTER MODE: Center, Skew, Spin
 
-        // Y Rotation (Horizontal spin) -> Mouse + Scroll spin (Left to Right)
-        // Scroll spin: 0 to 360 (2PI)
-        const targetRotationY = mouseX + (Math.PI * 2 * progress);
-        // We accumulate rotation, so we can just set it or lerp to it. 
-        // Since 'progress' is absolute, target is absolute.
-        meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, targetRotationY, 0.1);
+            // Move to Center (0,0) - accounting for camera.
+            // Lerp strictly to 0,0
+            meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, 0, 0.05);
+            meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, 0, 0.05);
+            meshRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
 
-        // Reset Z rotation (no steering wheel spin)
-        meshRef.current.rotation.z = 0;
+            // Skew (Z-axis tilt)
+            const targetSkew = -0.25;
+            meshRef.current.rotation.z = THREE.MathUtils.lerp(meshRef.current.rotation.z, targetSkew, 0.05);
+            meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, 0, 0.1);
+
+            // Continuous Spin (Y-axis) - "Coin Flip"
+            // Use time for consistent speed
+            const spinSpeed = 1.5;
+            meshRef.current.rotation.y += 0.02; // Simple increment for continuous feel relative to frame
+
+        } else {
+            // STANDARD STICKY MODE (Top-Left)
+
+            meshRef.current.scale.lerp(new THREE.Vector3(finalScale, finalScale, finalScale), 0.1);
+            meshRef.current.position.set(targetX, targetY, targetZ);
+
+            // Rotation Logic
+            // Mouse tilt on X (Vertical tilt) - kept small
+            meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, -mouseY, 0.1);
+
+            // Y Rotation (Horizontal spin) -> Mouse + Scroll spin (Left to Right)
+            // Scroll spin: 0 to 360 (2PI)
+            const targetRotationY = mouseX + (Math.PI * 2 * progress);
+            // We accumulate rotation, so we can just set it or lerp to it. 
+            // Since 'progress' is absolute, target is absolute.
+            meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, targetRotationY, 0.1);
+
+            // Reset Z rotation (no steering wheel spin)
+            meshRef.current.rotation.z = THREE.MathUtils.lerp(meshRef.current.rotation.z, 0, 0.1);
+        }
 
         // Apply opacity to children
         meshRef.current.traverse((child) => {
