@@ -1,6 +1,6 @@
 # katto.jsx
 
-A creative full stack developer portfolio by Catherine Arnado. Built to showcase interactive web experiences and creative work with modern tech.
+A creative full stack developer portfolio by Catherine Arnado. Built to showcase interactive web experiences and creative work with modern tech
 
 ---
 
