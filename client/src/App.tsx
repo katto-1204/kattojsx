@@ -7,8 +7,8 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import Cebu from "@/pages/Cebu";
 import Bohol from "@/pages/Bohol";
-import InCode from "@/pages/InCode";
-import BeyondCode from "@/pages/BeyondCode";
+import InCode from "./pages/InCode";
+import BeyondCode from "./pages/BeyondCode";
 
 function Router() {
   return (

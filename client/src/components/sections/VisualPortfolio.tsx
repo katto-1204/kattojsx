@@ -265,8 +265,15 @@ export function VisualPortfolio() {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   return (
-    <section id="visual" className="py-24 overflow-hidden bg-background">
-      <div className="container mx-auto px-6 md:px-12 mb-24 text-center">
+    <section id="visual" className="py-24 overflow-hidden bg-background relative">
+      {/* Background Text */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full text-center pointer-events-none select-none overflow-hidden z-0 opacity-[0.03] dark:opacity-10">
+        <span className="text-[18vw] font-black text-stroke uppercase leading-none inline-block whitespace-nowrap">
+          VISUAL PORTFOLIO
+        </span>
+      </div>
+
+      <div className="container mx-auto px-6 md:px-12 mb-24 text-center relative z-10">
         <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">VISUAL PORTFOLIO</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
             A curated collection of my graphic design works, ranging from digital marketing materials to brand identities.

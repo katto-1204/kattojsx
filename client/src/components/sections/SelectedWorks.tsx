@@ -170,9 +170,16 @@ export function SelectedWorks() {
   };
 
   return (
-    <section id="works" className="py-32 container mx-auto px-4">
-      <div className="mb-16">
-        <h2 className="text-4xl md:text-5xl font-display font-black mb-8 text-primary-gradient">SELECTED WORKS</h2>
+    <section id="works" className="py-32 container mx-auto px-4 relative">
+      {/* Background Text */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full text-center pointer-events-none select-none overflow-hidden z-0 opacity-[0.05] dark:opacity-10">
+        <span className="text-[18vw] font-black text-stroke uppercase leading-none inline-block whitespace-nowrap">
+          SELECTED WORKS
+        </span>
+      </div>
+
+      <div className="mb-16 relative z-10">
+        <h2 className="text-4xl md:text-5xl font-display font-black mb-8 text-primary-gradient uppercase tracking-tighter">SELECTED WORKS</h2>
         <div className="flex flex-wrap gap-3">
           {categories.map((category) => (
             <button
@@ -193,7 +200,7 @@ export function SelectedWorks() {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-12">
+      <div className="flex flex-col lg:flex-row gap-12 relative z-10">
         {/* Project List */}
         <div className="lg:w-1/2">
           <div className="flex flex-col" ref={listRef}>
@@ -202,7 +209,7 @@ export function SelectedWorks() {
                 <motion.div 
                   key={project.id}
                   layout
-                  className="group relative border-b border-white/5 py-8 cursor-pointer"
+                  className="group relative border-b border-border/60 py-8 cursor-pointer"
                   onMouseEnter={(e) => handleHover(index, e.currentTarget)}
                   onClick={() => setSelectedProject(project)}
                   initial={{ opacity: 0, y: 20 }}
@@ -211,7 +218,7 @@ export function SelectedWorks() {
                 >
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-baseline gap-6">
-                      <span className="text-zinc-600 font-serif italic text-lg">{romanNumerals[index]}</span>
+                      <span className="text-muted-foreground/40 font-serif italic text-lg">{romanNumerals[index]}</span>
                       <h3 className="text-2xl md:text-4xl font-black group-hover:text-primary-gradient transition-all duration-300 uppercase tracking-tighter">
                         {project.title}
                       </h3>

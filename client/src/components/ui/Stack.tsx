@@ -55,7 +55,8 @@ export default function Stack({
   autoplayDelay = 3000,
   pauseOnHover = false,
   mobileClickOnly = false,
-  mobileBreakpoint = 768
+  mobileBreakpoint = 768,
+  onTopCardChange
 }: {
   randomRotation?: boolean;
   sensitivity?: number;
@@ -67,6 +68,7 @@ export default function Stack({
   pauseOnHover?: boolean;
   mobileClickOnly?: boolean;
   mobileBreakpoint?: number;
+  onTopCardChange?: (index: number) => void;
 }) {
   const [isMobile, setIsMobile] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -104,6 +106,9 @@ export default function Stack({
       const index = newStack.findIndex(card => card.id === id);
       const [card] = newStack.splice(index, 1);
       newStack.unshift(card);
+      if (onTopCardChange) {
+        onTopCardChange(newStack[newStack.length - 1].id - 1);
+      }
       return newStack;
     });
   };

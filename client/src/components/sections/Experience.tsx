@@ -95,7 +95,7 @@ export function Experience() {
 
         <div className="relative max-w-4xl mx-auto">
           {/* Vertical Line */}
-          <div className="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-px bg-white/5 -translate-x-1/2" />
+          <div className="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-px bg-border/40 -translate-x-1/2" />
           <motion.div 
             className="absolute left-[19px] md:left-1/2 top-0 w-px bg-primary-gradient -translate-x-1/2 origin-top"
             style={{ height: lineHeight }}
@@ -121,7 +121,7 @@ export function Experience() {
                     `p-10 rounded-[2rem] border shadow-2xl hover:shadow-[0_20px_50px_rgba(249,115,22,0.1)] transition-all group cursor-pointer ` +
                     (reachedMilestone === index
                       ? 'bg-primary-gradient text-white border-none'
-                      : 'bg-zinc-900/50 backdrop-blur-xl text-card-foreground border-white/5')
+                      : 'bg-card/50 backdrop-blur-xl text-card-foreground border-border/40')
                   }
                   whileHover={{ 
                     rotateY: index % 2 === 0 ? -5 : 5,

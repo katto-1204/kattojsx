@@ -1,7 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback, useMemo } from "react";
+import { createPortal } from "react-dom";
 import Stack from "@/components/ui/Stack";
-import { BookOpen, X, MapPin, Quote } from "lucide-react";
+import { BookOpen, X, MapPin, Quote, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const journalEntries = [
@@ -66,8 +67,15 @@ export function Journal() {
   const currentEntry = journalEntries[topIndex];
 
   return (
-    <section id="journal" className="min-h-screen py-24 px-6 bg-background flex flex-col justify-center">
-      <div className="max-w-7xl mx-auto w-full">
+    <section id="journal" className="py-32 bg-background relative overflow-hidden">
+      {/* Background Text */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full text-center pointer-events-none select-none overflow-hidden z-0 opacity-[0.05] dark:opacity-10">
+        <span className="text-[18vw] font-black text-stroke uppercase leading-none inline-block whitespace-nowrap">
+          JOURNAL
+        </span>
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -83,40 +91,35 @@ export function Journal() {
         </motion.div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
 
           {/* LEFT COLUMN: Stacked Cards */}
-          <div className="flex items-center justify-center min-h-[400px] md:min-h-[500px]">
-            <div style={{ width: 350, height: 450, maxWidth: '90vw' }}>
+          <div 
+            className="flex items-center justify-center min-h-[600px] lg:justify-start"
+          >
+            <div style={{ width: 450, height: 550, maxWidth: '100%' }} className="relative group/stack">
               <Stack
-                randomRotation={true}
+                randomRotation={false}
                 sensitivity={180}
                 sendToBackOnClick={true}
+                onTopCardChange={(index) => setTopIndex(index)}
                 cards={journalEntries.map((entry, i) => (
                   <div 
                     key={entry.id} 
-                    className="card shadow-2xl border border-white/10 group/card relative overflow-hidden cursor-pointer bg-zinc-900" 
-                    onClick={() => {
-                      if (i === journalEntries.length - 1) { // Only the top visual card should trigger modal
-                        setIsModalOpen(true);
-                      }
-                    }}
+                    className="card shadow-2xl border border-white/10 group/card relative overflow-hidden bg-zinc-900 rounded-[2.5rem]"
+                    onClick={() => setIsModalOpen(true)}
                   >
                     <img 
                       src={entry.image} 
                       alt={`journal-${i}`} 
-                      className="card-image group-hover/card:scale-105 transition-transform duration-700"
+                      className="card-image group-hover/card:scale-110 transition-transform duration-1000 object-cover w-full h-full"
                     />
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/card:opacity-100 transition-opacity flex flex-col items-center justify-center p-6 text-center">
-                       <span className="text-[10px] font-black tracking-[0.3em] text-orange-500 mb-2 uppercase">{entry.date}</span>
-                       <h4 className="text-white font-black text-xl mb-4 leading-tight uppercase">{entry.company}</h4>
-                       <Button 
-                        variant="secondary" 
-                        size="sm" 
-                        className="rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold hover:bg-white/30"
-                       >
-                         <BookOpen className="mr-2 w-4 h-4" /> READ ENTRY
-                       </Button>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent opacity-0 group-hover/card:opacity-100 transition-all duration-500 flex flex-col items-center justify-end p-10 text-center">
+                       <span className="text-[10px] font-black tracking-[0.5em] text-orange-500 mb-3 uppercase">{entry.date}</span>
+                       <h4 className="text-white font-black text-3xl mb-8 leading-tight uppercase tracking-tight">{entry.company}</h4>
+                       <div className="flex items-center gap-3 px-10 py-5 rounded-full bg-primary-gradient text-white font-black text-xs tracking-widest shadow-2xl hover:scale-105 transition-transform">
+                         <BookOpen className="w-4 h-4" /> OPEN JOURNAL
+                       </div>
                     </div>
                   </div>
                 ))}
@@ -126,46 +129,47 @@ export function Journal() {
 
           {/* RIGHT COLUMN: Content */}
           <div className="w-full">
-             <div className="glass-strong rounded-3xl p-8 md:p-12 border border-primary/10 relative overflow-hidden group min-h-[450px] flex flex-col">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10" />
+             <div className="glass-strong rounded-[3rem] p-10 md:p-16 border border-primary/10 relative overflow-hidden group min-h-[550px] flex flex-col justify-center shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
+                <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-[100px] -z-10" />
                 
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentEntry.id}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.4 }}
-                    className="space-y-6"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="space-y-10"
                   >
                     <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <MapPin size={14} className="text-primary" />
-                        <span className="text-xs font-mono text-primary tracking-widest uppercase opacity-70">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-8 h-px bg-primary/50" />
+                        <span className="text-sm font-black text-primary tracking-[0.3em] uppercase">
                           {currentEntry.date}
                         </span>
                       </div>
-                      <h3 className="text-3xl md:text-4xl font-display font-black leading-tight text-primary-gradient">
+                      <h3 className="text-5xl md:text-6xl font-display font-black leading-tight text-primary-gradient tracking-tighter uppercase">
                         {currentEntry.company}
                       </h3>
                     </div>
 
-                    <div className="space-y-6">
+                    <div className="space-y-10">
                         <div className="relative">
-                          <Quote className="absolute -top-4 -left-4 w-8 h-8 text-primary/10 -z-10" />
-                          <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-                             Observation & Insights
+                          <Quote className="absolute -top-10 -left-10 w-20 h-20 text-primary/5 -z-10" />
+                          <h4 className="font-black text-xs tracking-widest text-muted-foreground uppercase mb-4">
+                             Observation
                           </h4>
-                          <p className="text-sm text-zinc-400 line-clamp-4 leading-relaxed">
+                          <p className="text-lg text-foreground/80 line-clamp-6 leading-relaxed font-medium">
                             {currentEntry.observation}
                           </p>
                         </div>
                         
-                        <div className="p-4 rounded-2xl bg-primary/5 border border-primary/10">
-                          <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-                             Key Learning
+                        <div className="p-10 rounded-[2.5rem] bg-primary/5 border border-primary/10 relative overflow-hidden group/learning">
+                          <div className="absolute inset-0 bg-primary-gradient opacity-0 group-hover/learning:opacity-[0.03] transition-opacity" />
+                          <h4 className="font-black text-xs tracking-widest text-primary uppercase mb-4">
+                             Core Learning
                           </h4>
-                          <p className="text-sm text-zinc-400 leading-relaxed italic">
+                          <p className="text-xl text-foreground font-bold leading-relaxed italic tracking-tight">
                             "{currentEntry.learning}"
                           </p>
                         </div>
@@ -173,10 +177,10 @@ export function Journal() {
 
                     <Button 
                       variant="link" 
-                      className="p-0 text-primary hover:text-orange-400 font-bold flex items-center gap-2 mt-4"
+                      className="p-0 text-primary hover:text-orange-400 font-black flex items-center gap-3 mt-4 text-xl tracking-tighter"
                       onClick={() => setIsModalOpen(true)}
                     >
-                      READ FULL ENTRY <BookOpen size={16} />
+                      READ FULL ENTRY <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform" />
                     </Button>
                   </motion.div>
                 </AnimatePresence>
@@ -186,74 +190,77 @@ export function Journal() {
       </div>
 
       {/* FULL ENTRY MODAL */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/90 backdrop-blur-xl"
-              onClick={() => setIsModalOpen(false)}
-            />
-            
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="relative w-full max-w-4xl bg-zinc-950 border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]"
-            >
-              <button 
+      {createPortal(
+        <AnimatePresence>
+          {isModalOpen && (
+            <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-black/90 backdrop-blur-xl"
                 onClick={() => setIsModalOpen(false)}
-                className="absolute top-6 right-6 z-20 w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white hover:bg-red-600 transition-colors"
+              />
+              
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                className="relative w-full max-w-4xl bg-background border border-border rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh] z-10"
               >
-                <X size={20} />
-              </button>
+                <button 
+                  onClick={() => setIsModalOpen(false)}
+                  className="absolute top-6 right-6 z-20 w-10 h-10 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white hover:bg-red-600 transition-colors"
+                >
+                  <X size={20} />
+                </button>
 
-              {/* Modal Image */}
-              <div className="w-full md:w-1/2 h-64 md:h-auto relative">
-                <img 
-                  src={currentEntry.image} 
-                  alt={currentEntry.company} 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-zinc-950" />
-              </div>
-
-              {/* Modal Content */}
-              <div className="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto no-scrollbar">
-                <div className="flex items-center gap-2 mb-4">
-                  <MapPin size={16} className="text-primary" />
-                  <span className="text-sm font-mono text-primary tracking-widest uppercase">
-                    {currentEntry.date}
-                  </span>
+                {/* Modal Image */}
+                <div className="w-full md:w-1/2 h-64 md:h-auto relative">
+                  <img 
+                    src={currentEntry.image} 
+                    alt={currentEntry.company} 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-background" />
                 </div>
-                
-                <h3 className="text-4xl font-display font-black text-primary-gradient mb-8 leading-tight">
-                  {currentEntry.company}
-                </h3>
 
-                <div className="space-y-8">
-                  <div>
-                    <h4 className="text-xs font-black tracking-widest text-zinc-500 uppercase mb-3">Observations</h4>
-                    <p className="text-zinc-300 leading-relaxed text-lg">
-                      {currentEntry.observation}
-                    </p>
+                {/* Modal Content */}
+                <div className="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto no-scrollbar">
+                  <div className="flex items-center gap-2 mb-4">
+                    <MapPin size={16} className="text-primary" />
+                    <span className="text-sm font-mono text-primary tracking-widest uppercase">
+                      {currentEntry.date}
+                    </span>
                   </div>
+                  
+                  <h3 className="text-4xl font-display font-black text-primary-gradient mb-8 leading-tight">
+                    {currentEntry.company}
+                  </h3>
 
-                  <div className="p-8 rounded-3xl bg-primary/5 border border-primary/10 relative overflow-hidden">
-                    <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
-                    <h4 className="text-xs font-black tracking-widest text-primary uppercase mb-3">Core Learning</h4>
-                    <p className="text-white text-xl font-medium leading-relaxed italic">
-                      "{currentEntry.learning}"
-                    </p>
+                  <div className="space-y-8">
+                    <div>
+                      <h4 className="text-xs font-black tracking-widest text-muted-foreground uppercase mb-3">Observations</h4>
+                      <p className="text-foreground leading-relaxed text-lg">
+                        {currentEntry.observation}
+                      </p>
+                    </div>
+
+                    <div className="p-8 rounded-[2rem] bg-primary/5 border border-primary/10 relative overflow-hidden">
+                      <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
+                      <h4 className="text-xs font-black tracking-widest text-primary uppercase mb-3">Core Learning</h4>
+                      <p className="text-foreground text-xl font-medium leading-relaxed italic">
+                        "{currentEntry.learning}"
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 }

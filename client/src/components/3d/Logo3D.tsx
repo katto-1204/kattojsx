@@ -83,8 +83,13 @@ export function Logo3D({ scrollProgress = 0, ...props }: any) {
         const finalScale = targetScale * scrollScale;
 
         // Opacity Logic
-        // Persistent visibility - no fade out
-        const opacity = 1;
+        // Fade out after hero, fade back in for footer
+        let opacity = 1;
+        if (scrollProgress > 0.1 && scrollProgress <= 0.90) {
+             opacity = Math.max(0, 1 - (scrollProgress - 0.1) * 10);
+        } else if (scrollProgress > 0.90) {
+             opacity = Math.min(1, (scrollProgress - 0.90) * 10);
+        }
 
         // Footer Animation Logic (Check if near bottom)
         const isFooter = scrollProgress > 0.94;

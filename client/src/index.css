@@ -99,7 +99,7 @@
   --primary: 0 84% 60%; /* Vibrant Red */
   --primary-foreground: 0 0% 100%;
   
-  --secondary: 0 0% 96%;
+  --secondary: 0 0% 90%; /* Slightly darker for contrast */
   --secondary-foreground: 0 0% 9%;
   
   --muted: 0 0% 96%;
@@ -111,7 +111,7 @@
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 98%;
 
-  --border: 0 0% 89.8%;
+  --border: 0 0% 70%; /* Darker for visibility in light mode */
   --input: 0 0% 89.8%;
   --ring: 0 84% 60%;
   
@@ -159,6 +159,15 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+    background-image: url('/assets/lightmode bg.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+  }
+  
+  .dark body {
+    background-image: none;
+    background-color: hsl(var(--background));
   }
   
   /* Smooth scrolling handled by Lenis, but fallback here */
@@ -185,11 +194,11 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/10 dark:bg-black/10 backdrop-blur-md border border-white/20 dark:border-white/10;
+    @apply bg-white/40 dark:bg-black/20 backdrop-blur-md border border-black/10 dark:border-white/10;
   }
   
   .glass-card {
-    @apply bg-white/70 dark:bg-black/70 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-xl;
+    @apply bg-white/80 dark:bg-black/70 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-xl;
   }
   
   .text-stroke {

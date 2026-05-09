@@ -90,7 +90,7 @@ export function EducationalTour() {
   };
 
   return (
-    <section id="tour" className="min-h-screen py-24 px-6 relative">
+    <section id="tour" className="min-h-screen py-24 px-6 relative z-[30] bg-background">
       {/* Route Loading Overlay */}
       <AnimatePresence>
         {routeLoading && (
