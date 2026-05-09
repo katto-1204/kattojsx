@@ -32,7 +32,7 @@ export function HeroScene({ scrollProgress }: { scrollProgress: any }) {
                 <Suspense fallback={null}>
                     <Environment preset="studio" />
                     <group position={[0, 0, 0]}>
-                        <Logo3D scale={0.45} scrollProgress={progress} />
+                        <Logo3D scale={0.4} scrollProgress={progress} />
                     </group>
                 </Suspense>
             </Canvas>

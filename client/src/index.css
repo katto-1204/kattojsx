@@ -1,6 +1,23 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Raider Crusader Font Family */
+@font-face {
+  font-family: 'Raider Crusader';
+  src: url('/FONTS/raidercrusaderstraight.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Raider Crusader';
+  src: url('/FONTS/raidercrusader.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -44,6 +61,7 @@
   --font-sans: 'Space Grotesk', 'Inter', sans-serif;
   --font-display: 'Syne', sans-serif;
   --font-body: 'Inter', sans-serif;
+  --font-crusader: 'Raider Crusader', 'Impact', sans-serif;
 
   --animate-float: float 6s ease-in-out infinite;
   --animate-marquee: marquee 25s linear infinite;
@@ -78,7 +96,7 @@
   --popover: 0 0% 100%;
   --popover-foreground: 0 0% 0%;
   
-  --primary: 24 95% 53%; /* Orange */
+  --primary: 0 84% 60%; /* Vibrant Red */
   --primary-foreground: 0 0% 100%;
   
   --secondary: 0 0% 96%;
@@ -87,7 +105,7 @@
   --muted: 0 0% 96%;
   --muted-foreground: 0 0% 45%;
   
-  --accent: 24 95% 53%; /* Orange Accent */
+  --accent: 0 84% 60%; /* Red Accent */
   --accent-foreground: 0 0% 100%;
   
   --destructive: 0 84.2% 60.2%;
@@ -95,11 +113,12 @@
 
   --border: 0 0% 89.8%;
   --input: 0 0% 89.8%;
-  --ring: 24 95% 53%;
+  --ring: 0 84% 60%;
   
   --radius: 0.75rem;
   
   --brand-orange: 24 95% 53%;
+  --brand-red: 0 100% 35%;
   --brand-black: 0 0% 0%;
 }
 
@@ -113,7 +132,7 @@
   --popover: 0 0% 3%;
   --popover-foreground: 0 0% 98%;
   
-  --primary: 24 95% 53%;
+  --primary: 0 84% 60%;
   --primary-foreground: 0 0% 100%;
   
   --secondary: 0 0% 14.9%;
@@ -122,7 +141,7 @@
   --muted: 0 0% 14.9%;
   --muted-foreground: 0 0% 63.9%;
   
-  --accent: 24 95% 53%;
+  --accent: 0 84% 60%;
   --accent-foreground: 0 0% 100%;
   
   --destructive: 0 62.8% 30.6%;
@@ -130,7 +149,7 @@
   
   --border: 0 0% 14.9%;
   --input: 0 0% 14.9%;
-  --ring: 24 95% 53%;
+  --ring: 0 84% 60%;
 }
 
 @layer base {
@@ -190,5 +209,17 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  .bg-primary-gradient {
+    @apply bg-gradient-to-br from-red-600 via-orange-500 to-orange-400;
+  }
+
+  .text-primary-gradient {
+    @apply bg-gradient-to-br from-red-600 via-orange-500 to-orange-400 bg-clip-text text-transparent;
+  }
+
+  .border-primary-gradient {
+    border-image: linear-gradient(to bottom right, #dc2626, #f97316, #fb923c) 1;
   }
 }

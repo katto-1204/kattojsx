@@ -1,0 +1,5 @@
+
+> rest-express@1.0.0 dev
+> cross-env NODE_ENV=development tsx server/index.ts
+
+6:01:16 AM [express] serving on port 5001

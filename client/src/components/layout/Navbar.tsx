@@ -1,14 +1,30 @@
 import { motion } from "framer-motion";
-import { Home, User, Award, Plane, Book, Sun, Moon } from "lucide-react";
+import { 
+  Home, 
+  User, 
+  Award, 
+  Plane, 
+  Book, 
+  Sun, 
+  Moon, 
+  Briefcase, 
+  LayoutGrid, 
+  Image as ImageIcon, 
+  Zap 
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/components/theme-provider";
 
 const navItems = [
   { name: "HOME", icon: Home, href: "#home" },
-  { name: "PERSONAL", icon: User, href: "#personal" },
-  { name: "CERTIFICATION", icon: Award, href: "#certification" },
-  { name: "EDUCATIONAL TOUR", icon: Plane, href: "#tour" },
+  { name: "ABOUT", icon: User, href: "#personal" },
+  { name: "EXPERIENCE", icon: Briefcase, href: "#experience" },
+  { name: "WORKS", icon: LayoutGrid, href: "#works" },
+  { name: "VISUAL", icon: ImageIcon, href: "#visual" },
+  { name: "CERT", icon: Award, href: "#certification" },
+  { name: "GATEWAY", icon: Zap, href: "#gateway" },
+  { name: "TOUR", icon: Plane, href: "#tour" },
   { name: "JOURNAL", icon: Book, href: "#journal" },
 ];
 
@@ -27,33 +43,19 @@ export function Navbar() {
     if (typeof window === "undefined") return;
 
     const handleScrollHighlight = () => {
-      const sections = navItems
-        .map((item) => {
-          const id = item.href.replace("#", "");
-          const el = document.getElementById(id);
-          if (!el) return null;
-          const rect = el.getBoundingClientRect();
-          const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-          const visibleAmount = Math.max(
-            0,
-            Math.min(rect.bottom, viewportHeight * 0.8) - Math.max(rect.top, viewportHeight * 0.2),
-          );
-          return { name: item.name, visibleAmount };
-        })
-        .filter((s): s is { name: string; visibleAmount: number } => !!s);
-
-      if (!sections.length) return;
-
-      const mostVisible = sections.reduce((prev, curr) =>
-        curr.visibleAmount > prev.visibleAmount ? curr : prev,
-      );
-
-      if (mostVisible.visibleAmount > 0) {
-        setActive(mostVisible.name);
+      const scrollPos = window.scrollY + window.innerHeight / 3;
+      
+      let currentSection = "HOME";
+      for (const item of navItems) {
+        const id = item.href.replace("#", "");
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollPos) {
+          currentSection = item.name;
+        }
       }
+      setActive(currentSection);
     };
 
-    handleScrollHighlight();
     window.addEventListener("scroll", handleScrollHighlight, { passive: true });
     return () => window.removeEventListener("scroll", handleScrollHighlight);
   }, []);
@@ -93,7 +95,7 @@ export function Navbar() {
                 // Responsive padding and font size
                 "relative flex items-center justify-center px-2 sm:px-4 py-2 sm:py-3 rounded-full transition-all duration-300 group min-w-0",
                 isActive
-                  ? "bg-primary text-white"
+                  ? "bg-primary-gradient text-white shadow-lg shadow-orange-500/20"
                   : "hover:bg-white/10 dark:hover:bg-white/5 text-muted-foreground hover:text-foreground"
               )}
               style={{ minWidth: 0 }}

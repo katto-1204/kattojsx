@@ -1,0 +1,2 @@
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[RUNTIME_ERROR]{"type":"runtime-error","timestamp":1778364195472,"name":"Error","message":"The requested module '/@fs/C:/Users/g11ar/OneDrive/Documents/3rd Year/me/kattojsx-portfolio/kattojsx/node_modules/.vite/deps/lucide-react.js?v=93a3ae76' does not provide an export named 'LayoutCode'","stack":""}

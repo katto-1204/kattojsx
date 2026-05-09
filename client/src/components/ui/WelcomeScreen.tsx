@@ -20,7 +20,7 @@ export function WelcomeScreen() {
 
     const timer = setTimeout(() => {
       setShow(false);
-    }, 6000);
+    }, 2000);
     return () => {
       clearTimeout(timer);
       if (audio) {
@@ -277,7 +277,7 @@ export function WelcomeScreen() {
               className="h-full bg-gradient-to-r from-orange-500 to-orange-600"
               initial={{ width: "0%" }}
               animate={{ width: "100%" }}
-              transition={{ duration: 2.5, ease: "easeInOut" }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
             />
           </motion.div>
         </motion.div>

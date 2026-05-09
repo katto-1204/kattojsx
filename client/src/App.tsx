@@ -7,6 +7,8 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import Cebu from "@/pages/Cebu";
 import Bohol from "@/pages/Bohol";
+import InCode from "@/pages/InCode";
+import BeyondCode from "@/pages/BeyondCode";
 
 function Router() {
   return (
@@ -14,6 +16,8 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/cebu" component={Cebu} />
       <Route path="/bohol" component={Bohol} />
+      <Route path="/incode" component={InCode} />
+      <Route path="/beyondcode" component={BeyondCode} />
       <Route component={NotFound} />
     </Switch>
   );

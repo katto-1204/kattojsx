@@ -6,15 +6,18 @@ import Logo from "@/components/layout/Logo";
 import { WelcomeScreen } from "@/components/ui/WelcomeScreen";
 import { Hero } from "@/components/sections/Hero";
 import { Personal } from "@/components/sections/Personal";
+import { MarqueeSection } from "@/components/sections/MarqueeSection";
 import { Experience } from "@/components/sections/Experience";
 import { SelectedWorks } from "@/components/sections/SelectedWorks";
 import { VisualPortfolio } from "@/components/sections/VisualPortfolio";
 import { Certifications } from "@/components/sections/Certifications";
+import { GatewaySection } from "@/components/sections/InCodeBeyondCode";
 import { EducationalTour } from "@/components/sections/EducationalTour";
 import { Journal } from "@/components/sections/Journal";
 import { Footer } from "@/components/sections/Footer";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { HeroScene } from "@/components/3d/HeroScene";
+import PixelSnow from "@/components/PixelSnow";
 
 import { useScroll, useTransform } from "framer-motion";
 
@@ -43,6 +46,32 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/30">
+      {/* PixelSnow — fixed full-screen background */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
+      >
+        <PixelSnow
+          color="#ffffff"
+          flakeSize={0.012}
+          minFlakeSize={1.25}
+          pixelResolution={290}
+          speed={0.7}
+          density={0.3}
+          direction={255}
+          brightness={0.1}
+          farPlane={11}
+          variant="snowflake"
+        />
+      </div>
+
       <WelcomeScreen />
       <CustomCursor />
       {/* 3D Logo Scene - FIXED as THE permanent logo, travels to top-left and stays there */}
@@ -51,13 +80,15 @@ export default function Home() {
       <TopHeader />
       <Navbar />
 
-      <main className="flex flex-col w-full overflow-hidden">
+      <main className="flex flex-col w-full overflow-hidden relative z-[1]">
         <Hero />
         <Personal />
+        <MarqueeSection />
         <Experience />
         <SelectedWorks />
         <VisualPortfolio />
         <Certifications />
+        <GatewaySection />
         <EducationalTour />
         <Journal />
       </main>
@@ -66,3 +97,4 @@ export default function Home() {
     </div>
   );
 }
+

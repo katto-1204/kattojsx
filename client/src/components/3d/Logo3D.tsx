@@ -74,12 +74,12 @@ export function Logo3D({ scrollProgress = 0, ...props }: any) {
         // Target coordinates
         // Move significantly left (-9.5) and Up (5.2) to account for parent scale (0.45)
         const targetX = THREE.MathUtils.lerp(0, -9.5, progress);
-        const targetY = THREE.MathUtils.lerp(1.2, 5.2, progress);
+        const targetY = THREE.MathUtils.lerp(0.4, 5.2, progress);
         const targetZ = 0;
 
         // Scale logic
         const targetScale = hovered ? 1.05 : 1;
-        const scrollScale = THREE.MathUtils.lerp(1, 0.35, progress);
+        const scrollScale = THREE.MathUtils.lerp(0.7, 0.45, progress);
         const finalScale = targetScale * scrollScale;
 
         // Opacity Logic
@@ -192,7 +192,7 @@ export function Logo3D({ scrollProgress = 0, ...props }: any) {
                             <Text
                                 font={fontUrl}
                                 position={[0, -0.05, 0]}
-                                fontSize={0.55}
+                                fontSize={0.45}
                                 anchorX="left"
                                 anchorY="middle"
                                 color="white"
@@ -204,7 +204,7 @@ export function Logo3D({ scrollProgress = 0, ...props }: any) {
                             <Text
                                 font={fontUrl}
                                 position={[1.75, -0.35, 0]}
-                                fontSize={0.2}
+                                fontSize={0.16}
                                 anchorX="center"
                                 anchorY="middle"
                                 color="#ff5500"
